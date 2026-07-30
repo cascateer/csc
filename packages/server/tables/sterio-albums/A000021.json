@@ -1,0 +1,52 @@
+{
+	"id": "21",
+	"previousId": "20",
+	"type": "insert",
+	"payload": {
+		"records": [
+			{
+				"youtubeMusicId": "MPREb_FPY6MXnYDvV",
+				"spotifyId": "1uVLEeDuKWgOazttohIOvd"
+			},
+			{
+				"youtubeMusicId": "MPREb_FRrlMHGe8dF",
+				"spotifyId": "5fprDXizxKL1cJOvTqf7T0",
+				"youtubeIteratee": "${$.snippet.title/(\\((Death’s Angel|By the Soldiers of Death)\\) )(\\((Remixed \\\\\\/ Remastered 2019)\\))$/$1[$4]/}"
+			},
+			{
+				"youtubeMusicId": "MPREb_B9ZaxihR2JK",
+				"spotifyId": "4xhCVL4LQtHIm3CEDkgtYy",
+				"spotifyIteratee": "${$.name/(?:- (.*))$/($1)/}"
+			},
+			{
+				"youtubeMusicId": "MPREb_2y0ZswwXZC4",
+				"spotifyId": "5DM1qCdgGt2zbknnsVn1Ca",
+				"youtubeIteratee": "${$.snippet.title/( \\(2011 Remaster\\))$//}",
+				"spotifyIteratee": "${$.name/( - 2011 Remaster)$//}"
+			},
+			{
+				"youtubeMusicId": "MPREb_BuHnnKK6MXq",
+				"spotifyId": "59gl3QDzCgH4GXzXLEwe55",
+				"spotifyIteratee": "${${$.name/(?:- (.*))$/($1)/}/(?: \\((.*?); (.*?)\\))$/ ($1) ($2)/}",
+				"youtubeMusicIteratee": "${${$.name/(?: \\(.*?\\) \\[.*?\\] \\((.*?); (.*?)\\))$/ ($1) ($2)/}/(?: \\((.*?)\\) \\[(.*?)\\])$/ ($1) ($2)/}",
+				"youtubeIteratee": "${$.snippet.title/^(?:(The Boy with the Thorn in His Side|Hand in Glove|This Charming Man)( \\(2008 Remaster\\)))$/$1 (Single Version)$2/}"
+			},
+			{
+				"youtubeMusicId": "MPREb_8B0BiQ0zT5S",
+				"spotifyId": "6cI1XoZsOhkyrCwtuI70CN",
+				"youtubeIteratee": "${$.snippet.title/( \\(2011 Remaster\\))$//}",
+				"spotifyIteratee": "${$.name/( - 2011 Remaster)$//}"
+			},
+			{
+				"youtubeMusicId": "MPREb_LK6XKj3XSaf",
+				"spotifyId": "5Y0p2XCgRRIjna91aQE8q7",
+				"spotifyIteratee": "${$.name/( - 2011 Remaster)$//}",
+				"youtubeIteratee": "${$.snippet.title/( \\(2011 Remaster\\))$//}"
+			},
+			{
+				"youtubeMusicId": "MPREb_vGZmA95flvv",
+				"spotifyId": "4upJm6GdUGCKUkVIzJIzb3"
+			}
+		]
+	}
+}

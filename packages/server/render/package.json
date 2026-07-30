@@ -1,0 +1,41 @@
+{
+  "name": "@cascateer/render",
+  "version": "0.0.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cascateer/render.git"
+  },
+  "main": "./build/main.js",
+  "scripts": {
+    "build": "tsup",
+    "start": "node build/main.js",
+    "dev": "set NODE_ENV=development && tsx src/main.ts",
+    "update": "npm cache clean --force && npx npm-check-updates -u --format time && npm i"
+  },
+  "tsup": {
+    "entry": [
+      "./src/main.ts"
+    ],
+    "format": [
+      "esm"
+    ],
+    "dts": true
+  },
+  "dependencies": {
+    "connect-redis": "^10.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "redis": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/express-session": "^1.19.0",
+    "@types/node": "^26.1.2",
+    "dotenv": "^17.4.2",
+    "tslib": "^2.8.1",
+    "typescript": "~6.0.2"
+  }
+}

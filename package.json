@@ -1,0 +1,26 @@
+{
+  "name": "@cascateer/csc",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cascateer/csc.git"
+  },
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "lint-staged": "lint-staged",
+    "prepare": "husky"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "packageManager": "npm@12.0.2",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^17.2.0",
+    "prettier": "^3.9.6",
+    "turbo": "^2.10.7",
+    "typescript": "^6.0.2"
+  }
+}

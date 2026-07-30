@@ -1,0 +1,76 @@
+{
+  "name": "@cascateer/lib",
+  "version": "1.0.103",
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "lint": "eslint",
+    "build": "tsup"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts",
+      "src/database/index.ts",
+      "src/math/index.ts",
+      "src/observable/index.ts",
+      "src/promise/index.ts"
+    ],
+    "format": [
+      "esm"
+    ],
+    "dts": true
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --ignore-pattern \"**/*.ts\"",
+      "prettier --write --ignore-unknown"
+    ],
+    "!(*.js|*.ts)": [
+      "prettier --write --ignore-unknown"
+    ]
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./database": {
+      "types": "./dist/database/index.d.ts",
+      "import": "./dist/database/index.js"
+    },
+    "./math": {
+      "types": "./dist/math/index.d.ts",
+      "import": "./dist/math/index.js"
+    },
+    "./observable": {
+      "types": "./dist/observable/index.d.ts",
+      "import": "./dist/observable/index.js"
+    },
+    "./promise": {
+      "types": "./dist/promise/index.d.ts",
+      "import": "./dist/promise/index.js"
+    }
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "lodash": "^4.18.1",
+    "mime-types": "^3.0.2",
+    "object-hash": "^3.0.0",
+    "ora": "^9.4.1",
+    "rxjs": "^7.8.2",
+    "utility-types": "^3.11.0",
+    "uuid": "^14.0.1"
+  },
+  "devDependencies": {
+    "@cascateer/eslint-config": "^0.0.0",
+    "@types/lodash": "^4.17.24",
+    "@types/mime-types": "^3.0.1",
+    "@types/node": "^26.1.2",
+    "@types/object-hash": "^3.0.6",
+    "tsup": "^8.5.1",
+    "vitest": "^4.1.10"
+  },
+  "files": [
+    "dist"
+  ]
+}

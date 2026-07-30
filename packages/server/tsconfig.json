@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "types": ["node"],
+    "lib": ["ES2021"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+
+    "paths": {
+      "@cascateer/lib": ["../lib/src"],
+      "@cascateer/lib/*": ["../lib/src/*"]
+    }
+  },
+  "exclude": ["api"]
+}

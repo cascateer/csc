@@ -1,0 +1,27 @@
+{
+  "name": "@cascateer/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "format": [
+      "cjs"
+    ],
+    "dts": true
+  },
+  "dependencies": {
+    "@eslint/js": "^10.0.1",
+    "@smarttools/eslint-plugin-rxjs": "^1.0.22",
+    "eslint-config": "^0.3.0",
+    "globals": "^17.7.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.62.1"
+  }
+}
