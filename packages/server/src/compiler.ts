@@ -1,4 +1,4 @@
-import { nonNullable, property } from "@cascateer/lib";
+import { envConfig, nonNullable, property } from "@cascateer/lib";
 import { LazyPromise } from "@cascateer/lib/promise";
 import filenamify from "filenamify";
 import { hashElement } from "folder-hash";
@@ -19,6 +19,8 @@ import { resolve } from "path";
 import { SterioService } from "./Sterio.service";
 import { SterioAlbumFull, SterioCompilerConfig } from "./types";
 import { YoutubeMusicService } from "./YoutubeMusic.service";
+
+const { COMPILER_OUT_URL } = envConfig();
 
 const toOraPrefixText = ({
   icon,
@@ -43,7 +45,7 @@ export const compile = async ({
 }: SterioCompilerConfig = {}) => {
   console.clear();
 
-  const OUT_URL = resolve(__dirname, "../../..", "out");
+  const OUT_URL = resolve(__dirname, COMPILER_OUT_URL!);
 
   if (out && !existsSync(OUT_URL)) {
     await mkdir(OUT_URL);
