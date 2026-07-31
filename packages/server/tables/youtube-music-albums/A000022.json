@@ -13469,6 +13469,794 @@
 						]
 					}
 				]
+			},
+			{
+				"type": "ALBUM",
+				"albumId": "MPREb_mQkAeVwIXvi",
+				"name": "The Captain",
+				"playlistId": "OLAK5uy_kNx-LEuoWheuW0_wrTGyQKgJQtMRMvb1w",
+				"artist": {
+					"artistId": "UC8VkXXy6wadIpJYJ7P_DPgA",
+					"name": "HIJCKD"
+				},
+				"year": 2022,
+				"thumbnails": [
+					{
+						"url": "https://yt3.googleusercontent.com/SSRvykbCkOTnmQoFip-UQe9kenkG8hiNbZRgb_8Bl06f1SnGY_E2Q583VfMUR2XAT9DqhjGQucJ25h8=w60-h60-l90-rj",
+						"width": 60,
+						"height": 60
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/SSRvykbCkOTnmQoFip-UQe9kenkG8hiNbZRgb_8Bl06f1SnGY_E2Q583VfMUR2XAT9DqhjGQucJ25h8=w120-h120-l90-rj",
+						"width": 120,
+						"height": 120
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/SSRvykbCkOTnmQoFip-UQe9kenkG8hiNbZRgb_8Bl06f1SnGY_E2Q583VfMUR2XAT9DqhjGQucJ25h8=w226-h226-l90-rj",
+						"width": 226,
+						"height": 226
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/SSRvykbCkOTnmQoFip-UQe9kenkG8hiNbZRgb_8Bl06f1SnGY_E2Q583VfMUR2XAT9DqhjGQucJ25h8=w544-h544-l90-rj",
+						"width": 544,
+						"height": 544
+					}
+				],
+				"songs": [
+					{
+						"type": "SONG",
+						"videoId": "xiQJvHkENUQ",
+						"name": "The Captain",
+						"artist": {
+							"artistId": "UC8VkXXy6wadIpJYJ7P_DPgA",
+							"name": "HIJCKD"
+						},
+						"album": {
+							"albumId": "MPREb_mQkAeVwIXvi",
+							"name": "The Captain"
+						},
+						"duration": 192,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/SSRvykbCkOTnmQoFip-UQe9kenkG8hiNbZRgb_8Bl06f1SnGY_E2Q583VfMUR2XAT9DqhjGQucJ25h8=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/SSRvykbCkOTnmQoFip-UQe9kenkG8hiNbZRgb_8Bl06f1SnGY_E2Q583VfMUR2XAT9DqhjGQucJ25h8=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/SSRvykbCkOTnmQoFip-UQe9kenkG8hiNbZRgb_8Bl06f1SnGY_E2Q583VfMUR2XAT9DqhjGQucJ25h8=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/SSRvykbCkOTnmQoFip-UQe9kenkG8hiNbZRgb_8Bl06f1SnGY_E2Q583VfMUR2XAT9DqhjGQucJ25h8=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					}
+				]
+			},
+			{
+				"type": "ALBUM",
+				"albumId": "MPREb_2FwZavE12Q2",
+				"name": "C'est beau la bourgeoisie",
+				"playlistId": "OLAK5uy_nANjSXIQWO6gobXdJZFklPywFc2SpnUXo",
+				"artist": {
+					"artistId": "UCnSvlOmfaMFAgooQkGtmd8A",
+					"name": "Discobitch"
+				},
+				"year": 2008,
+				"thumbnails": [
+					{
+						"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w60-h60-s-l90-rj",
+						"width": 60,
+						"height": 60
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w120-h120-s-l90-rj",
+						"width": 120,
+						"height": 120
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w226-h226-s-l90-rj",
+						"width": 226,
+						"height": 226
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w544-h544-s-l90-rj",
+						"width": 544,
+						"height": 544
+					}
+				],
+				"songs": [
+					{
+						"type": "SONG",
+						"videoId": "QKVQ2r-_zQk",
+						"name": "C'est beau la bourgeoisie (Radio Edit)",
+						"artist": {
+							"artistId": "UCnSvlOmfaMFAgooQkGtmd8A",
+							"name": "Discobitch"
+						},
+						"album": {
+							"albumId": "MPREb_2FwZavE12Q2",
+							"name": "C'est beau la bourgeoisie"
+						},
+						"duration": 211,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w60-h60-s-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w120-h120-s-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w226-h226-s-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w544-h544-s-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "7Th4vvxCSTI",
+						"name": "C'est beau la bourgeoisie (Bodybangers Remix)",
+						"artist": {
+							"artistId": "UCnSvlOmfaMFAgooQkGtmd8A",
+							"name": "Discobitch"
+						},
+						"album": {
+							"albumId": "MPREb_2FwZavE12Q2",
+							"name": "C'est beau la bourgeoisie"
+						},
+						"duration": 323,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w60-h60-s-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w120-h120-s-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w226-h226-s-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w544-h544-s-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "E9YCO9FcuUU",
+						"name": "C'est beau la bourgeoisie (RainDropz! Remix Edit)",
+						"artist": {
+							"artistId": "UCnSvlOmfaMFAgooQkGtmd8A",
+							"name": "Discobitch"
+						},
+						"album": {
+							"albumId": "MPREb_2FwZavE12Q2",
+							"name": "C'est beau la bourgeoisie"
+						},
+						"duration": 204,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w60-h60-s-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w120-h120-s-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w226-h226-s-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w544-h544-s-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "QKVQ2r-_zQk",
+						"name": "C'est beau la bourgeoisie (Extended Original Mix)",
+						"artist": {
+							"artistId": "UCnSvlOmfaMFAgooQkGtmd8A",
+							"name": "Discobitch"
+						},
+						"album": {
+							"albumId": "MPREb_2FwZavE12Q2",
+							"name": "C'est beau la bourgeoisie"
+						},
+						"duration": 343,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w60-h60-s-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w120-h120-s-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w226-h226-s-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w544-h544-s-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "QKVQ2r-_zQk",
+						"name": "C'est beau la bourgeoisie (Extended French Mix)",
+						"artist": {
+							"artistId": "UCnSvlOmfaMFAgooQkGtmd8A",
+							"name": "Discobitch"
+						},
+						"album": {
+							"albumId": "MPREb_2FwZavE12Q2",
+							"name": "C'est beau la bourgeoisie"
+						},
+						"duration": 325,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w60-h60-s-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w120-h120-s-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w226-h226-s-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/jwj8izYs2Fc5-ZP45QsEXPXTQ3rw3QscgNdciK4HZeYH7vzKmkbgY61D2kEJdSia-axcNcdH6Qj3szA=w544-h544-s-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					}
+				]
+			},
+			{
+				"type": "ALBUM",
+				"albumId": "MPREb_ATAZpyTw2hf",
+				"name": "Closure",
+				"playlistId": "OLAK5uy_nnf_w4GekfeUz1l39KwJD7hCZYI1SBTJo",
+				"artist": {
+					"artistId": "UCic7hSoeXQJk8trvYRRqDdg",
+					"name": "Hunter/Game"
+				},
+				"year": 2023,
+				"thumbnails": [
+					{
+						"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w60-h60-l90-rj",
+						"width": 60,
+						"height": 60
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w120-h120-l90-rj",
+						"width": 120,
+						"height": 120
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w226-h226-l90-rj",
+						"width": 226,
+						"height": 226
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w544-h544-l90-rj",
+						"width": 544,
+						"height": 544
+					}
+				],
+				"songs": [
+					{
+						"type": "SONG",
+						"videoId": "QikgGWZlVCg",
+						"name": "Closure",
+						"artist": {
+							"artistId": "UCic7hSoeXQJk8trvYRRqDdg",
+							"name": "Hunter/Game"
+						},
+						"album": {
+							"albumId": "MPREb_ATAZpyTw2hf",
+							"name": "Closure"
+						},
+						"duration": 359,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "GKQ1-mB3yd4",
+						"name": "Act Of Faith",
+						"artist": {
+							"artistId": "UCic7hSoeXQJk8trvYRRqDdg",
+							"name": "Hunter/Game"
+						},
+						"album": {
+							"albumId": "MPREb_ATAZpyTw2hf",
+							"name": "Closure"
+						},
+						"duration": 387,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					}
+				]
+			},
+			{
+				"type": "ALBUM",
+				"albumId": "MPREb_WwlZbZINWN8",
+				"name": "Decompressing Happy Camper VA Sampler",
+				"playlistId": "OLAK5uy_mPg8fmB38-CZx5ISJ6oNN3vtObnHF-BEk",
+				"artist": {
+					"artistId": null,
+					"name": "Various Artists"
+				},
+				"year": 2018,
+				"thumbnails": [
+					{
+						"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w60-h60-l90-rj",
+						"width": 60,
+						"height": 60
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w120-h120-l90-rj",
+						"width": 120,
+						"height": 120
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w226-h226-l90-rj",
+						"width": 226,
+						"height": 226
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w544-h544-l90-rj",
+						"width": 544,
+						"height": 544
+					}
+				],
+				"songs": [
+					{
+						"type": "SONG",
+						"videoId": "KpqQ-orEpH8",
+						"name": "C'era Una Volta",
+						"artist": {
+							"artistId": null,
+							"name": "Various Artists"
+						},
+						"album": {
+							"albumId": "MPREb_WwlZbZINWN8",
+							"name": "Decompressing Happy Camper VA Sampler"
+						},
+						"duration": 418,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "VEiMvfwIsAU",
+						"name": "John Love",
+						"artist": {
+							"artistId": null,
+							"name": "Various Artists"
+						},
+						"album": {
+							"albumId": "MPREb_WwlZbZINWN8",
+							"name": "Decompressing Happy Camper VA Sampler"
+						},
+						"duration": 535,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "JF_8QAcq3-E",
+						"name": "High Noon",
+						"artist": {
+							"artistId": null,
+							"name": "Various Artists"
+						},
+						"album": {
+							"albumId": "MPREb_WwlZbZINWN8",
+							"name": "Decompressing Happy Camper VA Sampler"
+						},
+						"duration": 446,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "huQRlTDRxts",
+						"name": "High Noon (Unders Remix)",
+						"artist": {
+							"artistId": null,
+							"name": "Various Artists"
+						},
+						"album": {
+							"albumId": "MPREb_WwlZbZINWN8",
+							"name": "Decompressing Happy Camper VA Sampler"
+						},
+						"duration": 546,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "1hlKv0SLze8",
+						"name": "Mojave",
+						"artist": {
+							"artistId": null,
+							"name": "Various Artists"
+						},
+						"album": {
+							"albumId": "MPREb_WwlZbZINWN8",
+							"name": "Decompressing Happy Camper VA Sampler"
+						},
+						"duration": 507,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "BpsJe4iQS7E",
+						"name": "The Round About",
+						"artist": {
+							"artistId": null,
+							"name": "Various Artists"
+						},
+						"album": {
+							"albumId": "MPREb_WwlZbZINWN8",
+							"name": "Decompressing Happy Camper VA Sampler"
+						},
+						"duration": 419,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "cDyekL_LZjc",
+						"name": "Luna",
+						"artist": {
+							"artistId": null,
+							"name": "Various Artists"
+						},
+						"album": {
+							"albumId": "MPREb_WwlZbZINWN8",
+							"name": "Decompressing Happy Camper VA Sampler"
+						},
+						"duration": 416,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "aMQXOcgSMVo",
+						"name": "Empathy",
+						"artist": {
+							"artistId": null,
+							"name": "Various Artists"
+						},
+						"album": {
+							"albumId": "MPREb_WwlZbZINWN8",
+							"name": "Decompressing Happy Camper VA Sampler"
+						},
+						"duration": 513,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "p_rzbyZTub4",
+						"name": "Polar",
+						"artist": {
+							"artistId": null,
+							"name": "Various Artists"
+						},
+						"album": {
+							"albumId": "MPREb_WwlZbZINWN8",
+							"name": "Decompressing Happy Camper VA Sampler"
+						},
+						"duration": 477,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "0YPpoNvTjDI",
+						"name": "Arpeggiated Souls",
+						"artist": {
+							"artistId": null,
+							"name": "Various Artists"
+						},
+						"album": {
+							"albumId": "MPREb_WwlZbZINWN8",
+							"name": "Decompressing Happy Camper VA Sampler"
+						},
+						"duration": 533,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AadjIonEEJYN_u8ttkp2RCivIGz1Y2ij55z1zQKLWNJ0a3mBFBSkiBonIQKECFJozbsjFjSdt_4gr7C88Q=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					}
+				]
 			}
 		]
 	}

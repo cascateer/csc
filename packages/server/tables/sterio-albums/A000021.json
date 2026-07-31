@@ -64,6 +64,33 @@
 				"youtubeMusicId": "MPREb_ptmy2ShNLbx",
 				"spotifyId": "4xOhK9LXV4Kz4VI1N7lOSO",
 				"spotifyIteratee": "${$.name/(?:- (.*))$/($1)/}"
+			},
+			{
+				"youtubeMusicId": "MPREb_mQkAeVwIXvi",
+				"spotifyId": "0hc4lRGEKpOzSdd2KXZ47j"
+			},
+			{
+				"youtubeMusicId": "MPREb_2FwZavE12Q2",
+				"spotifyId": "30t7nfMka4qIkBhJfmIRB3",
+				"spotifyIteratee": "${$.name/(?:- (.*))$/($1)/}",
+				"songs": [
+					3
+				]
+			},
+			{
+				"youtubeMusicId": "MPREb_ATAZpyTw2hf",
+				"spotifyId": "5al91xGt2Nnp7dTTtUsjAv",
+				"songs": [
+					0
+				]
+			},
+			{
+				"youtubeMusicId": "MPREb_WwlZbZINWN8",
+				"spotifyId": "4TjGZHb5bukGCfmZwNZ5jm",
+				"spotifyIteratee": "${$.name/(?:- (.*))$/($1)/}",
+				"songs": [
+					9
+				]
 			}
 		]
 	}
