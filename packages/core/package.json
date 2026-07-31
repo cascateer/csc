@@ -1,6 +1,7 @@
 {
   "name": "@cascateer/core",
   "version": "2.4.102",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cascateer/core.git"
