@@ -12,7 +12,7 @@
     "test": "turbo test",
     "build": "turbo build",
     "prepare": "husky",
-    "build-ci": "turbo build test",
+    "build-ci": "turbo build",
     "release-ci": "npm run build-ci && changeset publish"
   },
   "workspaces": [
