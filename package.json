@@ -11,7 +11,9 @@
     "lint-staged": "lint-staged",
     "test": "turbo test",
     "build": "turbo build",
-    "prepare": "husky"
+    "prepare": "husky",
+    "build-ci": "turbo build lint test",
+    "release-ci": "npm run build-ci && changeset publish"
   },
   "workspaces": [
     "packages/*"
