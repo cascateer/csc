@@ -10,7 +10,9 @@
     "//#lint-staged": {
       "cache": false
     },
-    "test": {},
+    "test": {
+      "dependsOn": ["^build"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
