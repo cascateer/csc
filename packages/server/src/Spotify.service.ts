@@ -1,4 +1,4 @@
-import { AsyncEndoFunction, envConfig, nonNullable } from "@cascateer/lib";
+import { AsyncEndoFunction, envConfig } from "@cascateer/lib";
 import { createTable } from "@cascateer/lib/database";
 import { LazyPromise } from "@cascateer/lib/promise";
 import { exec } from "child_process";
@@ -30,16 +30,14 @@ export class SpotifyService {
   );
 
   private static readonly readGrant = () =>
-    readFile(
-      nonNullable(SPOTIFY_GRANT_PATH),
-      "utf-8",
-    ).then<SpotifyGrant | null>(JSON.parse);
+    readFile(SPOTIFY_GRANT_PATH, "utf-8")
+      .then<SpotifyGrant | null>(JSON.parse)
+      .catch(() => null);
 
   private static readonly writeGrant = (grant: SpotifyGrant) =>
-    writeFile(
-      nonNullable(SPOTIFY_GRANT_PATH),
-      JSON.stringify(grant, null, "\t"),
-    ).then(() => grant);
+    writeFile(SPOTIFY_GRANT_PATH, JSON.stringify(grant, null, "\t")).then(
+      () => grant,
+    );
 
   private static lock = new Subject<AsyncEndoFunction<SpotifyWebApi>>();
 
