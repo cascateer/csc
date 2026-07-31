@@ -1,0 +1,14 @@
+{
+	"id": "308",
+	"type": "insert",
+	"payload": {
+		"records": [
+			{
+				"url": "https://i.ytimg.com/vi/c0Y0kVAepeA/sddefault.jpg",
+				"name": "c3ca3095ea12a841a0bb98639b825309bf056749.jpg",
+				"checksum": "8ad03fb99b2bf975514c0eadb233d89e"
+			}
+		]
+	},
+	"previousId": "307"
+}

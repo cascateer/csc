@@ -1,0 +1,14 @@
+{
+	"id": "40",
+	"type": "update",
+	"payload": {
+		"record": {
+			"youtubeMusicId": "MPREb_Vm6WIiztBpB",
+			"spotifyId": "7hqwHciaHozB8o4vC4szId",
+			"youtubeMusicIteratee": "${${$.name/(?: \\(([^\\)]*)\\) \\[([^\\]]*)\\]( \\([^\\)]*; [^\\)]*\\))?)$/ ($1) ($2)/}/(?: \\[([^\\]]*)\\] \\[([^\\]]*)\\]( \\([^\\)]*; [^\\)]*\\))?)$/ ($1) ($2)/}",
+			"spotifyIteratee": "${${$.name/(?:- (.*); (.*))$/($1) ($2)/}/(?:- (.*))$/($1)/}",
+			"youtubeIteratee": "${$.snippet.description/^(?:Provided to YouTube by Rhino\\\\n\\\\n)(.*)( ·[\\\\s\\\\S]*)$/$1/}"
+		}
+	},
+	"previousId": "39"
+}

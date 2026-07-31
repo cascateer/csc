@@ -1,0 +1,13 @@
+{
+	"id": "35",
+	"type": "update",
+	"payload": {
+		"record": {
+			"youtubeMusicId": "MPREb_Vm6WIiztBpB",
+			"spotifyId": "7hqwHciaHozB8o4vC4szId",
+			"youtubeMusicIteratee": "${${$.name/(?: \\(([^\\)]*)\\) \\[([^\\]]*)\\]( \\([^\\)]*; [^\\)]*\\))?)$/ ($1) ($2)/}/(?: \\[([^\\]]*)\\] \\[([^\\]]*)\\]( \\([^\\)]*; [^\\)]*\\))?)$/ ($1) ($2)/}",
+			"spotifyIteratee": "${${$.name/(?:- (.*); (.*))$/($1) ($2)/}/(?:- (.*))$/($1)/}"
+		}
+	},
+	"previousId": "34"
+}

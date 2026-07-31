@@ -1,0 +1,11 @@
+{
+	"id": "33",
+	"type": "update",
+	"payload": {
+		"record": {
+			"youtubeMusicId": "MPREb_Vm6WIiztBpB",
+			"spotifyId": "7hqwHciaHozB8o4vC4szId"
+		}
+	},
+	"previousId": "32"
+}

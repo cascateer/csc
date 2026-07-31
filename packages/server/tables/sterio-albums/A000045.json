@@ -1,0 +1,12 @@
+{
+	"id": "45",
+	"type": "update",
+	"payload": {
+		"record": {
+			"youtubeMusicId": "MPREb_ptmy2ShNLbx",
+			"spotifyId": "4xOhK9LXV4Kz4VI1N7lOSO",
+			"spotifyIteratee": "${$.name/(?:- (.*))$/($1)/}"
+		}
+	},
+	"previousId": "44"
+}
