@@ -1,5 +1,11 @@
 # @cascateer/lib
 
+## 1.0.108
+
+### Patch Changes
+
+- b927e00: test VI
+
 ## 1.0.107
 
 ### Patch Changes
