@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "tsx scripts/dev.ts",
-    "test": "vitest"
+    "test-ui": "vitest"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.24",
