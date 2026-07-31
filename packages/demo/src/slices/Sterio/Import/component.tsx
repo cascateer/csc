@@ -285,7 +285,7 @@ export const ImportComponent = sterioSlice
                         <td>{song.tags.trackNumber}</td>
                         <td>{song.tags.title}</td>
                         <td>
-                          <div>
+                          <div style={{ display: "flex" }}>
                             {ctx.terminal.effects.sterioPlaylists().pipe(
                               map((playlists) =>
                                 playlists.map((playlist) => {
@@ -297,7 +297,8 @@ export const ImportComponent = sterioSlice
                                     <div
                                       style={{
                                         opacity: included ? 1 : 0.5,
-                                        cursor: "default",
+                                        cursor: "pointer",
+                                        padding: "0 1em",
                                       }}
                                       onClick={() =>
                                         ctx.terminal.actions.updateSterioPlaylist(
