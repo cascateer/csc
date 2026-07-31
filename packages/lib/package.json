@@ -1,6 +1,6 @@
 {
   "name": "@cascateer/lib",
-  "version": "1.0.108",
+  "version": "1.0.109",
   "type": "module",
   "scripts": {
     "lint": "eslint",
