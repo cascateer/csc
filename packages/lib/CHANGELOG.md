@@ -1,5 +1,11 @@
 # @cascateer/lib
 
+## 1.0.110
+
+### Patch Changes
+
+- 524f4ad: exports fix
+
 ## 1.0.109
 
 ### Patch Changes
