@@ -18,7 +18,6 @@
   "dependencies": {
     "@cascateer/core": "*",
     "@cascateer/lib": "*",
-    "@cascateer/server": "*",
     "axios": "^1.18.1",
     "classnames": "^2.5.1",
     "globals": "^17.8.0",

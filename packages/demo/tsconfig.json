@@ -18,5 +18,5 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@cascateer/core"
   },
-  "include": ["src", "test", "sterio/main.tsx", "rubiks/main.tsx"]
+  "include": ["src", "test"]
 }

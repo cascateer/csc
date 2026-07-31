@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
-    "allowImportingTsExtensions": true,
     "lib": ["ESNext", "DOM", "DOM.Iterable", "WebWorker"],
-    "module": "ESNext",
-    "moduleDetection": "force",
-    "moduleResolution": "bundler",
-    "noEmit": true,
+    "module": "esnext",
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noUncheckedSideEffectImports": true,
@@ -17,7 +13,8 @@
     "types": ["node", "vite/client"],
     "useDefineForClassFields": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "@cascateer/core"
+    "jsxImportSource": "@cascateer/core",
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src"]
 }

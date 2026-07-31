@@ -1,4 +1,3 @@
-import { resolve } from "path";
 import { createServer, loadEnv, searchForWorkspaceRoot } from "vite";
 import sassDts from "vite-plugin-sass-dts";
 
@@ -23,13 +22,6 @@ export const createDevServer = async () => {
       modules: {
         scopeBehaviour: "local",
         localsConvention: "camelCaseOnly",
-      },
-    },
-
-    resolve: {
-      alias: {
-        "@cascateer/core": resolve(__dirname, "."),
-        "@cascateer/lib": resolve(__dirname, "../../lib/src"),
       },
     },
 
