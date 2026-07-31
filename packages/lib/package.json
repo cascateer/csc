@@ -1,6 +1,6 @@
 {
   "name": "@cascateer/lib",
-  "version": "1.0.109",
+  "version": "1.0.110",
   "type": "module",
   "scripts": {
     "test": "vitest",
