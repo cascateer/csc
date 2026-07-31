@@ -22,23 +22,23 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "default": "./dist/index.js"
     },
     "./database": {
       "types": "./dist/database/index.d.ts",
-      "import": "./dist/database/index.js"
+      "default": "./dist/database/index.js"
     },
     "./math": {
       "types": "./dist/math/index.d.ts",
-      "import": "./dist/math/index.js"
+      "default": "./dist/math/index.js"
     },
     "./observable": {
       "types": "./dist/observable/index.d.ts",
-      "import": "./dist/observable/index.js"
+      "default": "./dist/observable/index.js"
     },
     "./promise": {
       "types": "./dist/promise/index.d.ts",
-      "import": "./dist/promise/index.js"
+      "default": "./dist/promise/index.js"
     }
   },
   "dependencies": {
