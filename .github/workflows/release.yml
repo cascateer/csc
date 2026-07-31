@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 26
-          registry-url: https://registry.npmjs.org/ # makes the action set up npm authentication
+          registry-url: https://registry.npmjs.org/
 
       - name: Install Dependencies
         run: npm install
@@ -28,7 +28,6 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          # This expects you to have a script called release which does a build for your packages and calls changeset publish
-          publish-script: npm run release-ci
+          publish: npm run release-ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
