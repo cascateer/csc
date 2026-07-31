@@ -1,0 +1,227 @@
+{
+	"id": "25",
+	"type": "insert",
+	"payload": {
+		"records": [
+			{
+				"album_type": "single",
+				"total_tracks": 5,
+				"external_urls": {
+					"spotify": "https://open.spotify.com/album/30t7nfMka4qIkBhJfmIRB3"
+				},
+				"href": "https://api.spotify.com/v1/albums/30t7nfMka4qIkBhJfmIRB3",
+				"id": "30t7nfMka4qIkBhJfmIRB3",
+				"images": [
+					{
+						"url": "https://i.scdn.co/image/ab67616d0000b2733a84b0565f7e9703cd77ccdf",
+						"height": 640,
+						"width": 640
+					},
+					{
+						"url": "https://i.scdn.co/image/ab67616d00001e023a84b0565f7e9703cd77ccdf",
+						"height": 300,
+						"width": 300
+					},
+					{
+						"url": "https://i.scdn.co/image/ab67616d000048513a84b0565f7e9703cd77ccdf",
+						"height": 64,
+						"width": 64
+					}
+				],
+				"name": "C'est beau la bourgeoisie",
+				"release_date": "2009-06-22",
+				"release_date_precision": "day",
+				"type": "album",
+				"uri": "spotify:album:30t7nfMka4qIkBhJfmIRB3",
+				"artists": [
+					{
+						"external_urls": {
+							"spotify": "https://open.spotify.com/artist/48vWW7ozlrI3oT6zecxDUV"
+						},
+						"href": "https://api.spotify.com/v1/artists/48vWW7ozlrI3oT6zecxDUV",
+						"id": "48vWW7ozlrI3oT6zecxDUV",
+						"name": "Discobitch",
+						"type": "artist",
+						"uri": "spotify:artist:48vWW7ozlrI3oT6zecxDUV"
+					}
+				],
+				"tracks": {
+					"href": "https://api.spotify.com/v1/albums/30t7nfMka4qIkBhJfmIRB3/tracks?offset=0&limit=50",
+					"limit": 50,
+					"next": null,
+					"offset": 0,
+					"previous": null,
+					"total": 5,
+					"items": [
+						{
+							"artists": [
+								{
+									"external_urls": {
+										"spotify": "https://open.spotify.com/artist/48vWW7ozlrI3oT6zecxDUV"
+									},
+									"href": "https://api.spotify.com/v1/artists/48vWW7ozlrI3oT6zecxDUV",
+									"id": "48vWW7ozlrI3oT6zecxDUV",
+									"name": "Discobitch",
+									"type": "artist",
+									"uri": "spotify:artist:48vWW7ozlrI3oT6zecxDUV"
+								}
+							],
+							"disc_number": 1,
+							"duration_ms": 210186,
+							"explicit": false,
+							"external_urls": {
+								"spotify": "https://open.spotify.com/track/3c0wTMBNOggPofKcxHayrS"
+							},
+							"href": "https://api.spotify.com/v1/tracks/3c0wTMBNOggPofKcxHayrS",
+							"id": "3c0wTMBNOggPofKcxHayrS",
+							"name": "C'est beau la bourgeoisie - Radio Edit",
+							"track_number": 1,
+							"type": "track",
+							"uri": "spotify:track:3c0wTMBNOggPofKcxHayrS",
+							"is_local": false
+						},
+						{
+							"artists": [
+								{
+									"external_urls": {
+										"spotify": "https://open.spotify.com/artist/48vWW7ozlrI3oT6zecxDUV"
+									},
+									"href": "https://api.spotify.com/v1/artists/48vWW7ozlrI3oT6zecxDUV",
+									"id": "48vWW7ozlrI3oT6zecxDUV",
+									"name": "Discobitch",
+									"type": "artist",
+									"uri": "spotify:artist:48vWW7ozlrI3oT6zecxDUV"
+								},
+								{
+									"external_urls": {
+										"spotify": "https://open.spotify.com/artist/7koJQAjVzXoUpH6pXrihXA"
+									},
+									"href": "https://api.spotify.com/v1/artists/7koJQAjVzXoUpH6pXrihXA",
+									"id": "7koJQAjVzXoUpH6pXrihXA",
+									"name": "Bodybangers",
+									"type": "artist",
+									"uri": "spotify:artist:7koJQAjVzXoUpH6pXrihXA"
+								}
+							],
+							"disc_number": 1,
+							"duration_ms": 322226,
+							"explicit": false,
+							"external_urls": {
+								"spotify": "https://open.spotify.com/track/5iRRc19uOmlTrsLI3Rr8Vy"
+							},
+							"href": "https://api.spotify.com/v1/tracks/5iRRc19uOmlTrsLI3Rr8Vy",
+							"id": "5iRRc19uOmlTrsLI3Rr8Vy",
+							"name": "C'est beau la bourgeoisie - Bodybangers Remix",
+							"track_number": 2,
+							"type": "track",
+							"uri": "spotify:track:5iRRc19uOmlTrsLI3Rr8Vy",
+							"is_local": false
+						},
+						{
+							"artists": [
+								{
+									"external_urls": {
+										"spotify": "https://open.spotify.com/artist/48vWW7ozlrI3oT6zecxDUV"
+									},
+									"href": "https://api.spotify.com/v1/artists/48vWW7ozlrI3oT6zecxDUV",
+									"id": "48vWW7ozlrI3oT6zecxDUV",
+									"name": "Discobitch",
+									"type": "artist",
+									"uri": "spotify:artist:48vWW7ozlrI3oT6zecxDUV"
+								},
+								{
+									"external_urls": {
+										"spotify": "https://open.spotify.com/artist/3zYc2e5oMI5rApP4re3faE"
+									},
+									"href": "https://api.spotify.com/v1/artists/3zYc2e5oMI5rApP4re3faE",
+									"id": "3zYc2e5oMI5rApP4re3faE",
+									"name": "Dennis Logemann",
+									"type": "artist",
+									"uri": "spotify:artist:3zYc2e5oMI5rApP4re3faE"
+								}
+							],
+							"disc_number": 1,
+							"duration_ms": 203880,
+							"explicit": false,
+							"external_urls": {
+								"spotify": "https://open.spotify.com/track/2vp8YwL2nM3Qmr5vfezfAn"
+							},
+							"href": "https://api.spotify.com/v1/tracks/2vp8YwL2nM3Qmr5vfezfAn",
+							"id": "2vp8YwL2nM3Qmr5vfezfAn",
+							"name": "C'est beau la bourgeoisie - RainDropz! Remix Edit",
+							"track_number": 3,
+							"type": "track",
+							"uri": "spotify:track:2vp8YwL2nM3Qmr5vfezfAn",
+							"is_local": false
+						},
+						{
+							"artists": [
+								{
+									"external_urls": {
+										"spotify": "https://open.spotify.com/artist/48vWW7ozlrI3oT6zecxDUV"
+									},
+									"href": "https://api.spotify.com/v1/artists/48vWW7ozlrI3oT6zecxDUV",
+									"id": "48vWW7ozlrI3oT6zecxDUV",
+									"name": "Discobitch",
+									"type": "artist",
+									"uri": "spotify:artist:48vWW7ozlrI3oT6zecxDUV"
+								}
+							],
+							"disc_number": 1,
+							"duration_ms": 342826,
+							"explicit": false,
+							"external_urls": {
+								"spotify": "https://open.spotify.com/track/5NPBB71WcCbXOPIoToikmh"
+							},
+							"href": "https://api.spotify.com/v1/tracks/5NPBB71WcCbXOPIoToikmh",
+							"id": "5NPBB71WcCbXOPIoToikmh",
+							"name": "C'est beau la bourgeoisie - Extended Original Mix",
+							"track_number": 4,
+							"type": "track",
+							"uri": "spotify:track:5NPBB71WcCbXOPIoToikmh",
+							"is_local": false
+						},
+						{
+							"artists": [
+								{
+									"external_urls": {
+										"spotify": "https://open.spotify.com/artist/48vWW7ozlrI3oT6zecxDUV"
+									},
+									"href": "https://api.spotify.com/v1/artists/48vWW7ozlrI3oT6zecxDUV",
+									"id": "48vWW7ozlrI3oT6zecxDUV",
+									"name": "Discobitch",
+									"type": "artist",
+									"uri": "spotify:artist:48vWW7ozlrI3oT6zecxDUV"
+								}
+							],
+							"disc_number": 1,
+							"duration_ms": 324426,
+							"explicit": false,
+							"external_urls": {
+								"spotify": "https://open.spotify.com/track/1xcPlFMk0bowRBTre8T1l5"
+							},
+							"href": "https://api.spotify.com/v1/tracks/1xcPlFMk0bowRBTre8T1l5",
+							"id": "1xcPlFMk0bowRBTre8T1l5",
+							"name": "C'est beau la bourgeoisie - Extended French Mix",
+							"track_number": 5,
+							"type": "track",
+							"uri": "spotify:track:1xcPlFMk0bowRBTre8T1l5",
+							"is_local": false
+						}
+					]
+				},
+				"copyrights": [
+					{
+						"text": "(P) 2009 Dust in Music under exclusive license to Sony Music Entertainment Germany GmbH",
+						"type": "P"
+					}
+				],
+				"external_ids": {
+					"upc": "884977246759"
+				},
+				"genres": []
+			}
+		]
+	},
+	"previousId": "24"
+}

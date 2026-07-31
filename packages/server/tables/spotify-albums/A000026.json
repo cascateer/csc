@@ -1,0 +1,160 @@
+{
+	"id": "26",
+	"type": "insert",
+	"payload": {
+		"records": [
+			{
+				"album_type": "single",
+				"total_tracks": 2,
+				"external_urls": {
+					"spotify": "https://open.spotify.com/album/5al91xGt2Nnp7dTTtUsjAv"
+				},
+				"href": "https://api.spotify.com/v1/albums/5al91xGt2Nnp7dTTtUsjAv",
+				"id": "5al91xGt2Nnp7dTTtUsjAv",
+				"images": [
+					{
+						"url": "https://i.scdn.co/image/ab67616d0000b273938bd8978b8f88e9f34a8015",
+						"height": 640,
+						"width": 640
+					},
+					{
+						"url": "https://i.scdn.co/image/ab67616d00001e02938bd8978b8f88e9f34a8015",
+						"height": 300,
+						"width": 300
+					},
+					{
+						"url": "https://i.scdn.co/image/ab67616d00004851938bd8978b8f88e9f34a8015",
+						"height": 64,
+						"width": 64
+					}
+				],
+				"name": "Closure",
+				"release_date": "2023-04-28",
+				"release_date_precision": "day",
+				"type": "album",
+				"uri": "spotify:album:5al91xGt2Nnp7dTTtUsjAv",
+				"artists": [
+					{
+						"external_urls": {
+							"spotify": "https://open.spotify.com/artist/2EpNqFMVXOEGaliyKnZzDt"
+						},
+						"href": "https://api.spotify.com/v1/artists/2EpNqFMVXOEGaliyKnZzDt",
+						"id": "2EpNqFMVXOEGaliyKnZzDt",
+						"name": "Hunter/Game",
+						"type": "artist",
+						"uri": "spotify:artist:2EpNqFMVXOEGaliyKnZzDt"
+					},
+					{
+						"external_urls": {
+							"spotify": "https://open.spotify.com/artist/7G5LXo0b0pFlVzgWNGOngl"
+						},
+						"href": "https://api.spotify.com/v1/artists/7G5LXo0b0pFlVzgWNGOngl",
+						"id": "7G5LXo0b0pFlVzgWNGOngl",
+						"name": "Hollt",
+						"type": "artist",
+						"uri": "spotify:artist:7G5LXo0b0pFlVzgWNGOngl"
+					}
+				],
+				"tracks": {
+					"href": "https://api.spotify.com/v1/albums/5al91xGt2Nnp7dTTtUsjAv/tracks?offset=0&limit=50",
+					"limit": 50,
+					"next": null,
+					"offset": 0,
+					"previous": null,
+					"total": 2,
+					"items": [
+						{
+							"artists": [
+								{
+									"external_urls": {
+										"spotify": "https://open.spotify.com/artist/2EpNqFMVXOEGaliyKnZzDt"
+									},
+									"href": "https://api.spotify.com/v1/artists/2EpNqFMVXOEGaliyKnZzDt",
+									"id": "2EpNqFMVXOEGaliyKnZzDt",
+									"name": "Hunter/Game",
+									"type": "artist",
+									"uri": "spotify:artist:2EpNqFMVXOEGaliyKnZzDt"
+								},
+								{
+									"external_urls": {
+										"spotify": "https://open.spotify.com/artist/7G5LXo0b0pFlVzgWNGOngl"
+									},
+									"href": "https://api.spotify.com/v1/artists/7G5LXo0b0pFlVzgWNGOngl",
+									"id": "7G5LXo0b0pFlVzgWNGOngl",
+									"name": "Hollt",
+									"type": "artist",
+									"uri": "spotify:artist:7G5LXo0b0pFlVzgWNGOngl"
+								}
+							],
+							"disc_number": 1,
+							"duration_ms": 358709,
+							"explicit": false,
+							"external_urls": {
+								"spotify": "https://open.spotify.com/track/5r0DosrDfrEol5ZruY5iLf"
+							},
+							"href": "https://api.spotify.com/v1/tracks/5r0DosrDfrEol5ZruY5iLf",
+							"id": "5r0DosrDfrEol5ZruY5iLf",
+							"name": "Closure",
+							"track_number": 1,
+							"type": "track",
+							"uri": "spotify:track:5r0DosrDfrEol5ZruY5iLf",
+							"is_local": false
+						},
+						{
+							"artists": [
+								{
+									"external_urls": {
+										"spotify": "https://open.spotify.com/artist/2EpNqFMVXOEGaliyKnZzDt"
+									},
+									"href": "https://api.spotify.com/v1/artists/2EpNqFMVXOEGaliyKnZzDt",
+									"id": "2EpNqFMVXOEGaliyKnZzDt",
+									"name": "Hunter/Game",
+									"type": "artist",
+									"uri": "spotify:artist:2EpNqFMVXOEGaliyKnZzDt"
+								},
+								{
+									"external_urls": {
+										"spotify": "https://open.spotify.com/artist/7G5LXo0b0pFlVzgWNGOngl"
+									},
+									"href": "https://api.spotify.com/v1/artists/7G5LXo0b0pFlVzgWNGOngl",
+									"id": "7G5LXo0b0pFlVzgWNGOngl",
+									"name": "Hollt",
+									"type": "artist",
+									"uri": "spotify:artist:7G5LXo0b0pFlVzgWNGOngl"
+								}
+							],
+							"disc_number": 1,
+							"duration_ms": 386599,
+							"explicit": false,
+							"external_urls": {
+								"spotify": "https://open.spotify.com/track/1E1aVXD6LUwDXZ1vCz8w7b"
+							},
+							"href": "https://api.spotify.com/v1/tracks/1E1aVXD6LUwDXZ1vCz8w7b",
+							"id": "1E1aVXD6LUwDXZ1vCz8w7b",
+							"name": "Act Of Faith",
+							"track_number": 2,
+							"type": "track",
+							"uri": "spotify:track:1E1aVXD6LUwDXZ1vCz8w7b",
+							"is_local": false
+						}
+					]
+				},
+				"copyrights": [
+					{
+						"text": "2023 Radikon",
+						"type": "C"
+					},
+					{
+						"text": "2023 Radikon",
+						"type": "P"
+					}
+				],
+				"external_ids": {
+					"upc": "4251906601228"
+				},
+				"genres": []
+			}
+		]
+	},
+	"previousId": "25"
+}

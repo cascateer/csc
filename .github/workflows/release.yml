@@ -22,7 +22,7 @@ jobs:
           registry-url: https://registry.npmjs.org/ # makes the action set up npm authentication
 
       - name: Install Dependencies
-        run: npm install --frozen-lockfile
+        run: npm install
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets

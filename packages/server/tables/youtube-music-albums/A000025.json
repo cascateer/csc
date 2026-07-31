@@ -1,0 +1,116 @@
+{
+	"id": "25",
+	"type": "insert",
+	"payload": {
+		"records": [
+			{
+				"type": "ALBUM",
+				"albumId": "MPREb_ATAZpyTw2hf",
+				"name": "Closure",
+				"playlistId": "OLAK5uy_nnf_w4GekfeUz1l39KwJD7hCZYI1SBTJo",
+				"artist": {
+					"artistId": "UCic7hSoeXQJk8trvYRRqDdg",
+					"name": "Hunter/Game"
+				},
+				"year": 2023,
+				"thumbnails": [
+					{
+						"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w60-h60-l90-rj",
+						"width": 60,
+						"height": 60
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w120-h120-l90-rj",
+						"width": 120,
+						"height": 120
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w226-h226-l90-rj",
+						"width": 226,
+						"height": 226
+					},
+					{
+						"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w544-h544-l90-rj",
+						"width": 544,
+						"height": 544
+					}
+				],
+				"songs": [
+					{
+						"type": "SONG",
+						"videoId": "QikgGWZlVCg",
+						"name": "Closure",
+						"artist": {
+							"artistId": "UCic7hSoeXQJk8trvYRRqDdg",
+							"name": "Hunter/Game"
+						},
+						"album": {
+							"albumId": "MPREb_ATAZpyTw2hf",
+							"name": "Closure"
+						},
+						"duration": 359,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					},
+					{
+						"type": "SONG",
+						"videoId": "GKQ1-mB3yd4",
+						"name": "Act Of Faith",
+						"artist": {
+							"artistId": "UCic7hSoeXQJk8trvYRRqDdg",
+							"name": "Hunter/Game"
+						},
+						"album": {
+							"albumId": "MPREb_ATAZpyTw2hf",
+							"name": "Closure"
+						},
+						"duration": 387,
+						"thumbnails": [
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w60-h60-l90-rj",
+								"width": 60,
+								"height": 60
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w120-h120-l90-rj",
+								"width": 120,
+								"height": 120
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w226-h226-l90-rj",
+								"width": 226,
+								"height": 226
+							},
+							{
+								"url": "https://yt3.googleusercontent.com/AGlKiU_xt_HKfPq_KgqOk-SXusP-YTAihuQlNm-Ph69vVlbzwOp_bATposeME1NbgiFy8eFE0SxjDO-PCg=w544-h544-l90-rj",
+								"width": 544,
+								"height": 544
+							}
+						]
+					}
+				]
+			}
+		]
+	},
+	"previousId": "24"
+}
