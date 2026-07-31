@@ -1,5 +1,11 @@
 # @cascateer/lib
 
+## 1.0.106
+
+### Patch Changes
+
+- cf8f3df: test 3
+
 ## 1.0.105
 
 ### Patch Changes
