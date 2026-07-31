@@ -15,9 +15,6 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v6
-
       - name: Setup Node.js 26
         uses: actions/setup-node@v6
         with:
@@ -25,13 +22,13 @@ jobs:
           registry-url: https://registry.npmjs.org/ # makes the action set up npm authentication
 
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm install --frozen-lockfile
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
           # This expects you to have a script called release which does a build for your packages and calls changeset publish
-          publish-script: pnpm release
+          publish-script: npm release
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
