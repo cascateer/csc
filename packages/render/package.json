@@ -30,6 +30,7 @@
     "redis": "^6.1.0"
   },
   "devDependencies": {
+    "@cascateer/lib": "*",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/express-session": "^1.19.0",
