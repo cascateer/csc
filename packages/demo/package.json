@@ -6,7 +6,8 @@
     "url": "git+https://github.com/cascateer/demo.git"
   },
   "scripts": {
-    "dev": "tsx scripts/dev.ts"
+    "dev": "tsx scripts/dev.ts",
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.24",

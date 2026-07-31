@@ -46,6 +46,24 @@
 			{
 				"youtubeMusicId": "MPREb_vGZmA95flvv",
 				"spotifyId": "4upJm6GdUGCKUkVIzJIzb3"
+			},
+			{
+				"youtubeMusicId": "MPREb_xASvKbDfgo8",
+				"spotifyId": "6spo7M0HqW3q0UZVUrcdYF",
+				"spotifyIteratee": "${${$.name/(?:- (.*); (.*))$/($1) ($2)/}/(?:- (.*))$/($1)/}",
+				"youtubeMusicIteratee": "${${$.name/(?: \\(([^\\)]*)\\) \\[([^\\]]*)\\]( \\([^\\)]*; [^\\)]*\\))?)$/ ($1) ($2)/}/(?: \\[([^\\]]*)\\] \\[([^\\]]*)\\]( \\([^\\)]*; [^\\)]*\\))?)$/ ($1) ($2)/}"
+			},
+			{
+				"youtubeMusicId": "MPREb_Vm6WIiztBpB",
+				"spotifyId": "7hqwHciaHozB8o4vC4szId",
+				"youtubeMusicIteratee": "${${$.name/(?: \\(([^\\)]*)\\) \\[([^\\]]*)\\]( \\([^\\)]*; [^\\)]*\\))?)$/ ($1) ($2)/}/(?: \\[([^\\]]*)\\] \\[([^\\]]*)\\]( \\([^\\)]*; [^\\)]*\\))?)$/ ($1) ($2)/}",
+				"spotifyIteratee": "${${$.name/(?:- (.*); (.*))$/($1) ($2)/}/(?:- (.*))$/($1)/}",
+				"youtubeIteratee": "${${$.snippet.description/^(?:Provided to YouTube by Rhino\\n\\n)(.*)( ·[\\s\\S]*)$/$1/m}/(?:\\[(Live at Palais Des Sports, Paris, 5\\\\/7\\\\/1975)\\] \\[(Jakko Jakszyk Stereo Mix)\\]\\))$/($1) ($2)/}"
+			},
+			{
+				"youtubeMusicId": "MPREb_ptmy2ShNLbx",
+				"spotifyId": "4xOhK9LXV4Kz4VI1N7lOSO",
+				"spotifyIteratee": "${$.name/(?:- (.*))$/($1)/}"
 			}
 		]
 	}

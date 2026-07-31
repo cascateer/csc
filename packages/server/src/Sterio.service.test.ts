@@ -27,8 +27,8 @@ test("KeyGenerator", () => {
       items,
     },
     {
-      uid: "${id}",
-      name: "${name}",
+      uid: "${$.id}",
+      name: "${$.name}",
     },
   );
 

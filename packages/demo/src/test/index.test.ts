@@ -1,5 +1,5 @@
+import { evaluate } from "@cascateer/core/test";
 import { expect, test } from "vitest";
-import { evaluate } from "../../../core/src/test/";
 
 test("sample1", async () => {
   expect(

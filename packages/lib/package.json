@@ -3,8 +3,8 @@
   "version": "1.0.103",
   "type": "module",
   "scripts": {
-    "test": "vitest",
     "lint": "eslint",
+    "test": "vitest",
     "build": "tsup"
   },
   "tsup": {
