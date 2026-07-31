@@ -14,5 +14,5 @@ export const evaluate = <T>(
     await page.goto(`http://${VITE_HOST}:${VITE_PORT}/test/?sample=${sample}`);
     await page.locator("#root").waitHandle().then(callback).then(resolve);
 
-    browser.close();
+    return browser.close();
   });
