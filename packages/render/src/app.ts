@@ -1,9 +1,9 @@
+import { envConfig } from "@cascateer/lib";
 import { RedisStore } from "connect-redis";
 import cors from "cors";
 import express, { json } from "express";
 import session from "express-session";
 import { createClient } from "redis";
-import { envConfig } from "../../../lib/src/envConfig";
 
 const { REDIS_URL } = envConfig();
 
