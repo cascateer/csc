@@ -20,15 +20,6 @@
     ],
     "dts": true
   },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --ignore-pattern \"**/*.ts\"",
-      "prettier --write --ignore-unknown"
-    ],
-    "!(*.js|*.ts)": [
-      "prettier --write --ignore-unknown"
-    ]
-  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
