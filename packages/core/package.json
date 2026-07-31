@@ -3,7 +3,6 @@
   "version": "2.4.102",
   "type": "module",
   "scripts": {
-    "test": "vitest",
     "build": "tsup"
   },
   "tsup": {
@@ -53,8 +52,7 @@
     "@types/object-hash": "^3.0.6",
     "@types/react": "^19.2.17",
     "tsup": "^8.5.1",
-    "typescript": "^7.0.2",
-    "vitest": "^4.1.10"
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "@cascateer/lib": "*",
