@@ -1,6 +1,6 @@
+import { envConfig } from "@cascateer/lib";
 import { readFileSync } from "fs";
 import { createServer } from "https";
-import { envConfig } from "../../../lib/src/envConfig";
 import app from "./app";
 
 const { NODE_ENV, PORT, HOST } = envConfig();
