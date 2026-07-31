@@ -15,7 +15,7 @@
     "./api": "./src/api/index.ts"
   },
   "dependencies": {
-    "cascateer/lib": "*",
+    "@cascateer/lib": "*",
     "@inquirer/prompts": "^8.5.2",
     "cors": "^2.8.6",
     "ejs": "^6.0.1",
