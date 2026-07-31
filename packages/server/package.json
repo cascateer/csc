@@ -2,10 +2,6 @@
   "name": "@cascateer/server",
   "version": "1.0.41",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cascateer/server.git"
-  },
   "scripts": {
     "semver-patch": "npm version patch && git push origin main --tags",
     "update": "npm cache clean --force && npx ncu -u --format time && npm i && npm run serve",

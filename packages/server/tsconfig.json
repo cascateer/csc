@@ -10,12 +10,7 @@
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
     "experimentalDecorators": true,
-    "resolveJsonModule": true,
-
-    "paths": {
-      "@cascateer/lib": ["../lib/src"],
-      "@cascateer/lib/*": ["../lib/src/*"]
-    }
+    "resolveJsonModule": true
   },
   "exclude": ["api"]
 }

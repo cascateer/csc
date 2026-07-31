@@ -3,10 +3,6 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cascateer/render.git"
-  },
   "main": "./build/main.js",
   "scripts": {
     "build": "tsup",

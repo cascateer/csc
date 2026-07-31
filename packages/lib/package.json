@@ -62,7 +62,7 @@
     "uuid": "^14.0.1"
   },
   "devDependencies": {
-    "@cascateer/eslint-config": "^0.0.0",
+    "@cascateer/eslint-config": "*",
     "@types/lodash": "^4.17.24",
     "@types/mime-types": "^3.0.1",
     "@types/node": "^26.1.2",
