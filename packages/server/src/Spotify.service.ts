@@ -4,7 +4,7 @@ import { LazyPromise } from "@cascateer/lib/promise";
 import { exec } from "child_process";
 import { readFile, writeFile } from "fs/promises";
 import { StatusCodes } from "http-status-codes";
-import { maxBy, property, thru } from "lodash";
+import { isObject, maxBy, property, thru } from "lodash";
 import { Ora } from "ora";
 import { firstValueFrom, Subject, tap, timeout, UnaryFunction } from "rxjs";
 import SpotifyWebApi from "spotify-web-api-node";
@@ -17,7 +17,7 @@ const {
   SPOTIFY_CLIENT_ID,
   SPOTIFY_CLIENT_SECRET,
   SPOTIFY_REDIRECT_URI,
-  SPOTIFY_GRANT_PATH,
+  SPOTIFY_GRANT_PATH = "spotify-grant.json",
 } = envConfig();
 
 export class SpotifyService {
@@ -73,8 +73,8 @@ export class SpotifyService {
   }
 
   private async refreshAccessToken() {
-    return new Promise<SpotifyWebApi>((resolve) =>
-      this.chain((api) =>
+    return new Promise<SpotifyWebApi>((resolve) => {
+      void this.chain((api) =>
         api
           .refreshAccessToken()
           .then(async ({ body: grant }) => {
@@ -91,12 +91,12 @@ export class SpotifyService {
           .catch((error) => {
             console.log(error);
 
-            this.codeGrantAuthorization().then(resolve);
+            void this.codeGrantAuthorization().then(resolve);
 
             return api;
           }),
-      ),
-    );
+      );
+    });
   }
 
   private async codeGrantAuthorization(): Promise<SpotifyWebApi> {
@@ -133,17 +133,21 @@ export class SpotifyService {
   private async request<T>(
     predicate: UnaryFunction<SpotifyWebApi, Promise<T>>,
   ): Promise<T> {
-    return new Promise<T>((resolve) =>
-      this.chain((api) =>
+    return new Promise<T>((resolve) => {
+      void this.chain((api) =>
         predicate(api)
           .then(resolve)
           .catch((error) => {
-            if (error.statusCode === StatusCodes.UNAUTHORIZED) {
-              api.getRefreshToken() != null
+            if (
+              isObject(error) &&
+              "statusCode" in error &&
+              error.statusCode === StatusCodes.UNAUTHORIZED
+            ) {
+              void (api.getRefreshToken() != null
                 ? this.refreshAccessToken()
-                : this.codeGrantAuthorization();
+                : this.codeGrantAuthorization());
 
-              this.request(predicate).then(resolve);
+              void this.request(predicate).then(resolve);
 
               return;
             }
@@ -151,8 +155,8 @@ export class SpotifyService {
             throw error;
           })
           .then(() => api),
-      ),
-    );
+      );
+    });
   }
 
   private async getAlbums(ids: string[]): Promise<SpotifyAlbum[]> {

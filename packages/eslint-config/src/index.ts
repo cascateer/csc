@@ -34,5 +34,6 @@ export const config: ConfigWithExtends = {
     "no-useless-rename": "warn",
     "rxjs/suffix-subjects": "warn",
     "rxjs/finnish": "warn",
+    "@typescript-eslint/no-floating-promises": ["error", { ignoreVoid: true }],
   },
 };
