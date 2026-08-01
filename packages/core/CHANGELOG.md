@@ -1,5 +1,11 @@
 # @cascateer/core
 
+## 2.4.105
+
+### Patch Changes
+
+- 198b673: exports fix
+
 ## 2.4.104
 
 ### Patch Changes
