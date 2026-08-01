@@ -1,5 +1,11 @@
 # @cascateer/core
 
+## 2.4.107
+
+### Patch Changes
+
+- ee3f362: log
+
 ## 2.4.106
 
 ### Patch Changes
