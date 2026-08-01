@@ -1,5 +1,11 @@
 # @cascateer/core
 
+## 2.4.108
+
+### Patch Changes
+
+- 28475c8: fs allow fix?
+
 ## 2.4.107
 
 ### Patch Changes
