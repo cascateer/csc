@@ -106,7 +106,7 @@ export const multicast = <Seed>(key: string, seed: Seed): MulticastSubject =>
       })),
       concatMap(async (message) => message({ key, id: v4() })),
       exchangeMessages<MulticastHostMessage, MulticastClientMessage>(
-        new SharedWorker(new URL("../multicast.js", import.meta.url), {
+        new SharedWorker(new URL("./multicast.js", import.meta.url), {
           type: "module",
         }).port,
       ),
