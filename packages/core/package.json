@@ -8,11 +8,11 @@
   "tsup": {
     "entry": [
       "src/index.ts",
-      "src/jsx-runtime/index.ts",
-      "src/jsx-dev-runtime/index.ts",
+      "src/jsx-runtime.ts",
+      "src/jsx-dev-runtime.ts",
       "src/operators/index.ts",
       "src/test/index.ts",
-      "src/vite/index.ts"
+      "src/vite.ts"
     ],
     "format": [
       "esm"
