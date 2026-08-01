@@ -4,6 +4,8 @@ import sassDts from "vite-plugin-sass-dts";
 export const createDevServer = async () => {
   const { VITE_HOST, VITE_PORT } = loadEnv("development", process.cwd());
 
+  console.log(searchForWorkspaceRoot(process.cwd()));
+
   const server = await createServer({
     plugins: [
       sassDts({
@@ -31,7 +33,7 @@ export const createDevServer = async () => {
       fs: {
         allow: [
           searchForWorkspaceRoot(process.cwd()),
-          "../core/src/multicast.ts",
+          "../core/src/multicast.js",
         ],
       },
     },
