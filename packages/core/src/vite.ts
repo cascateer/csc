@@ -33,7 +33,7 @@ export const createDevServer = async () => {
       fs: {
         allow: [
           searchForWorkspaceRoot(process.cwd()),
-          "../core/src/multicast.js",
+          "../../node_modules/@cascateer/core/dist/multicast.js",
         ],
       },
     },
