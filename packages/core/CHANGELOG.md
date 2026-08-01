@@ -1,5 +1,11 @@
 # @cascateer/core
 
+## 2.4.106
+
+### Patch Changes
+
+- 361a8a2: multicast fix 1
+
 ## 2.4.105
 
 ### Patch Changes
