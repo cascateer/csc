@@ -10,6 +10,7 @@
       "src/index.ts",
       "src/jsx-runtime.ts",
       "src/jsx-dev-runtime.ts",
+      "src/multicast.ts",
       "src/operators/index.ts",
       "src/test/index.ts",
       "src/vite.ts"
