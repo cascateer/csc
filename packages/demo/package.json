@@ -13,7 +13,7 @@
     "@types/three": "^0.185.1",
     "@vitest/coverage-v8": "^4.1.10",
     "puppeteer": "^25.4.0",
-    "typescript": "~6.0.2",
+    "typescript": "~7.0.2",
     "vite": "^8.2.0",
     "vitest": "^4.1.10"
   },
@@ -26,5 +26,8 @@
     "lodash": "^4.18.1",
     "rxjs": "^7.8.2",
     "three": "^0.185.1"
+  },
+  "optionalDependencies": {
+    "@typescript/typescript-linux-x64": "^7.0.0"
   }
 }
