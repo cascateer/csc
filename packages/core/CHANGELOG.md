@@ -1,5 +1,11 @@
 # @cascateer/core
 
+## 2.4.110
+
+### Patch Changes
+
+- 4711f7a: fs allow removed
+
 ## 2.4.109
 
 ### Patch Changes
