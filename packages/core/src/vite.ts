@@ -1,10 +1,8 @@
-import { createServer, loadEnv, searchForWorkspaceRoot } from "vite";
+import { createServer, loadEnv } from "vite";
 import sassDts from "vite-plugin-sass-dts";
 
 export const createDevServer = async () => {
   const { VITE_HOST, VITE_PORT } = loadEnv("development", process.cwd());
-
-  console.log(searchForWorkspaceRoot(process.cwd()));
 
   const server = await createServer({
     plugins: [
@@ -30,12 +28,6 @@ export const createDevServer = async () => {
     server: {
       host: VITE_HOST,
       port: VITE_PORT != null ? +VITE_PORT : void 0,
-      fs: {
-        allow: [
-          searchForWorkspaceRoot(process.cwd()),
-          "../../node_modules/@cascateer/core/dist/multicast.js",
-        ],
-      },
     },
   });
 
