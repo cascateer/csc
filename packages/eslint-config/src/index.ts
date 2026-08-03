@@ -12,9 +12,7 @@ export const config: ConfigWithExtends = {
     {
       languageOptions: {
         parserOptions: {
-          projectService: {
-            allowDefaultProject: ["../../core/tsdown.config.ts"],
-          },
+          projectService: true,
           tsconfigRootDir: import.meta.dirname,
         },
       },
