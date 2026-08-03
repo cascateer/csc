@@ -13,5 +13,6 @@
     "composite": true,
     "declaration": true,
     "declarationMap": true
-  }
+  },
+  "include": ["./tsdown.config.ts", "./src"]
 }

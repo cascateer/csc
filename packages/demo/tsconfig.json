@@ -19,5 +19,5 @@
     "jsxImportSource": "@cascateer/core"
   },
   "references": [{ "path": "../core" }, { "path": "../lib" }],
-  "include": ["src", "test"]
+  "include": ["./src", "./test"]
 }
