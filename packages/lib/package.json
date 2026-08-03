@@ -2,20 +2,44 @@
   "name": "@cascateer/lib",
   "version": "1.0.110",
   "type": "module",
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
-  "exports": {
-    ".": "./dist/index.mjs",
-    "./database": "./dist/database/index.mjs",
-    "./math": "./dist/math/index.mjs",
-    "./observable": "./dist/observable/index.mjs",
-    "./promise": "./dist/promise/index.mjs",
-    "./package.json": "./package.json"
-  },
   "scripts": {
     "test": "vitest",
-    "build": "tsdown"
+    "build": "tsup"
+  },
+  "tsup": {
+    "entry": [
+      "./src/index.ts",
+      "./src/database/index.ts",
+      "./src/math/index.ts",
+      "./src/observable/index.ts",
+      "./src/promise/index.ts"
+    ],
+    "format": [
+      "esm"
+    ],
+    "clean": true
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./database": {
+      "types": "./src/database/index.ts",
+      "default": "./dist/database/index.js"
+    },
+    "./math": {
+      "types": "./src/math/index.ts",
+      "default": "./dist/math/index.js"
+    },
+    "./observable": {
+      "types": "./src/observable/index.ts",
+      "default": "./dist/observable/index.js"
+    },
+    "./promise": {
+      "types": "./src/promise/index.ts",
+      "default": "./dist/promise/index.js"
+    }
   },
   "dependencies": {
     "dotenv": "^17.4.2",
@@ -33,7 +57,7 @@
     "@types/mime-types": "^3.0.1",
     "@types/node": "^26.1.2",
     "@types/object-hash": "^3.0.6",
-    "tsdown": "^0.22.14",
+    "tsup": "^8.5.1",
     "vitest": "^4.1.10"
   },
   "files": [

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "tsx scripts/dev.ts",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "test-ui": "vitest"
   },
   "devDependencies": {

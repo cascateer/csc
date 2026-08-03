@@ -8,7 +8,9 @@
     "strict": true,
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
-    "ignoreDeprecations": "6.0"
+    "ignoreDeprecations": "6.0",
+    "composite": true,
+    "declaration": true
   },
-  "files": ["./tsdown.config.ts", "./src/index.ts"]
+  "files": ["./src/index.ts"]
 }

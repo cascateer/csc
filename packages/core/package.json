@@ -3,20 +3,48 @@
   "version": "2.4.110",
   "type": "module",
   "scripts": {
-    "build": "tsdown"
+    "build": "tsup"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
+  "tsup": {
+    "entry": [
+      "./src/index.ts",
+      "./src/jsx-runtime.ts",
+      "./src/jsx-dev-runtime.ts",
+      "./src/multicast.ts",
+      "./src/operators/index.ts",
+      "./src/test/index.ts",
+      "./src/vite.ts"
+    ],
+    "format": [
+      "esm"
+    ],
+    "clean": true
+  },
   "exports": {
-    ".": "./dist/index.mjs",
-    "./jsx-dev-runtime": "./dist/jsx-dev-runtime.mjs",
-    "./jsx-runtime": "./dist/jsx-runtime.mjs",
-    "./multicast": "./dist/multicast.mjs",
-    "./operators": "./dist/operators/index.mjs",
-    "./test": "./dist/test/index.mjs",
-    "./vite": "./dist/vite.mjs",
-    "./package.json": "./package.json"
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./jsx-runtime": {
+      "types": "./src/jsx-runtime.ts",
+      "default": "./dist/jsx-runtime.js"
+    },
+    "./jsx-dev-runtime": {
+      "types": "./src/jsx-dev-runtime.ts",
+      "default": "./dist/jsx-dev-runtime.js"
+    },
+    "./operators": {
+      "types": "./src/operators/index.ts",
+      "default": "./dist/operators.js"
+    },
+    "./test": {
+      "types": "./src/test/index.ts",
+      "default": "./dist/test.js"
+    },
+    "./vite": {
+      "types": "./src/vite.ts",
+      "default": "./dist/vite.js"
+    }
   },
   "devDependencies": {
     "@cascateer/eslint-config": "*",
@@ -24,7 +52,7 @@
     "@types/node": "^26.1.2",
     "@types/object-hash": "^3.0.6",
     "@types/react": "^19.2.17",
-    "tsdown": "^0.22.14",
+    "tsup": "^8.5.1",
     "typescript": "^7.0.2"
   },
   "dependencies": {

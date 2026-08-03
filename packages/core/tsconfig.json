@@ -16,8 +16,6 @@
     "jsxImportSource": "@cascateer/core",
     "ignoreDeprecations": "6.0",
     "composite": true,
-    "declaration": true,
-    "declarationMap": true
-  },
-  "include": ["./tsdown.config.ts", "./src"]
+    "declaration": true
+  }
 }
