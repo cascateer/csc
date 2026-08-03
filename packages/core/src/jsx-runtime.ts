@@ -24,6 +24,7 @@ import {
   Observer,
 } from "rxjs";
 import { Primitive } from "utility-types";
+import { cssImports } from "./css";
 import { removeNodes } from "./dom";
 import { ObservableFragment } from "./fragment";
 
@@ -32,6 +33,7 @@ type DocumentEventListener<EventName extends keyof DocumentEventMap> =
   | Function1<DocumentEventMap[EventName], void>;
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     type Element = MaybeObservable<Node | Primitive>;
 
@@ -66,21 +68,24 @@ declare global {
 
     type Props = Record<string, unknown>;
 
-    interface Component<P extends Props = Props> {
-      (props: IntrinsicAttributes & P): Element;
-    }
+    type Component<P extends Props = Props> = (
+      props: IntrinsicAttributes & P,
+    ) => Element;
 
     export type CSSCustomPropertyDefinition = Omit<PropertyDefinition, "name">;
 
     export type CSSCustomIntegerPropertyDefinition =
       CSSCustomPropertyDefinition & { syntax: "<integer>" };
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     export interface CSSCustomPropertyDefinitions extends Record<
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
       keyof {},
       CSSCustomPropertyDefinition
     > {}
 
     type CSSCustomProperties = Record<
+      // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
       keyof CSSCustomPropertyDefinitions & `--${string}`,
       string | number
     >;
@@ -195,6 +200,7 @@ export const createElement = (
                   delete element.dataset[camelCaseName];
                 } else {
                   element.dataset[camelCase(name.replace(/^data/, ""))] =
+                    // eslint-disable-next-line @typescript-eslint/no-base-to-string
                     String(propertyValue);
                 }
               } else if (name === "disabled" && !propertyValue) {
@@ -220,18 +226,21 @@ export const createElement = (
   }
 };
 
-export const createRoot = (root: Node) => ({
-  render: (children?: JSX.Children) => (
-    removeNodes(...root.childNodes),
-    tap(root, (root) =>
-      root.appendChild(
-        createFragment({
-          children,
-        }),
-      ),
-    )
-  ),
-});
+export const createRoot = (root: Node) => (
+  void cssImports(),
+  {
+    render: (children?: JSX.Children) => (
+      removeNodes(...root.childNodes),
+      tap(root, (root) =>
+        root.appendChild(
+          createFragment({
+            children,
+          }),
+        ),
+      )
+    ),
+  }
+);
 
 export const Fragment = createFragment;
 export const jsx = createElement;
