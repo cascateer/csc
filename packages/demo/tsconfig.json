@@ -18,5 +18,6 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@cascateer/core"
   },
+  "references": [{ "path": "../core" }, { "path": "../lib" }],
   "include": ["src", "test"]
 }

@@ -9,7 +9,9 @@
     "strict": true,
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
+    "ignoreDeprecations": "6.0",
+    "composite": true,
     "declaration": true,
-    "ignoreDeprecations": "6.0"
+    "declarationMap": true
   }
 }

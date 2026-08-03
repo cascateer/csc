@@ -14,7 +14,10 @@
     "useDefineForClassFields": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@cascateer/core",
-    "ignoreDeprecations": "6.0"
+    "ignoreDeprecations": "6.0",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["src"]
 }

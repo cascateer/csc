@@ -32,7 +32,12 @@ export const cssImports = once(() =>
           (styleSheets.get(url) ?? []).concat(styleSheet ?? []),
       ),
     }))
-    .then((imports) => (console.info("Imported styles", imports), imports)),
+    .then(
+      (imports) => (
+        console.info("Imported styles", imports.styleSheets),
+        imports
+      ),
+    ),
 );
 
 export const cssStyleSheets = (modules: unknown[]) =>

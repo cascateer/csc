@@ -12,8 +12,10 @@ export const config: ConfigWithExtends = {
     {
       languageOptions: {
         parserOptions: {
-          projectService: true,
-          // FIXME tsconfigRootDir: __dirname, https://stackoverflow.com/questions/64383909/dirname-is-not-defined-error-in-node-js-14-version
+          projectService: {
+            allowDefaultProject: ["../../core/tsdown.config.ts"],
+          },
+          tsconfigRootDir: import.meta.dirname,
         },
       },
     },

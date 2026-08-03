@@ -1,19 +1,14 @@
 {
   "name": "@cascateer/eslint-config",
   "private": true,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "build": "tsup"
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": "./dist/index.cjs",
+    "./package.json": "./package.json"
   },
-  "tsup": {
-    "entry": [
-      "src/index.ts"
-    ],
-    "format": [
-      "cjs"
-    ],
-    "dts": true
+  "scripts": {
+    "build": "tsdown"
   },
   "dependencies": {
     "@eslint/js": "^10.0.1",
@@ -22,5 +17,11 @@
     "globals": "^17.7.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.62.1"
-  }
+  },
+  "devDependencies": {
+    "tsdown": "^0.22.14"
+  },
+  "files": [
+    "dist"
+  ]
 }
