@@ -6,7 +6,7 @@
     "url": "git+https://github.com/cascateer/csc.git"
   },
   "scripts": {
-    "dev": "turbo dev",
+    "dev": "turbo watch build dev",
     "lint": "turbo lint",
     "lint-staged": "lint-staged",
     "test": "turbo test",

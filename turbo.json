@@ -1,5 +1,8 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "futureFlags": {
+    "watchUsingTaskInputs": true
+  },
   "tasks": {
     "dev": {
       "dependsOn": ["^build"],
@@ -15,7 +18,8 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["./dist/**"],
+      "inputs": ["./src/**"]
     }
   }
 }
