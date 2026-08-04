@@ -1,5 +1,12 @@
 # @cascateer/core
 
+## 2.4.112
+
+### Patch Changes
+
+- a963caa: test
+- 45aaa2b: test 2
+
 ## 2.4.111
 
 ### Patch Changes
