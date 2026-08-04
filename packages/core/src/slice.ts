@@ -1,6 +1,7 @@
 import { LazyDictionary } from "@cascateer/lib";
 import { DerivedSignal } from "@cascateer/lib/observable";
 import { Dictionary, Function1 } from "lodash";
+import { defer, fromEvent, map, merge } from "rxjs";
 import { ApiAdapter, ApiEffect } from "./api";
 import { createComponent } from "./component";
 import { multicast, MulticastSubject } from "./operators";
@@ -8,25 +9,21 @@ import { asStoreEffects, StoreAdapter, StoreProvider } from "./store";
 import { TerminalAdapter, TerminalEffect, TerminalProvider } from "./terminal";
 import { Action } from "./types";
 
-interface SliceConfigStore<
+type StoreFactory<
   Data,
   StoreSignals extends Dictionary<DerivedSignal<Data, any>>,
   StoreActions extends Dictionary<Action<any, any>>,
-> extends Function1<
+> = Function1<
   {
     StoreProvider: {
+      // eslint-disable-next-line  @typescript-eslint/prefer-function-type
       new (): StoreProvider<Data>;
     };
   },
   StoreAdapter<Data, StoreSignals, StoreActions>
-> {}
+>;
 
-interface SliceConfigApi<
-  ApiEffects extends Dictionary<ApiEffect<any, any>>,
-  ApiActions extends Dictionary<Action<any, any>>,
-> extends ApiAdapter<ApiEffects, ApiActions> {}
-
-interface SliceConfigTerminal<
+type TerminalFactory<
   Data,
   StoreSignals extends Dictionary<DerivedSignal<Data, any>>,
   StoreActions extends Dictionary<Action<any, any>>,
@@ -34,9 +31,10 @@ interface SliceConfigTerminal<
   ApiActions extends Dictionary<Action<any, any>>,
   TerminalEffects extends Dictionary<TerminalEffect<any, any>>,
   TerminalActions extends Dictionary<Action<any, any>>,
-> extends Function1<
+> = Function1<
   {
     TerminalProvider: {
+      // eslint-disable-next-line  @typescript-eslint/prefer-function-type
       new (): TerminalProvider<
         Data,
         StoreSignals,
@@ -47,9 +45,9 @@ interface SliceConfigTerminal<
     };
   },
   TerminalAdapter<TerminalEffects, TerminalActions>
-> {}
+>;
 
-interface SliceConfigProps<
+interface SliceConfig<
   Data,
   StoreSignals extends Dictionary<DerivedSignal<Data, any>>,
   StoreActions extends Dictionary<Action<any, any>>,
@@ -60,9 +58,9 @@ interface SliceConfigProps<
 > {
   key: string;
   data: Data;
-  store: SliceConfigStore<Data, StoreSignals, StoreActions>;
-  api: SliceConfigApi<ApiEffects, ApiActions>;
-  terminal: SliceConfigTerminal<
+  store: StoreFactory<Data, StoreSignals, StoreActions>;
+  api: ApiAdapter<ApiEffects, ApiActions>;
+  terminal: TerminalFactory<
     Data,
     StoreSignals,
     StoreActions,
@@ -73,93 +71,64 @@ interface SliceConfigProps<
   >;
 }
 
-class SliceConfig<
-  Data,
-  StoreSignals extends Dictionary<DerivedSignal<Data, any>>,
-  StoreActions extends Dictionary<Action<any, any>>,
+export const createStore = <Data>(data: Data) => ({
+  with: <
+    StoreSignals extends Dictionary<DerivedSignal<Data, any>>,
+    StoreActions extends Dictionary<Action<any, any>>,
+  >(
+    store: StoreFactory<Data, StoreSignals, StoreActions>,
+  ) => ({ data, store }),
+});
+
+export const createApi = <
   ApiEffects extends Dictionary<ApiEffect<any, any>>,
   ApiActions extends Dictionary<Action<any, any>>,
-  TerminalEffects extends Dictionary<TerminalEffect<any, any>>,
-  TerminalActions extends Dictionary<Action<any, any>>,
-> {
-  slice: Slice<
-    Data,
-    StoreSignals,
-    StoreActions,
-    ApiEffects,
-    ApiActions,
-    TerminalEffects,
-    TerminalActions
-  >;
-
-  constructor(
-    config: SliceConfigProps<
-      Data,
-      StoreSignals,
-      StoreActions,
-      ApiEffects,
-      ApiActions,
-      TerminalEffects,
-      TerminalActions
-    >,
-  ) {
-    this.slice = new Slice(config);
-  }
-
-  createComponent(customElement?: string) {
-    return createComponent(this.slice.key, {
-      store: {
-        effects: asStoreEffects<Data, StoreSignals>(this.slice.store.signals),
-        actions: this.slice.store.actions,
-      },
-      api: {
-        effects: this.slice.api.effects,
-        actions: this.slice.api.actions,
-      },
-      terminal: {
-        effects: this.slice.terminal.effects,
-        actions: this.slice.terminal.actions,
-      },
-    })(customElement);
-  }
-}
+>(
+  api: ApiAdapter<ApiEffects, ApiActions>,
+) => ({ api });
 
 export const createSlice = (key: string) => ({
-  withData: <Data>(data: Data) => ({
-    withStore: <
-      StoreSignals extends Dictionary<DerivedSignal<Data, any>>,
-      StoreActions extends Dictionary<Action<any, any>>,
+  withStore: <
+    Data,
+    StoreSignals extends Dictionary<DerivedSignal<Data, any>>,
+    StoreActions extends Dictionary<Action<any, any>>,
+  >(
+    dataAndStore: Promise<{
+      default: {
+        data: Data;
+        store: StoreFactory<Data, StoreSignals, StoreActions>;
+      };
+    }>,
+  ) => ({
+    withApi: <
+      ApiEffects extends Dictionary<ApiEffect<any, any>>,
+      ApiActions extends Dictionary<Action<any, any>>,
     >(
-      store: SliceConfigStore<Data, StoreSignals, StoreActions>,
+      api: Promise<{
+        default: { api: ApiAdapter<ApiEffects, ApiActions> };
+      }>,
     ) => ({
-      withApi: <
-        ApiEffects extends Dictionary<ApiEffect<any, any>>,
-        ApiActions extends Dictionary<Action<any, any>>,
+      withTerminal: async <
+        TerminalEffects extends Dictionary<TerminalEffect<any, any>>,
+        TerminalActions extends Dictionary<Action<any, any>>,
       >(
-        api: SliceConfigApi<ApiEffects, ApiActions>,
-      ) => ({
-        withTerminal: <
-          TerminalEffects extends Dictionary<TerminalEffect<any, any>>,
-          TerminalActions extends Dictionary<Action<any, any>>,
-        >(
-          terminal: SliceConfigTerminal<
-            Data,
-            StoreSignals,
-            StoreActions,
-            ApiEffects,
-            ApiActions,
-            TerminalEffects,
-            TerminalActions
-          >,
-        ) =>
-          new SliceConfig({
-            key,
-            data,
-            store,
-            api,
-            terminal,
-          }),
-      }),
+        terminal: TerminalFactory<
+          Data,
+          StoreSignals,
+          StoreActions,
+          ApiEffects,
+          ApiActions,
+          TerminalEffects,
+          TerminalActions
+        >,
+      ) =>
+        new Slice({
+          key,
+          data: (await dataAndStore).default.data,
+          store: (await dataAndStore).default.store,
+          api: (await api).default.api,
+          terminal,
+        }),
     }),
   }),
 });
@@ -173,11 +142,11 @@ export class Slice<
   TerminalEffects extends Dictionary<TerminalEffect<any, any>>,
   TerminalActions extends Dictionary<Action<any, any>>,
 > {
-  public key: string;
-  public data: Data;
-  public store: StoreAdapter<Data, StoreSignals, StoreActions>;
-  public api: SliceConfigApi<ApiEffects, ApiActions>;
-  public terminal: TerminalAdapter<TerminalEffects, TerminalActions>;
+  private key: string;
+  private data: Data;
+  private store: StoreAdapter<Data, StoreSignals, StoreActions>;
+  private api: ApiAdapter<ApiEffects, ApiActions>;
+  private terminal: TerminalAdapter<TerminalEffects, TerminalActions>;
 
   actions: MulticastSubject;
 
@@ -187,7 +156,7 @@ export class Slice<
     store,
     api,
     terminal,
-  }: SliceConfigProps<
+  }: SliceConfig<
     Data,
     StoreSignals,
     StoreActions,
@@ -225,6 +194,40 @@ export class Slice<
           }
         })({ api, store: this.store }),
     });
+
+    merge(
+      defer(() => Promise.resolve(document.hasFocus())),
+      fromEvent(window, "focus").pipe(map(() => true)),
+      fromEvent(window, "blur").pipe(map(() => false)),
+    ).subscribe({
+      next: (hasFocus) => {
+        if (hasFocus) {
+          localStorage.setItem(`${this.key}.state`, JSON.stringify(this.data));
+        }
+
+        document.title = document.title.replace(
+          /^(~?)(.*)/,
+          `${hasFocus ? "~" : ""}$2`,
+        );
+      },
+    });
+  }
+
+  createComponent(customElement?: string) {
+    return createComponent(this.key, {
+      store: {
+        effects: asStoreEffects<Data, StoreSignals>(this.store.signals),
+        actions: this.store.actions,
+      },
+      api: {
+        effects: this.api.effects,
+        actions: this.api.actions,
+      },
+      terminal: {
+        effects: this.terminal.effects,
+        actions: this.terminal.actions,
+      },
+    })(customElement);
   }
 }
 
@@ -264,7 +267,7 @@ export class LazySliceAdapter<
         >(
           constructor: Function1<
             void,
-            SliceConfigProps<
+            SliceConfig<
               Data,
               StoreSignals,
               StoreActions,
@@ -299,6 +302,7 @@ export class LazySliceAdapter<
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export class SliceProvider extends LazySliceAdapter<{}> {
   constructor() {
     super(new LazyDictionary({}));

@@ -155,6 +155,7 @@ export class LazyStoreAdapter<
                           target,
                           predicate: target.retract(
                             predicate(
+                              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                               Serializable.parse(event.data.args ?? null),
                             ),
                           ),
@@ -191,6 +192,7 @@ export class LazyStoreAdapter<
 export class StoreProvider<Data> extends LazyStoreAdapter<
   Data,
   { data: DerivedSignal<Data> },
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   {}
 > {
   constructor({ actions }: { actions: MulticastSubject }) {
@@ -228,7 +230,7 @@ export class StoreProvider<Data> extends LazyStoreAdapter<
             .subscribe(transformActions),
       },
       new LazyDictionary({
-        data: new DerivedSignal({
+        data: new DerivedSignal<Data>({
           value: merge(seedActions, transformActions).pipe(
             tapOperator((action) => console.log(action)),
             reduce<MulticastAction<Data>, Data>(
