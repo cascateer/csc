@@ -1,5 +1,15 @@
 # @cascateer/core
 
+## 2.4.111
+
+### Patch Changes
+
+- bce27a8: tsup
+- 19f2a37: test
+- Updated dependencies [bce27a8]
+- Updated dependencies [19f2a37]
+  - @cascateer/lib@1.0.111
+
 ## 2.4.110
 
 ### Patch Changes
