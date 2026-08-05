@@ -63,6 +63,9 @@
     "utility-types": "^3.11.0",
     "uuid": "^14.0.1"
   },
+  "peerDependencies": {
+    "vite": "^8.2.0"
+  },
   "files": [
     "./dist"
   ]
