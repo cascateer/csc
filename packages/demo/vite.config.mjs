@@ -7,4 +7,8 @@ export default defineConfig({
       localsConvention: "camelCaseOnly",
     },
   },
+
+  build: {
+    minify: false,
+  },
 });

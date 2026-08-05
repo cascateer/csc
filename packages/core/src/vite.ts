@@ -11,13 +11,6 @@ export const createDevServer = async () => {
       }),
     ],
 
-    oxc: {
-      jsx: {
-        runtime: "automatic",
-        importSource: "@cascateer/core",
-      },
-    },
-
     css: {
       modules: {
         scopeBehaviour: "local",

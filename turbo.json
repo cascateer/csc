@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "futureFlags": {
-    "watchUsingTaskInputs": true
+    "watchUsingTaskInputs": false
   },
   "tasks": {
     "dev": {
