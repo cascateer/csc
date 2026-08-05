@@ -1,7 +1,7 @@
-import { keyMapBy, nonNullable, property } from "@cascateer/lib";
+import { keyMapBy, property } from "@cascateer/lib";
 import { isObject, isString, once } from "lodash";
 
-export const cssImports = once(() =>
+const cssImports = once(() =>
   Promise.all(
     [
       ...Object.entries(import.meta.glob("/**/*.*css")),
@@ -32,17 +32,20 @@ export const cssImports = once(() =>
           (styleSheets.get(url) ?? []).concat(styleSheet ?? []),
       ),
     }))
-    .then(
-      (imports) => (
-        console.info("Imported styles", imports.styleSheets),
-        imports
-      ),
-    ),
+    .then((imports) => (console.info("Imported styles", imports), imports)),
 );
 
 export const cssStyleSheets = (modules: unknown[]) =>
   cssImports().then(({ urls, styleSheets }) =>
-    modules.flatMap(
-      (module) => styleSheets.get(nonNullable(urls.get(module))) ?? [],
-    ),
+    modules.flatMap((module) => {
+      const url = urls.get(module);
+
+      if (url == null) {
+        console.warn(`Style ${url} of`, modules, `could not be resolved.`);
+
+        return [];
+      }
+
+      return styleSheets.get(url) ?? [];
+    }),
   );

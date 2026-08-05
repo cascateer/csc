@@ -24,7 +24,6 @@ import {
   Observer,
 } from "rxjs";
 import { Primitive } from "utility-types";
-import { cssImports } from "./css";
 import { removeNodes } from "./dom";
 import { ObservableFragment } from "./fragment";
 
@@ -226,21 +225,18 @@ export const createElement = (
   }
 };
 
-export const createRoot = (root: Node) => (
-  void cssImports(),
-  {
-    render: (children?: JSX.Children) => (
-      removeNodes(...root.childNodes),
-      tap(root, (root) =>
-        root.appendChild(
-          createFragment({
-            children,
-          }),
-        ),
-      )
-    ),
-  }
-);
+export const createRoot = (root: Node) => ({
+  render: (children?: JSX.Children) => (
+    removeNodes(...root.childNodes),
+    tap(root, (root) =>
+      root.appendChild(
+        createFragment({
+          children,
+        }),
+      ),
+    )
+  ),
+});
 
 export const Fragment = createFragment;
 export const jsx = createElement;

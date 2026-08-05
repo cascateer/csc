@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "tsx scripts/dev.ts",
     "build": "vite build",
-    "test-ui": "vitest"
+    "test-ui": "vitest",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.24",

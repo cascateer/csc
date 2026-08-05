@@ -1,4 +1,4 @@
-import { Function1, Function2, keyBy, tap } from "lodash";
+import { Function1, Function2, tap } from "lodash";
 
 export const keyMapBy = <T, K, V>(
   collection: T[],
@@ -10,5 +10,3 @@ export const keyMapBy = <T, K, V>(
       tap(map, (map) => map.set(keyIteratee(item), valueIteratee(item, map))),
     new Map<K, V>(),
   );
-
-keyBy;
