@@ -1,6 +1,8 @@
 :host {
   align-items: center;
   display: flex;
-  flex-direction: column;
-  height: 100vh;
+  inset: 0;
+  justify-content: center;
+  margin: auto;
+  position: absolute;
 }
