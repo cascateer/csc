@@ -1,1 +1,1 @@
-[Demo](cascateer.dev)
+[Demo](http://cascateer.dev)
