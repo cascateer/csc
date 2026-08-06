@@ -1,10 +1,11 @@
 import { lastValueFrom, map, of, ReplaySubject, toArray } from "rxjs";
 import { expect, test } from "vitest";
-import { ProxySubject } from "./ProxySubject";
+import { NextObservable } from "./NextObservable";
 
-test("ProxySubject", () => {
-  const squareNumber = new ProxySubject(new ReplaySubject<number>(), (target) =>
-    target.pipe(map((x) => x ** 2)),
+test("NextObservable", () => {
+  const squareNumber = new NextObservable(
+    new ReplaySubject<number>(),
+    (target) => target.pipe(map((x) => x ** 2)),
   );
 
   of(1, 2, 3, 4).subscribe(squareNumber);

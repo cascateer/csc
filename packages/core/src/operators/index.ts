@@ -7,6 +7,6 @@ export {
   type MulticastClientMessage,
   type MulticastConnectMessageData,
   type MulticastHostMessage,
-  type MulticastSubject,
+  type MulticastObservable,
 } from "./multicast";
 export { some } from "./some";

@@ -2,7 +2,7 @@ import { property } from "@cascateer/lib";
 import {
   exchangeMessages,
   flatMap,
-  ProxyReplaySubject,
+  NextObservable,
   reduce,
 } from "@cascateer/lib/observable";
 import { partition, tap, thru, uniqBy } from "lodash";
@@ -14,6 +14,7 @@ import {
   mergeAll,
   mergeMap,
   Observable,
+  ReplaySubject,
   scan,
   share,
 } from "rxjs";
@@ -29,6 +30,7 @@ import {
   MulticastConnectMessage,
 } from "./operators/multicast";
 
+// eslint-disable-next-line no-var
 declare var self: ServiceWorkerGlobalScope;
 
 declare global {
@@ -37,17 +39,18 @@ declare global {
   }
 }
 
-type InMessages = {
+interface InMessages {
   connect: MulticastConnectMessage;
   actions: MulticastActionMessage<any>[];
-};
+}
 
-type OutMessages = {
+interface OutMessages {
   actions: MulticastActionMessage<any>[];
   ports: Set<MessagePort>;
-};
+}
 
-const actions = new ProxyReplaySubject<Observable<InMessages>, OutMessages>(
+const actions = new NextObservable<Observable<InMessages>, OutMessages>(
+  new ReplaySubject(),
   (messages) =>
     messages.pipe(
       mergeAll(),

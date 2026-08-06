@@ -4,7 +4,7 @@ import { Dictionary, Function1 } from "lodash";
 import { defer, fromEvent, map, merge } from "rxjs";
 import { ApiAdapter, ApiEffect } from "./api";
 import { createComponent } from "./component";
-import { multicast, MulticastSubject } from "./operators";
+import { multicast, MulticastObservable } from "./operators";
 import { asStoreEffects, StoreAdapter, StoreProvider } from "./store";
 import { TerminalAdapter, TerminalEffect, TerminalProvider } from "./terminal";
 import { Action } from "./types";
@@ -148,7 +148,7 @@ export class Slice<
   private api: ApiAdapter<ApiEffects, ApiActions>;
   private terminal: TerminalAdapter<TerminalEffects, TerminalActions>;
 
-  actions: MulticastSubject;
+  actions$: MulticastObservable;
 
   constructor({
     key,
@@ -174,7 +174,7 @@ export class Slice<
             super(context);
           }
         })({
-        actions: (this.actions = multicast(key, data)),
+        actions$: (this.actions$ = multicast(key, data)),
       }),
     });
 

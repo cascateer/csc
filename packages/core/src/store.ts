@@ -14,7 +14,7 @@ import {
   shareReplay,
   tap as tapOperator,
 } from "rxjs";
-import { MulticastAction, MulticastSubject } from "./operators";
+import { MulticastAction, MulticastObservable } from "./operators";
 import {
   assertIsMulticastSeedActionMessage,
   isMulticastSeedActionMessage,
@@ -195,12 +195,12 @@ export class StoreProvider<Data> extends LazyStoreAdapter<
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   {}
 > {
-  constructor({ actions }: { actions: MulticastSubject }) {
+  constructor({ actions$ }: { actions$: MulticastObservable }) {
     const transformActions = new ReplaySubject<
       MulticastAction<Data, "transformAction">
     >();
     const seedActions: Observable<MulticastAction<Data, "seedAction">> =
-      actions.pipe(
+      actions$.pipe(
         flatMap((event) =>
           isMulticastSeedActionMessage(event)
             ? {
@@ -213,9 +213,9 @@ export class StoreProvider<Data> extends LazyStoreAdapter<
 
     super(
       {
-        share: (action) => actions.next(action),
+        share: (action) => actions$.next(action),
         parse: (key, handler) =>
-          actions
+          actions$
             .pipe(
               mergeMap(async (event) => {
                 if (
