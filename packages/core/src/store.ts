@@ -9,6 +9,7 @@ import { constant, Dictionary, Function1, mapValues, noop, tap } from "lodash";
 import {
   merge,
   mergeMap,
+  NextObserver,
   Observable,
   ReplaySubject,
   shareReplay,
@@ -195,11 +196,17 @@ export class StoreProvider<Data> extends LazyStoreAdapter<
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   {}
 > {
-  constructor({ actions$ }: { actions$: MulticastObservable }) {
-    const transformActions = new ReplaySubject<
+  constructor({
+    actions$,
+    dataObserver,
+  }: {
+    actions$: MulticastObservable;
+    dataObserver: NextObserver<Data>;
+  }) {
+    const transformActionSubject$ = new ReplaySubject<
       MulticastAction<Data, "transformAction">
     >();
-    const seedActions: Observable<MulticastAction<Data, "seedAction">> =
+    const seedAction$: Observable<MulticastAction<Data, "seedAction">> =
       actions$.pipe(
         flatMap((event) =>
           isMulticastSeedActionMessage(event)
@@ -227,12 +234,12 @@ export class StoreProvider<Data> extends LazyStoreAdapter<
               }),
               flatMap((action) => action ?? []),
             )
-            .subscribe(transformActions),
+            .subscribe(transformActionSubject$),
       },
       new LazyDictionary({
         data: new DerivedSignal<Data>({
-          value: merge(seedActions, transformActions).pipe(
-            tapOperator((action) => console.log(action)),
+          value: merge(seedAction$, transformActionSubject$).pipe(
+            tapOperator((action) => console.debug(action)),
             reduce<MulticastAction<Data>, Data>(
               (previousState, action, previousAction) => {
                 if (isMulticastSeedActionMessage(action)) {
@@ -254,6 +261,7 @@ export class StoreProvider<Data> extends LazyStoreAdapter<
               ),
             ),
             shareReplay(1),
+            tapOperator(dataObserver),
           ),
         }),
       }),

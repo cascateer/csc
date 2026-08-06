@@ -100,7 +100,13 @@ export const multicast = <Seed>(key: string, seed: Seed): MulticastObservable =>
         type: "connect",
         data: {
           key,
-          seed: JSON.stringify(seed),
+          seed: JSON.stringify(
+            (
+              (JSON.parse(localStorage.getItem(`${key}.state`) ?? "null") as {
+                data: Seed;
+              } | null) ?? { data: seed }
+            ).data,
+          ),
         },
       })),
       concatMap(async (message) => message({ key, id: v4() })),
