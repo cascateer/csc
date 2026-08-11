@@ -7,18 +7,22 @@ import {
 } from "@cascateer/lib/observable";
 import { constant, Dictionary, Function1, mapValues, noop, tap } from "lodash";
 import {
+  combineLatest,
+  defer,
+  fromEvent,
+  map,
   merge,
   mergeMap,
-  NextObserver,
   Observable,
   ReplaySubject,
   shareReplay,
   tap as tapOperator,
 } from "rxjs";
-import { MulticastAction, MulticastObservable } from "./operators";
+import { MulticastAction } from "./operators";
 import {
   assertIsMulticastSeedActionMessage,
   isMulticastSeedActionMessage,
+  multicast,
   MulticastBaseActionMessage,
   MulticastClientMessage,
   MulticastMessageConstructor,
@@ -72,20 +76,9 @@ export class LazyStoreAdapter<
   }
 
   constructor(
-    public transform: {
-      share: Function1<
-        MulticastMessageConstructor<MulticastClientMessage>,
-        void
-      >;
-      parse: (
-        key: Promise<string>,
-        handler: (
-          action: MulticastBaseActionMessage<any, "transformAction">,
-        ) => MulticastAction<Data, "transformAction">,
-      ) => void;
-    },
-    private lazySignals: LazyDictionary<DerivedSignal<Data, any>, Signals>,
-    private lazyActions: LazyDictionary<Action<any, any>, Actions>,
+    protected reducer: StoreReducer<Data>,
+    protected lazySignals: LazyDictionary<DerivedSignal<Data, any>, Signals>,
+    protected lazyActions: LazyDictionary<Action<any, any>, Actions>,
   ) {}
 
   provideEffects<MoreSignals extends Dictionary<DerivedSignal<Data, any>>>(
@@ -99,7 +92,7 @@ export class LazyStoreAdapter<
     >,
   ) {
     return new LazyStoreAdapter(
-      this.transform,
+      this.reducer,
       this.lazySignals.extend(
         (currentSignals) => () =>
           effects({
@@ -135,14 +128,14 @@ export class LazyStoreAdapter<
     >,
   ) {
     return new LazyStoreAdapter(
-      this.transform,
+      this.reducer,
       this.lazySignals,
       this.lazyActions.extend(
         () =>
           ({ property }) =>
             actions({
               action: (constructor) =>
-                property((key) =>
+                property((actionKey) =>
                   constructor(
                     mapValues(this.lazySignals.currentValue, (target) => ({
                       update: (predicate, config = {}) => {
@@ -151,7 +144,7 @@ export class LazyStoreAdapter<
                           Function1<Data, void>
                         >();
 
-                        this.transform.parse(key, (event) => ({
+                        this.reducer.subscribe(actionKey, (event) => ({
                           ...event,
                           target,
                           predicate: target.retract(
@@ -165,14 +158,14 @@ export class LazyStoreAdapter<
 
                         return (args) =>
                           new Promise<Data>((callback) =>
-                            this.transform.share(
+                            this.reducer.next(
                               async ({ id }) => (
                                 callbacks.set(id, callback),
                                 {
                                   id,
                                   type: "transformAction",
                                   data: {
-                                    key: await key,
+                                    key: await actionKey,
                                     args: JSON.stringify(args),
                                   },
                                   sameOrigin: config.sameOrigin,
@@ -190,23 +183,26 @@ export class LazyStoreAdapter<
   }
 }
 
-export class StoreProvider<Data> extends LazyStoreAdapter<
-  Data,
-  { data: DerivedSignal<Data> },
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  {}
-> {
-  constructor({
-    actions$,
-    dataObserver,
-  }: {
-    actions$: MulticastObservable;
-    dataObserver: NextObserver<Data>;
-  }) {
+export class StoreReducer<Data> {
+  value: Observable<Data>;
+
+  next: Function1<MulticastMessageConstructor<MulticastClientMessage>, void>;
+
+  subscribe: (
+    key: Promise<string>,
+    parse: (
+      action: MulticastBaseActionMessage<any, "transformAction">,
+    ) => MulticastAction<Data, "transformAction">,
+  ) => void;
+
+  constructor(key: string, data: Data) {
+    const actions$ = multicast(key, data);
+
     const transformActionSubject$ = new ReplaySubject<
       MulticastAction<Data, "transformAction">
     >();
-    const seedAction$: Observable<MulticastAction<Data, "seedAction">> =
+
+    const seedActions$: Observable<MulticastAction<Data, "seedAction">> =
       actions$.pipe(
         flatMap((event) =>
           isMulticastSeedActionMessage(event)
@@ -218,51 +214,89 @@ export class StoreProvider<Data> extends LazyStoreAdapter<
         ),
       );
 
-    super(
-      {
-        share: (action) => actions$.next(action),
-        parse: (key, handler) =>
-          actions$
-            .pipe(
-              mergeMap(async (event) => {
-                if (
-                  event.type === "transformAction" &&
-                  event.data.key === (await key)
-                ) {
-                  return handler(event);
-                }
-              }),
-              flatMap((action) => action ?? []),
-            )
-            .subscribe(transformActionSubject$),
+    this.next = (action) => actions$.next(action);
+
+    this.subscribe = (key, parse) =>
+      actions$
+        .pipe(
+          mergeMap(async (event) => {
+            if (
+              event.type === "transformAction" &&
+              event.data.key === (await key)
+            ) {
+              return parse(event);
+            }
+          }),
+          flatMap((action) => action ?? []),
+        )
+        .subscribe(transformActionSubject$);
+
+    this.value = merge(seedActions$, transformActionSubject$).pipe(
+      tapOperator((action) => console.debug(action)),
+      reduce<MulticastAction<Data>, Data>(
+        (previousState, action, previousAction) => {
+          if (isMulticastSeedActionMessage(action)) {
+            return action.predicate();
+          }
+
+          if (action.previousId !== previousAction?.id) {
+            throw new Error();
+          }
+
+          return tap(action.predicate(previousState), action.callback ?? noop);
+        },
+        (action) => (
+          assertIsMulticastSeedActionMessage(action),
+          action.predicate()
+        ),
+      ),
+      shareReplay(1),
+    );
+
+    combineLatest([
+      merge(
+        defer(() => Promise.resolve(document.hasFocus())),
+        fromEvent(window, "focus").pipe(map(() => true)),
+        fromEvent(window, "blur").pipe(map(() => false)),
+      ),
+      this.value,
+    ]).subscribe({
+      next: ([hasFocus, data]) => {
+        if (hasFocus) {
+          localStorage.setItem(`${key}.state`, JSON.stringify({ data }));
+        }
+
+        document.title = document.title.replace(
+          /^(~?)(.*)/,
+          `${hasFocus ? "~" : ""}$2`,
+        );
       },
+    });
+  }
+
+  get provider(): new () => StoreProvider<Data> {
+    const self = this;
+
+    return class extends StoreProvider<Data> {
+      constructor() {
+        super(self);
+      }
+    };
+  }
+}
+
+export class StoreProvider<Data> extends LazyStoreAdapter<
+  Data,
+  { data: DerivedSignal<Data> },
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  {}
+> {
+  constructor(protected reducer: StoreReducer<Data>) {
+    super(
+      reducer,
       new LazyDictionary({
         data: new DerivedSignal<Data>({
-          value: merge(seedAction$, transformActionSubject$).pipe(
-            tapOperator((action) => console.debug(action)),
-            reduce<MulticastAction<Data>, Data>(
-              (previousState, action, previousAction) => {
-                if (isMulticastSeedActionMessage(action)) {
-                  return action.predicate();
-                }
-
-                if (action.previousId !== previousAction?.id) {
-                  throw new Error();
-                }
-
-                return tap(
-                  action.predicate(previousState),
-                  action.callback ?? noop,
-                );
-              },
-              (action) => (
-                assertIsMulticastSeedActionMessage(action),
-                action.predicate()
-              ),
-            ),
-            shareReplay(1),
-            tapOperator(dataObserver),
-          ),
+          value: reducer.value,
         }),
       }),
       new LazyDictionary({}),

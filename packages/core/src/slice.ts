@@ -1,10 +1,13 @@
 import { DerivedSignal } from "@cascateer/lib/observable";
 import { Dictionary, Function1 } from "lodash";
-import { combineLatest, defer, fromEvent, map, merge, Subject } from "rxjs";
 import { ApiAdapter, ApiEffect } from "./api";
 import { createComponent } from "./component";
-import { multicast, MulticastObservable } from "./operators";
-import { asStoreEffects, StoreAdapter, StoreProvider } from "./store";
+import {
+  asStoreEffects,
+  StoreAdapter,
+  StoreProvider,
+  StoreReducer,
+} from "./store";
 import { TerminalAdapter, TerminalEffect, TerminalProvider } from "./terminal";
 import { Action } from "./types";
 
@@ -143,8 +146,6 @@ export class Slice<
   private api: ApiAdapter<ApiEffects, ApiActions>;
   private terminal: TerminalAdapter<TerminalEffects, TerminalActions>;
 
-  actions$: MulticastObservable;
-
   constructor(
     private key: string,
     {
@@ -162,20 +163,8 @@ export class Slice<
       TerminalActions
     >,
   ) {
-    const dataSubject$ = new Subject<Data>();
-
     this.store = store({
-      StoreProvider: ((context) =>
-        class extends StoreProvider<Data> {
-          constructor() {
-            super(context);
-          }
-        })({
-        actions$: (this.actions$ = multicast(key, data)),
-        dataObserver: {
-          next: (value: Data) => dataSubject$.next(value),
-        },
-      }),
+      StoreProvider: new StoreReducer(key, data).provider,
     });
 
     this.api = api;
@@ -193,26 +182,6 @@ export class Slice<
             super(context);
           }
         })({ api, store: this.store }),
-    });
-
-    combineLatest([
-      merge(
-        defer(() => Promise.resolve(document.hasFocus())),
-        fromEvent(window, "focus").pipe(map(() => true)),
-        fromEvent(window, "blur").pipe(map(() => false)),
-      ),
-      dataSubject$,
-    ]).subscribe({
-      next: ([hasFocus, data]) => {
-        if (hasFocus) {
-          localStorage.setItem(`${this.key}.state`, JSON.stringify({ data }));
-        }
-
-        document.title = document.title.replace(
-          /^(~?)(.*)/,
-          `${hasFocus ? "~" : ""}$2`,
-        );
-      },
     });
   }
 

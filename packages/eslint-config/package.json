@@ -28,6 +28,11 @@
   "devDependencies": {
     "tsup": "^8.5.1"
   },
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "eslint-config"
+  ],
   "files": [
     "./dist"
   ]

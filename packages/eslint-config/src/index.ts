@@ -37,5 +37,12 @@ export const config: ConfigWithExtends = {
     "@typescript-eslint/no-floating-promises": ["error", { ignoreVoid: true }],
     "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/no-this-alias": [
+      "error",
+      {
+        allowDestructuring: true,
+        allowedNames: ["self"],
+      },
+    ],
   },
 };
