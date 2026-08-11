@@ -202,17 +202,16 @@ export class StoreReducer<Data> {
       MulticastAction<Data, "transformAction">
     >();
 
-    const seedActions$: Observable<MulticastAction<Data, "seedAction">> =
-      actions$.pipe(
-        flatMap((event) =>
-          isMulticastSeedActionMessage(event)
-            ? {
-                ...event,
-                predicate: constant(Serializable.parse(event.data.seed)),
-              }
-            : [],
-        ),
-      );
+    const seedActions$ = actions$.pipe(
+      flatMap((event) =>
+        isMulticastSeedActionMessage(event)
+          ? {
+              ...event,
+              predicate: constant(Serializable.parse(event.data.seed)),
+            }
+          : [],
+      ),
+    );
 
     this.next = (action) => actions$.next(action);
 

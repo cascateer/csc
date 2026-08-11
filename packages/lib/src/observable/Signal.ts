@@ -1,4 +1,11 @@
-import { clone, Function1, identity, isEqual, memoize } from "lodash";
+import {
+  clone,
+  flowRight,
+  Function1,
+  identity,
+  isEqual,
+  memoize,
+} from "lodash";
 import { distinctUntilChanged, map, Observable } from "rxjs";
 import {
   asEnumerable,
@@ -45,7 +52,7 @@ export class Signal<D, T> extends ProxyObservable<T> {
     return new Signal({
       value: this.pipe(map(project), distinctUntilChanged()),
       enumerator,
-      retract: (transform) => this.retract(retract(transform)),
+      retract: flowRight(this.retract, retract),
     });
   }
 
@@ -97,10 +104,9 @@ export class Signal<D, T> extends ProxyObservable<T> {
       (transform) => (value) => {
         if (Array.isArray((value = clone(value)))) {
           value.reduce(
-            (property, item, index) => (
-              (item[key] = property[index]),
-              property
-            ),
+            (property, item, index) =>
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+              ((item[key] = property[index]), property),
             transform(value.map(property(key))),
           );
         }
