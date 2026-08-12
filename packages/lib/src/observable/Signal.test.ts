@@ -14,7 +14,7 @@ import { EndoFunction } from "..";
 test("projection", () => {
   const signal = new DerivedSignal({
     value: of({ number: 1 }, { number: 2 }, { number: 3 }),
-  }).property("number");
+  }).prop("number");
 
   return lastValueFrom(signal.pipe(toArray())).then((numbers) =>
     expect(numbers).toEqual([1, 2, 3]),
@@ -28,7 +28,7 @@ test("transformation", () => {
       startWith(identity),
       scan((state, transform) => transform(state), { number: 1 }),
     ),
-  }).property("number");
+  }).prop("number");
 
   transforms.next(signal.retract((number) => number + 1));
   transforms.next(signal.retract((number) => number + 2));

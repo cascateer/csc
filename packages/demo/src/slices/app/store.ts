@@ -4,9 +4,7 @@ export default createStore({ counter: { value: 0 } }).with(
   ({ StoreProvider }) =>
     new StoreProvider()
       .provideEffects(({ effect }) => ({
-        counterValue: effect(({ data }) =>
-          data.property("counter").property("value"),
-        ),
+        counterValue: effect(({ data }) => data.prop("counter").prop("value")),
       }))
       .provideActions(({ action }) => ({
         incrementCounterValue: action<number>(({ counterValue }) =>

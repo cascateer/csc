@@ -56,7 +56,7 @@ export class Signal<D, T> extends ProxyObservable<T> {
     });
   }
 
-  protected property<K extends keyof T>(
+  protected prop<K extends keyof T>(
     key: K,
     enumerator?: Enumerator<T[K]>,
   ): Signal<D, T[K]> {
@@ -96,7 +96,7 @@ export class Signal<D, T> extends ProxyObservable<T> {
     );
   }
 
-  protected collection<K extends keyof EnumerableItem<T>>(
+  protected coll<K extends keyof EnumerableItem<T>>(
     key: K,
   ): Signal<D, EnumerableItem<T>[K][]> {
     return this.map(
@@ -132,11 +132,11 @@ export class Signal<D, T> extends ProxyObservable<T> {
 }
 
 export class DerivedSignal<D, T = D> extends Signal<D, T> {
-  property<K extends keyof T>(
+  prop<K extends keyof T>(
     key: K,
     enumerator?: Enumerator<T[K]>,
   ): DerivedSignal<D, T[K]> {
-    return new DerivedSignal(super.property(key, enumerator));
+    return new DerivedSignal(super.prop(key, enumerator));
   }
 
   item(
@@ -146,9 +146,9 @@ export class DerivedSignal<D, T = D> extends Signal<D, T> {
     return new DerivedSignal(super.item(key, enumerator));
   }
 
-  collection<K extends keyof EnumerableItem<T>>(
+  coll<K extends keyof EnumerableItem<T>>(
     key: K,
   ): DerivedSignal<D, EnumerableItem<T>[K][]> {
-    return new DerivedSignal(super.collection(key));
+    return new DerivedSignal(super.coll(key));
   }
 }
