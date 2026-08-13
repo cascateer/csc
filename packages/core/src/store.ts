@@ -212,7 +212,7 @@ export class StoreReducer<Data> {
         isMulticastSeedActionMessage(event)
           ? {
               ...event,
-              predicate: constant(Serializable.parse(event.data.seed)),
+              predicate: constant(Serializable.parse(event.data.seed ?? null)),
             }
           : [],
       ),
