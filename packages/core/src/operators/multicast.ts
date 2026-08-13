@@ -1,11 +1,18 @@
-import { EndoFunction } from "@cascateer/lib";
+import { EndoFunction, MaybeArray } from "@cascateer/lib";
 import {
   DerivedSignal,
   exchangeMessages,
+  flatMap,
   NextObservable,
 } from "@cascateer/lib/observable";
 import { Function1 } from "lodash";
-import { concatMap, ReplaySubject, shareReplay, startWith } from "rxjs";
+import {
+  concatMap,
+  identity,
+  ReplaySubject,
+  shareReplay,
+  startWith,
+} from "rxjs";
 import { v4 } from "uuid";
 
 interface MulticastBaseMessage<Data, Type> {
@@ -85,7 +92,7 @@ export type MulticastClientMessage =
 type MulticastMessage = MulticastHostMessage | MulticastClientMessage;
 
 export type MulticastMessageConstructor<Message extends MulticastMessage> =
-  Function1<Record<"key" | "id", string>, Promise<Message>>;
+  Function1<Record<"key" | "id", string>, Promise<MaybeArray<Message>>>;
 
 export type MulticastObservable = NextObservable<
   MulticastMessageConstructor<MulticastClientMessage>,
@@ -110,6 +117,7 @@ export const multicast = <Seed>(key: string, seed: Seed): MulticastObservable =>
         },
       })),
       concatMap(async (message) => message({ key, id: v4() })),
+      flatMap(identity),
       exchangeMessages<MulticastHostMessage, MulticastClientMessage>(
         new SharedWorker(new URL("./multicast.js", import.meta.url), {
           type: "module",

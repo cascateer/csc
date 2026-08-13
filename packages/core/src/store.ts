@@ -71,7 +71,7 @@ export class LazyStoreAdapter<
   complete(): StoreAdapter<Data, Signals, Actions> {
     return new StoreAdapter(
       this.lazySignals.complete(),
-      this.lazyActions.complete(),
+      tap(this.lazyActions.complete(), console.info),
     );
   }
 
@@ -144,7 +144,7 @@ export class LazyStoreAdapter<
                           Function1<Data, void>
                         >();
 
-                        this.reducer.subscribe(actionKey, (event) => ({
+                        void this.reducer.subscribe(actionKey, (event) => ({
                           ...event,
                           target,
                           predicate: target.retract(
@@ -158,19 +158,24 @@ export class LazyStoreAdapter<
 
                         return (args) =>
                           new Promise<Data>((callback) =>
-                            this.reducer.next(
-                              async ({ id }) => (
-                                callbacks.set(id, callback),
-                                {
-                                  id,
-                                  type: "transformAction",
-                                  data: {
-                                    key: await actionKey,
-                                    args: JSON.stringify(args),
-                                  },
-                                  sameOrigin: config.sameOrigin,
+                            this.reducer.next(({ id }) =>
+                              actionKey.then((key) => {
+                                if (key != null) {
+                                  callbacks.set(id, callback);
+
+                                  return {
+                                    id,
+                                    type: "transformAction",
+                                    data: {
+                                      key,
+                                      args: JSON.stringify(args),
+                                    },
+                                    sameOrigin: config.sameOrigin,
+                                  };
                                 }
-                              ),
+
+                                return [];
+                              }),
                             ),
                           );
                       },
@@ -189,11 +194,11 @@ export class StoreReducer<Data> {
   next: Function1<MulticastMessageConstructor<MulticastClientMessage>, void>;
 
   subscribe: (
-    key: Promise<string>,
+    key: Promise<string | undefined>,
     parse: (
       action: MulticastBaseActionMessage<any, "transformAction">,
     ) => MulticastAction<Data, "transformAction">,
-  ) => void;
+  ) => Promise<void>;
 
   constructor(key: string, data: Data) {
     const actions$ = multicast(key, data);
@@ -215,8 +220,8 @@ export class StoreReducer<Data> {
 
     this.next = (action) => actions$.next(action);
 
-    this.subscribe = (key, parse) =>
-      actions$
+    this.subscribe = async (key, parse) => {
+      const subscription = actions$
         .pipe(
           mergeMap(async (event) => {
             if (
@@ -229,6 +234,11 @@ export class StoreReducer<Data> {
           flatMap((action) => action ?? []),
         )
         .subscribe(transformActionSubject$);
+
+      if ((await key) == null) {
+        subscription.unsubscribe();
+      }
+    };
 
     this.value = merge(seedActions$, transformActionSubject$).pipe(
       tapOperator((action) => console.debug(action)),

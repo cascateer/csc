@@ -1,7 +1,5 @@
 .increment-button {
-  background-color: royalblue;
   font-size: 3em;
-  padding: 0.4em;
 
   &::before {
     content: "Counter value: ";

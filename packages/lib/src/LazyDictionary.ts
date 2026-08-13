@@ -11,7 +11,8 @@ export class LazyDictionary<T, U extends Dictionary<T>> {
     private value = new LazyPromise<Dictionary<T>>(identity),
   ) {}
 
-  complete = () => tap(this.currentValue, this.value.start);
+  complete = () =>
+    tap(this.currentValue, (value) => void this.value.start(value));
 
   extend<V extends Dictionary<T>>(
     value: (
@@ -19,7 +20,9 @@ export class LazyDictionary<T, U extends Dictionary<T>> {
     ) => ({
       property,
     }: {
-      property: (constructor: UnaryFunction<Promise<string>, T>) => T;
+      property: (
+        constructor: UnaryFunction<Promise<string | undefined>, T>,
+      ) => T;
     }) => V,
   ) {
     return new LazyDictionary<T, Extend<U, V>>(
@@ -28,16 +31,12 @@ export class LazyDictionary<T, U extends Dictionary<T>> {
         ...value(this.currentValue)({
           property: (constructor) => {
             const property = constructor(
-              new Promise<string>(async (resolve, reject) => {
-                const value = await this.value;
-
+              this.value.then((value) => {
                 for (const key of keys(value)) {
                   if (value[key] === property) {
-                    return resolve(key);
+                    return key;
                   }
                 }
-
-                reject();
               }),
             );
 
