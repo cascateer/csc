@@ -18,10 +18,18 @@ export default createStore<AppState>({
         data.update(() => () => ({ counter: { value: 0 }, numbers: [] })),
       ),
       incrementCounterValue: action<number>(({ counterValue }) =>
-        counterValue.update((increment) => (value) => value + increment),
+        counterValue.update(
+          (increment) => (counterValue) => counterValue + increment,
+        ),
       ),
-      addNumber: action<string>(({ numbers }) =>
-        numbers.update((id) => (numbers) => numbers.concat({ id })),
+      addNumber: action<void>(({ data }) =>
+        data.update(() => (data) => ({
+          ...data,
+          numbers: data.numbers.concat({
+            id: data.numbers.length,
+            value: data.counter.value + 1,
+          }),
+        })),
       ),
     }))
     .complete(),

@@ -1,20 +1,17 @@
 import { LazyDictionary } from "@cascateer/lib";
 import { DerivedSignal } from "@cascateer/lib/observable";
 import { Dictionary, Function1, mapValues } from "lodash";
-import { ApiAdapter, ApiEffect } from "./api";
-import { asStoreEffects, StoreAdapter, StoreEffects } from "./store";
+import { ApiAdapter, ApiEffect, ApiEffectMap } from "./api";
+import { asStoreEffects, StoreAdapter, StoreEffectMap } from "./store";
 import {
   Action,
   combineProxyEffects,
   Effect,
   ProxyEffect,
-  ProxyEffects,
+  ProxyEffectMap,
 } from "./types";
 
-export interface TerminalEffect<Args, Result> extends ProxyEffect<
-  Args,
-  Result
-> {}
+export type TerminalEffect<Args, Result> = ProxyEffect<Args, Result>;
 
 export class TerminalAdapter<
   Effects extends Dictionary<TerminalEffect<any, any>>,
@@ -58,13 +55,13 @@ export class LazyTerminalAdapter<
           constructor: Function1<
             {
               store: {
-                effects: StoreEffects<Data, StoreSignals>;
+                effects: StoreEffectMap<Data, StoreSignals>;
               };
               api: {
-                effects: ProxyEffects<ApiEffects>;
+                effects: ApiEffectMap<ApiEffects>;
               };
               terminal: {
-                effects: ProxyEffects<Effects>;
+                effects: ProxyEffectMap<Effects>;
               };
             },
             Effect<Args, Result>
@@ -109,7 +106,7 @@ export class LazyTerminalAdapter<
           constructor: Function1<
             {
               store: {
-                effects: StoreEffects<Data, StoreSignals>;
+                effects: StoreEffectMap<Data, StoreSignals>;
                 actions: StoreActions;
               };
               api: {
@@ -165,7 +162,9 @@ export class TerminalProvider<
   StoreActions,
   ApiEffects,
   ApiActions,
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   {}
 > {
   constructor(context: {

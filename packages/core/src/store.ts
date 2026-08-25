@@ -31,7 +31,7 @@ import { Action } from "./types";
 
 type StoreEffect<Data, Result> = () => Signal<Data, Result>;
 
-export type StoreEffects<
+export type StoreEffectMap<
   Data,
   Signals extends Dictionary<DerivedSignal<Data, any>>,
 > = {
@@ -49,7 +49,7 @@ export const asStoreEffects = <
   Signals extends Dictionary<DerivedSignal<Data, any>>,
 >(
   signals: Signals,
-): StoreEffects<Data, Signals> =>
+): StoreEffectMap<Data, Signals> =>
   mapValues(signals, (signal) => () => signal.clone());
 
 export class StoreAdapter<
@@ -71,7 +71,7 @@ export class LazyStoreAdapter<
   complete(): StoreAdapter<Data, Signals, Actions> {
     return new StoreAdapter(
       this.lazySignals.complete(),
-      tap(this.lazyActions.complete(), console.info),
+      this.lazyActions.complete(),
     );
   }
 

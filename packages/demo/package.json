@@ -22,12 +22,12 @@
   "dependencies": {
     "@cascateer/core": "*",
     "@cascateer/lib": "*",
+    "@cascateer/server": "*",
     "axios": "^1.18.1",
     "classnames": "^2.5.1",
     "globals": "^17.8.0",
     "lodash": "^4.18.1",
-    "rxjs": "^7.8.2",
-    "uuid": "^14.0.1"
+    "rxjs": "^7.8.2"
   },
   "optionalDependencies": {
     "@typescript/typescript-linux-x64": "^7.0.2"

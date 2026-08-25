@@ -7,7 +7,7 @@ export const AppCounterComponent = appSlice
   .withTemplate((ctx, { button }, { incrementButton }) => () => (
     <button
       className={cn(button, incrementButton)}
-      onClick={() => ctx.store.actions.incrementCounterValue(1)}
+      onClick={() => void ctx.store.actions.incrementCounterValue(1)}
     >
       {ctx.terminal.effects.counterValue(1)}
     </button>

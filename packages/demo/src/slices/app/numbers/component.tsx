@@ -1,6 +1,4 @@
-import { property } from "@cascateer/lib";
 import { map } from "rxjs";
-import { v4 } from "uuid";
 import { appSlice } from "../slice";
 
 export const AppNumbersComponent = appSlice
@@ -14,13 +12,13 @@ export const AppNumbersComponent = appSlice
     <>
       <button
         className={button}
-        onClick={() => ctx.store.actions.addNumber(v4())}
+        onClick={() => void ctx.store.actions.addNumber()}
       >
         Add
       </button>
       <div className={list}>
-        {ctx.store.effects.numbers().list((number) => (
-          <div>{number.pipe(map(property("id")))}</div>
+        {ctx.store.effects.numbers().list((number$) => (
+          <div>{number$.pipe(map(({ value }) => "--".repeat(value)))}</div>
         ))}
       </div>
     </>

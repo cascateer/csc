@@ -1,4 +1,4 @@
 export interface AppState {
   counter: { value: number };
-  numbers: { id: string }[];
+  numbers: { id: number; value: number }[];
 }
