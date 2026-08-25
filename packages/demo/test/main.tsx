@@ -1,1 +1,1 @@
-import("@cascateer/core").then(({ loadSample }) => loadSample());
+void import("@cascateer/core").then(({ loadSample }) => loadSample());

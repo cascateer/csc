@@ -12,10 +12,7 @@
     "target": "ES2022",
     "types": ["node", "vite/client"],
     "useDefineForClassFields": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "@cascateer/core",
-    "ignoreDeprecations": "6.0",
-    "composite": true,
-    "declaration": true
-  }
+    "ignoreDeprecations": "6.0"
+  },
+  "include": ["./src"]
 }

@@ -2,6 +2,7 @@ import { SampleRegistry } from "@cascateer/core";
 import { scan, Subject } from "rxjs";
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Sample {
     interface Components {
       sample1: Sample.Component;

@@ -10,6 +10,7 @@
     "lint": "turbo lint",
     "lint-staged": "lint-staged",
     "test": "turbo test",
+    "test-ui": "turbo test-ui",
     "build": "turbo build",
     "prepare": "husky",
     "build-ci": "turbo build lint test",
