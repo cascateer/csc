@@ -52,7 +52,7 @@ export function createComponent<Context>(
     ) => (props: Props) => ObservableFragment;
   };
   withTemplate: <Props extends JSX.Props>(
-    constructor: (ctx?: Context | undefined) => JSX.Component<Props>,
+    constructor: (ctx?: Context) => JSX.Component<Props>,
   ) => (props: Props) => ObservableFragment;
 } {
   return (customElement?: string) => {

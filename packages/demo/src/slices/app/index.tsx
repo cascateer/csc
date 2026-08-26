@@ -5,7 +5,7 @@ import { appSlice } from "./slice";
 
 export const AppRootComponent = appSlice
   .createComponent("root")
-  .withStyles(import("./styles.module.scss"), import("./styles.scss?inline"))
+  .withStyles(import("./styles.module.scss"), import("./styles.scss"))
   .withTemplate((ctx, { button }) => () => (
     <>
       <button className={button} onClick={() => void ctx.store.actions.reset()}>

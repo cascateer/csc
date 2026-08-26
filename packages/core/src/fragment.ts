@@ -25,7 +25,7 @@ class AnchorFragment extends DocumentFragment {
     };
   }
 
-  anchor = new Observable<Node[]>((subscriber) => {
+  anchor$ = new Observable<Node[]>((subscriber) => {
     const observer = tap(
       new MutationObserver((records) =>
         subscriber.next(records.flatMap((record) => [...record.removedNodes])),
@@ -57,7 +57,7 @@ class AnchorFragment extends DocumentFragment {
   constructor() {
     super();
 
-    this.anchor.subscribe();
+    this.anchor$.subscribe();
   }
 }
 
@@ -95,7 +95,7 @@ export class ObservableFragment extends AnchorFragment {
   constructor(private content: JSX.Children = []) {
     super();
 
-    this.subscription = combineLatest([this.anchor, this.nodes])
+    this.subscription = combineLatest([this.anchor$, this.nodes])
       .pipe(
         scan(
           (currentNodes, [anchor, nextNodes]) => (

@@ -42,7 +42,7 @@ interface ApiActionConfig<Args, Result> {
 }
 
 const subscribe = <Args, Result>(
-  { predicate, resetOnRefCountZero }: ApiEffectConfig<Args, Result>,
+  { predicate, resetOnRefCountZero = false }: ApiEffectConfig<Args, Result>,
   invalidatesTagsSubject$: Subject<string[]>,
 ): ApiEffect<Args, Result> => {
   const memoizedEffect: ApiEffect<Args, Result> = memoize(
@@ -70,7 +70,7 @@ const subscribe = <Args, Result>(
                 ),
               ),
           }),
-          shareReplay({ bufferSize: 1, refCount: !!resetOnRefCountZero }),
+          shareReplay({ bufferSize: 1, refCount: resetOnRefCountZero }),
         ),
       ),
   );
@@ -145,7 +145,7 @@ export class LazyApiAdapter<
   constructor(
     public context: {
       source: Source;
-      invalidatedTags: Subject<string[]>;
+      invalidatedTagsSubject$: Subject<string[]>;
     },
     private lazyEffects: LazyDictionary<ApiEffect<any, any>, Effects>,
     private lazyActions: LazyDictionary<Action<any, any>, Actions>,
@@ -165,7 +165,7 @@ export class LazyApiAdapter<
             effect: (config) =>
               subscribe(
                 config(this.context.source),
-                this.context.invalidatedTags,
+                this.context.invalidatedTagsSubject$,
               ),
           }),
       ),
@@ -186,7 +186,10 @@ export class LazyApiAdapter<
         () => () =>
           actions({
             action: (config) =>
-              share(config(this.context.source), this.context.invalidatedTags),
+              share(
+                config(this.context.source),
+                this.context.invalidatedTagsSubject$,
+              ),
           }),
       ),
     );
@@ -199,7 +202,7 @@ export class ApiProvider<Source> extends LazyApiAdapter<Source, {}, {}> {
     super(
       {
         source,
-        invalidatedTags: new Subject(),
+        invalidatedTagsSubject$: new Subject(),
       },
       new LazyDictionary({}),
       new LazyDictionary({}),
