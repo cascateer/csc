@@ -33,7 +33,7 @@
     "@rollup/rollup-linux-x64-gnu": "*"
   },
   "lint-staged": {
-    "!(packages/eslint-config/**/*|packages/server/openapi/**/*|packages/server/src/metadata).{js,ts}": [
+    "!(packages/eslint-config/**/*|packages/server/openapi/**/*)*.{js,ts}": [
       "eslint",
       "prettier --write --ignore-unknown"
     ],
