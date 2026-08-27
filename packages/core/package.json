@@ -37,10 +37,7 @@
       "types": "./src/operators/index.ts",
       "default": "./dist/operators.js"
     },
-    "./test": {
-      "types": "./src/test/index.ts",
-      "default": "./dist/test.js"
-    },
+    "./test": "./src/test/index.ts",
     "./vite": {
       "types": "./src/vite.ts",
       "default": "./dist/vite.js"
