@@ -8,11 +8,11 @@ export const AppRootComponent = appSlice
   .withStyles(import("./styles.module.scss"), import("./styles.scss?inline"))
   .withTemplate((ctx, { button }) => () => (
     <>
-      <button className={button} onClick={() => void ctx.store.actions.reset()}>
-        Reset
-      </button>
       <AppIconsComponent />
       <AppCounterComponent />
       <AppNumbersComponent />
+      <button className={button} onClick={() => void ctx.store.actions.reset()}>
+        Reset
+      </button>
     </>
   ));

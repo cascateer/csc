@@ -1,6 +1,6 @@
 import { asArray } from "@cascateer/lib";
 import { asObservable, flatMap } from "@cascateer/lib/observable";
-import { tap } from "lodash";
+import { difference, tap } from "lodash";
 import {
   combineLatest,
   distinctUntilChanged,
@@ -8,20 +8,26 @@ import {
   Observable,
   of,
   scan,
-  share,
   shareReplay,
   startWith,
   Subscription,
   switchMap,
+  Unsubscribable,
 } from "rxjs";
 import { isPrimitive } from "utility-types";
-import { insertNodes, removeNodes } from "./dom";
+import { insert, unlink } from "./dom";
+
+class AnchorComment extends Comment {
+  constructor(public target: AnchorFragment) {
+    super("anchor");
+  }
+}
 
 class AnchorFragment extends DocumentFragment {
-  appendAnchor(current?: Comment) {
+  appendAnchor(previous?: Comment) {
     return {
-      current,
-      next: this.appendChild(new Comment("anchor")),
+      previous,
+      current: this.appendChild(new AnchorComment(this)),
     };
   }
 
@@ -37,34 +43,34 @@ class AnchorFragment extends DocumentFragment {
       unsubscribe: () => observer.disconnect(),
     };
   }).pipe(
-    share(),
     scan((anchor, removedNodes) => {
-      if (removedNodes.includes(anchor.next)) {
-        if (anchor.current != null) {
-          removeNodes(anchor.current);
+      if (removedNodes.includes(anchor.current)) {
+        if (anchor.previous != null) {
+          unlink(anchor.previous);
         }
 
-        return this.appendAnchor(anchor.next);
+        return this.appendAnchor(anchor.current);
       }
 
       return anchor;
     }, this.appendAnchor()),
-    flatMap((anchor) => anchor.current ?? []),
+    flatMap((anchor) => anchor.previous ?? []),
     distinctUntilChanged(),
     shareReplay(1),
   );
-
-  constructor() {
-    super();
-
-    this.anchor$.subscribe();
-  }
 }
 
-export class ObservableFragment extends AnchorFragment {
-  subscription: Subscription;
+export class ObservableFragment
+  extends AnchorFragment
+  implements Unsubscribable
+{
+  private subscription: Subscription;
 
-  get nodes(): Observable<Node[]> {
+  unsubscribe(): void {
+    this.subscription.unsubscribe();
+  }
+
+  get nodes$(): Observable<Node[]> {
     return asObservable(this.content).pipe(
       map(asArray),
       switchMap((elements) =>
@@ -73,12 +79,12 @@ export class ObservableFragment extends AnchorFragment {
             asObservable(element).pipe(
               switchMap((element) =>
                 element instanceof ObservableFragment
-                  ? element.nodes
+                  ? element.nodes$
                   : of(
                       element == null || element === false
                         ? []
                         : isPrimitive(element)
-                          ? new Text(element?.toString())
+                          ? new Text(element.toString())
                           : element,
                     ),
               ),
@@ -95,15 +101,29 @@ export class ObservableFragment extends AnchorFragment {
   constructor(private content: JSX.Children = []) {
     super();
 
-    this.subscription = combineLatest([this.anchor$, this.nodes])
+    this.subscription = combineLatest([this.anchor$, this.nodes$])
       .pipe(
-        scan(
-          (currentNodes, [anchor, nextNodes]) => (
-            removeNodes(...currentNodes),
-            insertNodes(...nextNodes).before(anchor)
-          ),
-          new Array<Node>(),
-        ),
+        scan((currentNodes, [anchor, nextNodes]) => {
+          unlink(...currentNodes);
+
+          for (const removedNode of difference(currentNodes, nextNodes)) {
+            const walker = document.createTreeWalker(
+              removedNode,
+              NodeFilter.SHOW_COMMENT,
+            );
+
+            while (walker.nextNode()) {
+              if (
+                walker.currentNode instanceof AnchorComment &&
+                walker.currentNode.target instanceof ObservableFragment
+              ) {
+                walker.currentNode.target.unsubscribe();
+              }
+            }
+          }
+
+          return insert(...nextNodes).before(anchor);
+        }, new Array<Node>()),
       )
       .subscribe();
   }

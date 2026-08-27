@@ -1,4 +1,4 @@
 declare const classNames: {
-  readonly list: "list";
+  readonly numbersList: "numbersList";
 };
 export = classNames;

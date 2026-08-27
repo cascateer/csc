@@ -1,7 +1,7 @@
 import { isObject, memoize } from "lodash";
 import { createFragment } from "./jsx-runtime";
 
-export const insertNodes = <T extends Node>(...nodes: T[]) => ({
+export const insert = <T extends Node>(...nodes: T[]) => ({
   before: (child: Node | null): T[] => {
     for (const node of nodes) {
       if (node instanceof Node) {
@@ -13,7 +13,7 @@ export const insertNodes = <T extends Node>(...nodes: T[]) => ({
   },
 });
 
-export const removeNodes = <T extends Node>(...nodes: T[]) => {
+export const unlink = <T extends Node>(...nodes: T[]) => {
   for (const node of nodes) {
     node.parentNode?.removeChild(node);
   }

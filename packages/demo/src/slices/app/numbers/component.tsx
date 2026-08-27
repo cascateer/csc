@@ -8,7 +8,7 @@ export const AppNumbersComponent = appSlice
     import("./styles.module.scss"),
     import("./styles.scss?inline"),
   )
-  .withTemplate((ctx, { button }, { list }) => () => (
+  .withTemplate((ctx, { button }, { numbersList }) => () => (
     <>
       <button
         className={button}
@@ -16,7 +16,7 @@ export const AppNumbersComponent = appSlice
       >
         Add
       </button>
-      <div className={list}>
+      <div className={numbersList}>
         {ctx.store.effects.numbers().list((number$) => (
           <div>{number$.pipe(map(({ value }) => "--".repeat(value)))}</div>
         ))}

@@ -24,7 +24,7 @@ import {
   Observer,
 } from "rxjs";
 import { Primitive } from "utility-types";
-import { removeNodes } from "./dom";
+import { unlink } from "./dom";
 import { ObservableFragment } from "./fragment";
 
 type DocumentEventListener<EventName extends keyof DocumentEventMap> =
@@ -227,7 +227,7 @@ export const createElement = (
 
 export const createRoot = (root: Node) => ({
   render: (children?: JSX.Children) => (
-    removeNodes(...root.childNodes),
+    unlink(...root.childNodes),
     tap(root, (root) =>
       root.appendChild(
         createFragment({

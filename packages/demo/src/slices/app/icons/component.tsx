@@ -19,12 +19,11 @@ export const AppIconsComponent = appSlice
           })
         }
       >
-        Add fly
-      </button>
-      <div>
         {ctx.api.effects
-          .icons({ group: AppControllerGetIconsGroupEnum.Insects })
+          .icons({
+            group: AppControllerGetIconsGroupEnum.Insects,
+          })
           .pipe(map(({ data }) => data.join("")))}
-      </div>
+      </button>
     </>
   ));

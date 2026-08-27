@@ -1,4 +1,4 @@
 declare const classNames: {
-  readonly incrementButton: "incrementButton";
+  readonly counterIncrementButton: "counterIncrementButton";
 };
 export = classNames;
