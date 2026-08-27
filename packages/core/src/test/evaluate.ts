@@ -1,9 +1,5 @@
 import { MaybePromise } from "@cascateer/lib/promise";
 import puppeteer, { ElementHandle } from "puppeteer";
-import { SampleRegistry } from "../test";
-
-// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-SampleRegistry;
 
 const { VITE_HOST, VITE_PORT } = import.meta.env;
 

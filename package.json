@@ -37,7 +37,7 @@
       "eslint",
       "prettier --write --ignore-unknown"
     ],
-    "!(*.js|*.ts)": [
+    "!(*.js|*.ts|packages/server/openapi/tsconfig.json)": [
       "prettier --write --ignore-unknown"
     ]
   }
