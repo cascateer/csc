@@ -1,18 +1,10 @@
-import {
-  clone,
-  flowRight,
-  Function1,
-  identity,
-  isEqual,
-  memoize,
-} from "lodash";
+import { clone, flowRight, Function1, identity, isEqual } from "lodash";
 import { distinctUntilChanged, map, Observable } from "rxjs";
 import {
   asEnumerable,
   EndoFunctionOperator,
   EnumerableItem,
   Enumerator,
-  nonNullable,
   property,
 } from "..";
 import { ProxyObservable } from "./ProxyObservable";
@@ -81,7 +73,7 @@ export class Signal<D, T> extends ProxyObservable<T> {
   ): Signal<D, EnumerableItem<T>> {
     const findIndex = this.enumerator.findIndex(key);
     const findItem: Function1<T, EnumerableItem<T>> = (value) =>
-      nonNullable(asEnumerable(value)[findIndex(value)]);
+      asEnumerable(value)[findIndex(value)];
 
     return this.map(
       findItem,
@@ -119,14 +111,10 @@ export class Signal<D, T> extends ProxyObservable<T> {
   list<U>(
     iteratee: (item: Signal<D, EnumerableItem<T>>, index: number) => U,
   ): Observable<U[]> {
-    const memoizedIteratee = memoize<(key: PropertyKey, index: number) => U>(
-      (key, index) => iteratee(this.item(key), index),
-    );
-
     return this.pipe(
       map(this.enumerator.enumerate),
       distinctUntilChanged((previous, current) => isEqual(previous, current)),
-      map((keys) => keys.map(memoizedIteratee)),
+      map((keys) => keys.map((key, index) => iteratee(this.item(key), index))),
     );
   }
 }

@@ -10,10 +10,8 @@ export class Enumerable<T> extends Array<
   }
 }
 
-export type EnumerableItem<
-  T,
-  Index extends number = number,
-> = Enumerable<T>[Index];
+export type EnumerableItem<T, Index extends number = number> =
+  Enumerable<T>[Index] | undefined;
 
 export class Enumerator<T> {
   constructor(
