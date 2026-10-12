@@ -1,9 +1,9 @@
 import { Router } from "@cascateer/core";
 import { AppRootComponent } from "./slices/app";
 
-const router = new Router()
+new Router()
   .addRoute({
-    path: "/",
+    path: "{/}",
     component: () => <AppRootComponent />,
   })
   .addRoute({
