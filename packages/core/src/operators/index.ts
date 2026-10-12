@@ -1,5 +1,4 @@
 export { accumulate } from "./accumulate";
-export { combine } from "./combine";
 export {
   multicast,
   type MulticastAction,
