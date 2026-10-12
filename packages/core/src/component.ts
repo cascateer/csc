@@ -2,7 +2,6 @@ import { kebabCase } from "lodash";
 import { defer, share } from "rxjs";
 import { cssStyleSheets } from "./css";
 import { defineCustomElement } from "./dom";
-import { ObservableFragment } from "./fragment";
 import { createFragment } from "./jsx-runtime";
 
 export function createComponent(key: string): (customElement?: string) => {
@@ -13,11 +12,11 @@ export function createComponent(key: string): (customElement?: string) => {
       constructor: (
         ...classNames: { -readonly [K in keyof Styles]: Awaited<Styles[K]> }
       ) => JSX.Component<Props>,
-    ) => (props: Props) => ObservableFragment;
+    ) => (props: Props) => JSX.Element;
   };
   withTemplate: <Props extends JSX.Props>(
     constructor: () => JSX.Component<Props>,
-  ) => (props: Props) => ObservableFragment;
+  ) => (props: Props) => JSX.Element;
 };
 export function createComponent<Context>(
   key: string,
@@ -31,11 +30,11 @@ export function createComponent<Context>(
         ctx: Context,
         ...classNames: { -readonly [K in keyof Styles]: Awaited<Styles[K]> }
       ) => JSX.Component<Props>,
-    ) => (props: Props) => ObservableFragment;
+    ) => (props: Props) => JSX.Element;
   };
   withTemplate: <Props extends JSX.Props>(
     constructor: (ctx: Context) => JSX.Component<Props>,
-  ) => (props: Props) => ObservableFragment;
+  ) => (props: Props) => JSX.Element;
 };
 export function createComponent<Context>(
   key: string,
@@ -49,11 +48,11 @@ export function createComponent<Context>(
         ctx?: Context,
         ...classNames: { -readonly [K in keyof Styles]: Awaited<Styles[K]> }
       ) => JSX.Component<Props>,
-    ) => (props: Props) => ObservableFragment;
+    ) => (props: Props) => JSX.Element;
   };
   withTemplate: <Props extends JSX.Props>(
     constructor: (ctx?: Context) => JSX.Component<Props>,
-  ) => (props: Props) => ObservableFragment;
+  ) => (props: Props) => JSX.Element;
 } {
   return (customElement?: string) => {
     const withTemplate =
@@ -78,9 +77,7 @@ export function createComponent<Context>(
                   ? new (defineCustomElement(
                       `${key}-${kebabCase(customElement)}`,
                     ))(element, cssStyleSheets)
-                  : createFragment({
-                      children: element,
-                    }); /* TODO omit cssModules (whole workflow) */
+                  : element; /* TODO omit cssModules (whole workflow) */
               }),
             ),
           ).pipe(share()),

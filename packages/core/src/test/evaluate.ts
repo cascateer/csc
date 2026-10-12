@@ -11,7 +11,7 @@ export const evaluate = <T>(
     browser.newPage().then(async (page) => {
       await page.goto(
         // eslint-disable-next-line  @typescript-eslint/restrict-template-expressions
-        `http://${VITE_HOST}:${VITE_PORT}/test/?sample=${sample}`,
+        `http://${VITE_HOST}:${VITE_PORT}/#/test?sample=${sample}`,
       );
 
       const value = await page.locator("#root").waitHandle().then(callback);

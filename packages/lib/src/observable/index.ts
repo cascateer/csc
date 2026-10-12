@@ -3,6 +3,7 @@ import { isObservable, Observable, ObservableInput, of } from "rxjs";
 export { eventListener } from "./eventListener";
 export { exchangeMessages } from "./exchangeMessages";
 export { flatMap } from "./flatMap";
+export { mutationRecords } from "./mutationRecords";
 export { NextObservable } from "./NextObservable";
 export { ProxyObservable } from "./ProxyObservable";
 export { reduce } from "./reduce";

@@ -1,130 +1,107 @@
 import { asArray } from "@cascateer/lib";
-import { asObservable, flatMap } from "@cascateer/lib/observable";
+import {
+  asObservable,
+  flatMap,
+  mutationRecords,
+} from "@cascateer/lib/observable";
 import { difference, tap } from "lodash";
 import {
   combineLatest,
   distinctUntilChanged,
   map,
-  Observable,
-  of,
   scan,
   shareReplay,
   startWith,
-  Subscription,
   switchMap,
-  Unsubscribable,
 } from "rxjs";
 import { isPrimitive } from "utility-types";
-import { insert, unlink } from "./dom";
+import { unlink } from "./dom";
+import { FinalizationObserver } from "./jsx-runtime";
 
-class AnchorComment extends Comment {
-  constructor(public target: AnchorFragment) {
-    super("anchor");
+class SlotComment extends Comment {
+  constructor(public target: SlotFragment) {
+    super("slot");
   }
 }
 
-class AnchorFragment extends DocumentFragment {
-  appendAnchor(previous?: Comment) {
+class SlotFragment extends DocumentFragment {
+  updateSlot(previous?: Comment) {
     return {
       previous,
-      current: this.appendChild(new AnchorComment(this)),
+      current: this.appendChild(new SlotComment(this)),
     };
   }
 
-  anchor$ = new Observable<Node[]>((subscriber) => {
-    const observer = tap(
-      new MutationObserver((records) =>
-        subscriber.next(records.flatMap((record) => [...record.removedNodes])),
-      ),
-      (observer) => observer.observe(this, { childList: true }),
-    );
-
-    return {
-      unsubscribe: () => observer.disconnect(),
-    };
-  }).pipe(
-    scan((anchor, removedNodes) => {
-      if (removedNodes.includes(anchor.current)) {
-        if (anchor.previous != null) {
-          unlink(anchor.previous);
+  slot$ = mutationRecords(this, { childList: true }).pipe(
+    map((records) => records.flatMap((record) => [...record.removedNodes])),
+    scan((slot, removedNodes) => {
+      if (removedNodes.includes(slot.current)) {
+        if (slot.previous != null) {
+          unlink(slot.previous);
         }
 
-        return this.appendAnchor(anchor.current);
+        return this.updateSlot(slot.current);
       }
 
-      return anchor;
-    }, this.appendAnchor()),
-    flatMap((anchor) => anchor.previous ?? []),
+      return slot;
+    }, this.updateSlot()),
+    flatMap((slot) => slot.previous ?? []),
     distinctUntilChanged(),
-    shareReplay(1),
+    shareReplay({ bufferSize: 1, refCount: true }),
   );
 }
 
-export class ObservableFragment
-  extends AnchorFragment
-  implements Unsubscribable
-{
-  private subscription: Subscription;
-
-  unsubscribe(): void {
-    this.subscription.unsubscribe();
+export class ObservableFragment extends SlotFragment {
+  unlink() {
+    new DocumentFragment().append(this);
   }
 
-  get nodes$(): Observable<Node[]> {
-    return asObservable(this.content).pipe(
+  constructor({ children = [] }: JSX.IntrinsicAttributes = {}) {
+    super();
+
+    const nodes$ = asObservable(children).pipe(
       map(asArray),
       switchMap((elements) =>
         combineLatest(
           elements.map((element) =>
             asObservable(element).pipe(
-              switchMap((element) =>
-                element instanceof ObservableFragment
-                  ? element.nodes$
-                  : of(
-                      element == null || element === false
-                        ? []
-                        : isPrimitive(element)
-                          ? new Text(element.toString())
-                          : element,
-                    ),
+              map((element) =>
+                element == null || element === false
+                  ? []
+                  : isPrimitive(element)
+                    ? new Text(element.toString())
+                    : element,
               ),
             ),
           ),
         ).pipe(
-          startWith([new Comment("child-nodes")]),
+          startWith([new Comment("placeholder")]),
           map((nodes) => nodes.flat()),
         ),
       ),
     );
-  }
 
-  constructor(private content: JSX.Children = []) {
-    super();
-
-    this.subscription = combineLatest([this.anchor$, this.nodes$])
+    combineLatest([this.slot$, nodes$])
       .pipe(
-        scan((currentNodes, [anchor, nextNodes]) => {
-          unlink(...currentNodes);
-
-          for (const removedNode of difference(currentNodes, nextNodes)) {
-            const walker = document.createTreeWalker(
-              removedNode,
-              NodeFilter.SHOW_COMMENT,
-            );
-
-            while (walker.nextNode()) {
-              if (
-                walker.currentNode instanceof AnchorComment &&
-                walker.currentNode.target instanceof ObservableFragment
-              ) {
-                walker.currentNode.target.unsubscribe();
-              }
+        scan((previousNodes, [slot, nodes]) => {
+          for (const node of difference(previousNodes, nodes)) {
+            if (node instanceof ObservableFragment) {
+              node.unlink();
+            } else {
+              node.parentElement?.removeChild(node);
             }
           }
 
-          return insert(...nextNodes).before(anchor);
+          slot.parentNode?.insertBefore(
+            tap(new DocumentFragment(), (content) => content.append(...nodes)),
+            slot,
+          );
+
+          return nodes;
         }, new Array<Node>()),
       )
       .subscribe();
+
+    new FinalizationObserver(this).subscribe();
   }
 }

@@ -1,17 +1,5 @@
-import { isObject, memoize } from "lodash";
+import { isObject, memoize, tap } from "lodash";
 import { createFragment } from "./jsx-runtime";
-
-export const insert = <T extends Node>(...nodes: T[]) => ({
-  before: (child: Node | null): T[] => {
-    for (const node of nodes) {
-      if (node instanceof Node) {
-        child?.parentNode?.insertBefore(node, child);
-      }
-    }
-
-    return nodes;
-  },
-});
 
 export const unlink = <T extends Node>(...nodes: T[]) => {
   for (const node of nodes) {
@@ -30,13 +18,11 @@ export class CustomElement extends HTMLElement {
   }
 }
 
-export const defineCustomElement = memoize((key: string) => {
-  const constructor = class extends CustomElement {};
-
-  customElements.define(key, constructor);
-
-  return constructor;
-});
+export const defineCustomElement = memoize((key: string) =>
+  tap(class extends CustomElement {}, (constructor) =>
+    customElements.define(key, constructor),
+  ),
+);
 
 export const registerCustomProperties = (
   definitions: Partial<JSX.CSSCustomPropertyDefinitions>,

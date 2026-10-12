@@ -14,7 +14,7 @@ test("sample2", async () => {
     await evaluate("sample2", (root) =>
       root.evaluate((root) => root.innerHTML),
     ),
-  ).toEqual('<input type="text"><!--anchor-->');
+  ).toEqual('<input type="text"><!--slot-->');
 });
 
 test("sample3", async () => {

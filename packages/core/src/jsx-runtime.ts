@@ -9,23 +9,95 @@ import {
   bind,
   camelCase,
   Dictionary,
+  fromPairs,
   Function1,
   isFunction,
   isObject,
   kebabCase,
   tap,
+  thru,
 } from "lodash";
 import React, { CSSProperties } from "react";
 import {
   combineLatest,
+  distinctUntilChanged,
+  filter,
   fromEvent,
+  ignoreElements,
+  isObservable,
   map,
-  ObservableInputTuple,
+  Observable,
   Observer,
+  of,
+  shareReplay,
+  Subscriber,
+  Subscription,
+  switchMap,
+  tap as tapOperator,
 } from "rxjs";
 import { Primitive } from "utility-types";
+import { v4 } from "uuid";
 import { unlink } from "./dom";
 import { ObservableFragment } from "./fragment";
+
+export class FinalizationObserver {
+  static registerCount = 0;
+  static registry = new FinalizationRegistry<() => void>((cb) => cb());
+
+  #subscriber?: Subscriber<void>;
+  subscribe: (
+    observerOrNext?: Partial<Observer<void>> | ((value: void) => void),
+  ) => Subscription;
+
+  constructor(key: WeakKey) {
+    const id = `value-${v4()}`;
+    const token = new WeakRef(key);
+    const finalized$ = new Observable<void>((subscriber) => {
+      this.#subscriber = subscriber;
+
+      return {
+        unsubscribe: () => FinalizationObserver.registry.unregister(token),
+      };
+    }).pipe(
+      tapOperator({
+        subscribe: () =>
+          console.info(
+            `%c[${`${++FinalizationObserver.registerCount}`.toString().padStart(6, "0")}] %cRegistered {${id}}`,
+            null,
+            "color: #e06c75",
+          ),
+        complete: () =>
+          console.info(
+            `%c[${`${--FinalizationObserver.registerCount}`.toString().padStart(6, "0")}] %cFinalized  {${id}}`,
+            null,
+            "color: #98c379",
+          ),
+      }),
+      shareReplay({ bufferSize: 1, refCount: true }),
+    );
+
+    FinalizationObserver.registry.register(
+      key,
+      () => {
+        this.#subscriber?.next();
+        this.#subscriber?.complete();
+
+        FinalizationObserver.registry.unregister(token);
+      },
+      token,
+    );
+
+    this.subscribe = finalized$.subscribe.bind(finalized$);
+  }
+}
+
+const fromDocumentEvent = (element: HTMLElement, type: string) =>
+  thru(new WeakRef(element), (elementRef) =>
+    fromEvent(document, type).pipe(
+      filter((event) => event.composedPath()[0] === elementRef.deref()),
+      distinctUntilChanged(),
+    ),
+  );
 
 type DocumentEventListener<EventName extends keyof DocumentEventMap> =
   | Partial<Observer<DocumentEventMap[EventName]>>
@@ -40,6 +112,7 @@ declare global {
 
     interface IntrinsicAttributes {
       children?: Children;
+      onTeardown?: () => void;
     }
 
     type IntrinsicElements = {
@@ -91,19 +164,27 @@ declare global {
   }
 }
 
-export const createFragment = ({ children }: JSX.IntrinsicAttributes) =>
-  new ObservableFragment(children);
+export const createFragment = (
+  ...params: ConstructorParameters<typeof ObservableFragment>
+) => new ObservableFragment(...params);
 
 export const createElement = (
   component: JSX.Component | string,
   attributes: JSX.IntrinsicAttributes | null,
   ...tagContent: JSX.Children[]
 ): JSX.Element => {
-  const { children: rawChildren = tagContent, ...propsWithoutChildren } =
-      attributes ?? {},
+  const {
+      children: rawChildren = tagContent,
+      onTeardown,
+      ...propsWithoutChildren
+    } = attributes ?? {},
     children = asArray(rawChildren).map((children) =>
       asObservable(children).pipe(
-        map((children) => createFragment({ children })),
+        map((children) =>
+          isObservable(children) || Array.isArray(children)
+            ? createFragment({ children })
+            : children,
+        ),
       ),
     );
 
@@ -117,7 +198,7 @@ export const createElement = (
         const eventName = name.match(/^on(.*)$/)?.[1]?.toLowerCase();
 
         if (eventName != null) {
-          fromEvent(element, eventName).subscribe(
+          fromDocumentEvent(element, eventName).subscribe(
             ...(isFunction(value)
               ? [value]
               : isObject(value)
@@ -144,81 +225,84 @@ export const createElement = (
                 : []),
           );
         } else {
-          asObservable(value).subscribe({
-            next: (propertyValue) => {
-              if (name === "className") {
-                element.setAttribute(
-                  "class",
-                  String(propertyValue).replaceAll(",", " "),
-                );
-              } else if (name === "style") {
-                if (isObject(propertyValue)) {
-                  const assignStyles = (
-                    target: CSSStyleDeclaration,
-                    source: Dictionary<unknown>,
-                  ) => {
-                    for (const [name, value] of Object.entries(source)) {
-                      target.setProperty(
-                        name.startsWith("--") ? name : kebabCase(name),
-                        String(value),
-                      );
-                    }
+          asObservable(value)
+            .pipe(
+              switchMap((propertyValue) => {
+                const assignStyles = (
+                  target: HTMLElement,
+                  source: Dictionary<unknown>,
+                ) => {
+                  for (const [name, value] of Object.entries(source)) {
+                    target.style.setProperty(
+                      name.startsWith("--") ? name : kebabCase(name),
+                      String(value),
+                    );
+                  }
 
-                    return source;
-                  };
+                  return source;
+                };
 
-                  combineLatest(
-                    Object.entries(propertyValue).reduce<
-                      ObservableInputTuple<Record<string, unknown>>
-                    >(
-                      (style, [key, value]) => (
-                        (style[key] = asObservable(value)),
-                        style
-                      ),
-                      {},
-                    ),
-                  )
-                    .pipe(
-                      reduce(
-                        (previousStyle, style) => {
-                          for (const name in previousStyle) {
-                            element.style.removeProperty(name);
-                          }
-
-                          return assignStyles(element.style, style);
-                        },
-                        (style) => assignStyles(element.style, style),
+                return name === "style" && isObject(propertyValue)
+                  ? combineLatest(
+                      fromPairs(
+                        Object.entries(propertyValue).map(([key, value]) => [
+                          key,
+                          asObservable(value),
+                        ]),
                       ),
                     )
-                    .subscribe();
-                }
-              } else if (name.startsWith("data-")) {
-                const camelCaseName = camelCase(name.replace(/^data/, ""));
+                      .pipe(
+                        reduce(
+                          (previousStyle, style) => {
+                            for (const name in previousStyle) {
+                              element.style.removeProperty(name);
+                            }
 
-                if (propertyValue == null) {
-                  delete element.dataset[camelCaseName];
+                            return assignStyles(element, style);
+                          },
+                          (style) => assignStyles(element, style),
+                        ),
+                      )
+                      .pipe(ignoreElements())
+                  : of(propertyValue);
+              }),
+            )
+            .subscribe({
+              next: (propertyValue) => {
+                if (name === "className") {
+                  element.setAttribute(
+                    "class",
+                    String(propertyValue).replaceAll(",", " "),
+                  );
+                } else if (name.startsWith("data-")) {
+                  const camelCaseName = camelCase(name.replace(/^data/, ""));
+
+                  if (propertyValue == null) {
+                    delete element.dataset[camelCaseName];
+                  } else {
+                    element.dataset[camelCase(name.replace(/^data/, ""))] =
+                      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+                      String(propertyValue);
+                  }
+                } else if (name === "disabled" && !propertyValue) {
+                  element.removeAttribute(name);
+                } else if (
+                  name === "checked" &&
+                  element instanceof HTMLInputElement &&
+                  element.type === "checkbox"
+                ) {
+                  element.checked = Boolean(propertyValue);
                 } else {
-                  element.dataset[camelCase(name.replace(/^data/, ""))] =
-                    // eslint-disable-next-line @typescript-eslint/no-base-to-string
-                    String(propertyValue);
+                  element.setAttribute(name, String(propertyValue));
                 }
-              } else if (name === "disabled" && !propertyValue) {
-                element.removeAttribute(name);
-              } else if (
-                name === "checked" &&
-                element instanceof HTMLInputElement &&
-                element.type === "checkbox"
-              ) {
-                element.checked = Boolean(propertyValue);
-              } else {
-                element.setAttribute(name, String(propertyValue));
-              }
-            },
-          });
+              },
+            });
         }
       }
 
       element.append(createFragment({ children }));
+
+      new FinalizationObserver(element).subscribe();
 
       return element;
     }

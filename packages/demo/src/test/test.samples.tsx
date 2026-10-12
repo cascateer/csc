@@ -20,14 +20,14 @@ SampleRegistry.register({
     return <input type="text" />;
   },
   sample3() {
-    const toggle = new Subject<void>();
+    const toggleSubject$ = new Subject<void>();
 
     return (
       <>
-        <button type="button" onClick={() => toggle.next()}></button>
+        <button type="button" onClick={() => toggleSubject$.next()}></button>
         <input
           type="checkbox"
-          checked={toggle.pipe(scan((acc) => !acc, false))}
+          checked={toggleSubject$.pipe(scan((acc) => !acc, false))}
         />
       </>
     );

@@ -1,5 +1,5 @@
 export { accumulate } from "./accumulate";
-export { every } from "./every";
+export { combine } from "./combine";
 export {
   multicast,
   type MulticastAction,
@@ -9,4 +9,3 @@ export {
   type MulticastHostMessage,
   type MulticastObservable,
 } from "./multicast";
-export { some } from "./some";

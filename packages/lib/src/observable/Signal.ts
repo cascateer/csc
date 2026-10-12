@@ -5,6 +5,7 @@ import {
   EndoFunctionOperator,
   EnumerableItem,
   Enumerator,
+  nonNullable,
   property,
 } from "..";
 import { ProxyObservable } from "./ProxyObservable";
@@ -73,7 +74,7 @@ export class Signal<D, T> extends ProxyObservable<T> {
   ): Signal<D, EnumerableItem<T>> {
     const findIndex = this.enumerator.findIndex(key);
     const findItem: Function1<T, EnumerableItem<T>> = (value) =>
-      asEnumerable(value)[findIndex(value)];
+      nonNullable(asEnumerable(value)[findIndex(value)]);
 
     return this.map(
       findItem,
@@ -111,6 +112,7 @@ export class Signal<D, T> extends ProxyObservable<T> {
   list<U>(
     iteratee: (item: Signal<D, EnumerableItem<T>>, index: number) => U,
   ): Observable<U[]> {
+    // TODO light memoization (via distinctUntilChanged or scan?)
     return this.pipe(
       map(this.enumerator.enumerate),
       distinctUntilChanged((previous, current) => isEqual(previous, current)),

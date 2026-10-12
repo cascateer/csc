@@ -1,10 +1,17 @@
 import { property } from "@cascateer/lib";
 import { ProxyObservable } from "@cascateer/lib/observable";
 import { Dictionary, Function1, tap } from "lodash";
-import { combineLatest, ReplaySubject, switchMap } from "rxjs";
+import {
+  combineLatest,
+  map,
+  ReplaySubject,
+  scan,
+  shareReplay,
+  switchMap,
+  tap as tapOperator,
+} from "rxjs";
 import { Observable } from "rxjs/internal/Observable";
 import { memoize } from "./lib/memoize";
-import { accumulate, every, some } from "./operators";
 
 export type Effect<Args, Result> = Function1<Args, Observable<Result>>;
 
@@ -32,6 +39,7 @@ export type ProxyEffectMap<Effects extends Dictionary<ProxyEffect<any, any>>> =
 export const combineProxyEffects = <T, Args, Result>({
   intercept,
   project,
+  bufferSize = 1,
 }: {
   intercept: (
     proxy: <Args, Result>(
@@ -39,27 +47,54 @@ export const combineProxyEffects = <T, Args, Result>({
     ) => ProxyEffect<Args, Result>,
   ) => T;
   project: Function1<T, Effect<Args, Result>>;
+  bufferSize: number;
 }): ProxyEffect<Args, Result> => {
-  const sources = new ReplaySubject<ProxyObservable<any>>();
+  const depsUpdateSubject$ = new ReplaySubject<
+    Function1<Set<ProxyObservable<any>>, void>
+  >();
+  const deps$ = depsUpdateSubject$.pipe(
+    scan(tap, new Set<ProxyObservable<any>>()),
+  );
+
   const effect = project(
-    intercept((effect) =>
-      memoize((args) =>
-        tap(
-          new ProxyObservable(effect(args), (target, receiver) =>
-            combineLatest([target.pending, receiver.refCount]).pipe(every()),
-          ),
-          (source) => sources.next(source),
-        ),
+    intercept(<Args, Result>(effect: ProxyEffect<Args, Result>) =>
+      memoize(
+        (args: Args) =>
+          new (class extends ProxyObservable<Result> {
+            constructor(source: ProxyObservable<Result>) {
+              super(
+                source.pipe(
+                  tapOperator({
+                    subscribe: () =>
+                      depsUpdateSubject$.next((subscribers) =>
+                        subscribers.add(this),
+                      ),
+                    unsubscribe: () =>
+                      depsUpdateSubject$.next((subscribers) =>
+                        subscribers.delete(this),
+                      ),
+                  }),
+                  shareReplay({ bufferSize, refCount: true }),
+                ),
+                combineLatest([source.finalized, deps$]).pipe(
+                  map(([finalized, deps]) => finalized || !deps.has(this)),
+                ),
+              );
+            }
+          })(effect(args)),
       ),
     ),
   );
 
   return (args) =>
-    new ProxyObservable(effect(args), () =>
-      sources.pipe(
-        accumulate(),
-        switchMap((sources) => combineLatest(sources.map(property("pending")))),
-        some(),
+    new ProxyObservable(
+      effect(args),
+      deps$.pipe(
+        switchMap((deps) =>
+          combineLatest(Array.from(deps, property("finalized"))).pipe(
+            map((values) => values.every(Boolean)),
+          ),
+        ),
       ),
     );
 };

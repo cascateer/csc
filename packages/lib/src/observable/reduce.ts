@@ -16,9 +16,7 @@ export const reduce =
           ],
           previousEvent: event,
         }),
-        <{ outputs: Result[]; previousEvent?: Event }>{
-          outputs: [],
-        },
+        { outputs: [] } as { outputs: Result[]; previousEvent?: Event },
       ),
       map(({ outputs }) => {
         if (0 in outputs) {

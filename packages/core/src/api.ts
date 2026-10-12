@@ -6,6 +6,7 @@ import {
 } from "@cascateer/lib/observable";
 import { Dictionary, Function1, intersection } from "lodash";
 import {
+  BehaviorSubject,
   combineLatest,
   filter,
   finalize,
@@ -47,32 +48,40 @@ const subscribe = <Args, Result>(
 ): ApiEffect<Args, Result> => {
   const memoizedEffect: ApiEffect<Args, Result> = memoize(
     (args) =>
-      new ProxyObservable((pending) =>
-        asObservable(predicate(args)).pipe(
-          tap({
-            next: ({ invalidatesTags }) => {
-              if (invalidatesTags != null) {
-                invalidatesTagsSubject$.next(asArray(invalidatesTags));
-              }
-            },
-            subscribe: () => pending.next(true),
-          }),
-          finalize(() => pending.next(false)),
-          repeat({
-            delay: () =>
-              combineLatest([
-                memoizedEffect(args),
-                invalidatesTagsSubject$,
-              ]).pipe(
-                filter(
-                  ([{ providesTags }, invalidatedTags]) =>
-                    intersection(providesTags, invalidatedTags).length > 0,
-                ),
-              ),
-          }),
-          shareReplay({ bufferSize: 1, refCount: resetOnRefCountZero }),
-        ),
-      ),
+      new (class extends ProxyObservable<ApiEffectResult<Result>> {
+        constructor() {
+          const finalizedSubject$ = new BehaviorSubject(true);
+
+          super(
+            asObservable(predicate(args)).pipe(
+              tap({
+                next: ({ invalidatesTags }) => {
+                  if (invalidatesTags != null) {
+                    invalidatesTagsSubject$.next(asArray(invalidatesTags));
+                  }
+                },
+                subscribe: () => finalizedSubject$.next(false),
+                unsubscribe: () => finalizedSubject$.next(true),
+              }),
+              finalize(() => finalizedSubject$.next(true)),
+              repeat({
+                delay: () =>
+                  combineLatest([
+                    memoizedEffect(args),
+                    invalidatesTagsSubject$,
+                  ]).pipe(
+                    filter(
+                      ([{ providesTags }, invalidatedTags]) =>
+                        intersection(providesTags, invalidatedTags).length > 0,
+                    ),
+                  ),
+              }),
+              shareReplay({ bufferSize: 1, refCount: resetOnRefCountZero }),
+            ),
+            finalizedSubject$,
+          );
+        }
+      })(),
   );
 
   return memoizedEffect;

@@ -80,10 +80,7 @@ export class TableIndex<R, K extends keyof R> {
     }
   }
 
-  async trySelectByIdFromAction(
-    id: R[K],
-    action?: TableAction<R, K>,
-  ): Promise<R | undefined> {
+  trySelectByIdFromAction(id: R[K], action?: TableAction<R, K>): R | undefined {
     return this.table.trySelectById(
       action?.type === "insert"
         ? action.payload.records
@@ -101,7 +98,9 @@ export class TableIndex<R, K extends keyof R> {
   }
 
   async getMany(ids: R[K][]): Promise<R[]> {
-    const readActionMemoized = memoize((path) => this.readAction(path));
+    const readActionMemoized = memoize((path?: string) =>
+      this.readAction(path),
+    );
     const records = new Array<R>();
 
     for (const id of ids) {
@@ -208,7 +207,9 @@ export class Table<R, K extends keyof R> {
       records.find((record) => this.selectId(record) === id),
       (record) => {
         if (record == null) {
-          console.warn(`No record w/ id ${id} found in table ${this.id}`);
+          console.warn(
+            `No record w/ id ${String(id)} found in table ${this.id}`,
+          );
         }
       },
     );
@@ -346,7 +347,7 @@ export class Table<R, K extends keyof R> {
                     ]
                   : tap([], () => {
                       console.warn(
-                        `record ${id} cannot be deleted, because it doesn't exist`,
+                        `record ${String(id)} cannot be deleted, because it doesn't exist`,
                       );
                     }),
                 callback,
@@ -374,7 +375,7 @@ export class Table<R, K extends keyof R> {
   }
 
   public async getAll(): Promise<R[]> {
-    return new Promise<R[]>((resolve) => this.dispatch("all", resolve));
+    return new Promise<R[]>((resolve) => void this.dispatch("all", resolve));
   }
 
   reduceActions =
@@ -452,7 +453,7 @@ export class Table<R, K extends keyof R> {
             ),
           Promise.resolve<{
             index: TableIndex<R, K>;
-            actions: Array<TableAction<R, K>>;
+            actions: TableAction<R, K>[];
             previousAction?: TableAction<R, K>;
           }>({
             index: this.createIndex(),
@@ -465,6 +466,7 @@ export class Table<R, K extends keyof R> {
 }
 
 interface TableInstance<R, K extends keyof R> {
+  // eslint-disable-next-line
   new (): Table<R, K>;
 }
 
@@ -492,8 +494,9 @@ export const createTable = memoize(
 );
 
 interface FileTableInstance<R, K extends keyof R> {
+  // eslint-disable-next-line
   new (): Table<R, K> & {
-    getFile: (url: string, spinner?: Ora | undefined) => Promise<File>;
+    getFile: (url: string, spinner?: Ora) => Promise<File>;
   };
 }
 
