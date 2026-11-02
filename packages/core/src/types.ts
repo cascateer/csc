@@ -8,7 +8,6 @@ import { Dictionary, Function1, memoize, pick, tap } from "lodash";
 import {
   combineLatest,
   map,
-  ObservedValueOf,
   ReplaySubject,
   scan,
   shareReplay,
@@ -66,16 +65,6 @@ export type ReargEffectConstructorPredicate<
   ctx: Ctx,
   ...deps: { -readonly [K in keyof DepKeys]: Args[DepKeys[K]] }
 ) => MaybeObservable<Result>;
-
-// TODO remove after commit
-export type EffectFiber<Eff extends Effect<any, any>> = (
-  ...args: Parameters<Eff>
-) => ObservedValueOf<ReturnType<Eff>>;
-
-// TODO remove after commit
-export type EffectFibers<Effects extends Dictionary<Effect<any, any>>> = {
-  [K in keyof Effects]: EffectFiber<Effects[K]>;
-};
 
 export type Action<Args, Result> = Function1<Args, Promise<Result>>;
 
