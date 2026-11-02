@@ -156,15 +156,15 @@ export class LazyStoreAdapter<
                         return (args) =>
                           new Promise<Data>((callback) =>
                             this.reducer.next(({ id }) =>
-                              actionKey.then((key) => {
-                                if (key != null) {
+                              actionKey.then((actionKey) => {
+                                if (actionKey != null) {
                                   callbacks.set(id, callback);
 
                                   return {
                                     id,
                                     type: "transformAction",
                                     data: {
-                                      key,
+                                      actionKey,
                                       args: JSON.stringify(args),
                                     },
                                     sameOrigin: config.sameOrigin,
@@ -191,7 +191,7 @@ export class StoreReducer<StoreData> {
   next: Function1<MulticastMessageConstructor<MulticastClientMessage>, void>;
 
   subscribe: (
-    key: Promise<string | undefined>,
+    actionKey: Promise<string | undefined>,
     parse: (
       action: MulticastBaseActionMessage<any, "transformAction">,
     ) => MulticastAction<StoreData, "transformAction">,
@@ -217,13 +217,13 @@ export class StoreReducer<StoreData> {
 
     this.next = (action) => actions$.next(action);
 
-    this.subscribe = async (key, parse) => {
+    this.subscribe = async (actionKey, parse) => {
       const subscription = actions$
         .pipe(
           mergeMap(async (event) => {
             if (
               event.type === "transformAction" &&
-              event.data.key === (await key)
+              event.data.actionKey === (await actionKey)
             ) {
               return parse(event);
             }
@@ -232,7 +232,7 @@ export class StoreReducer<StoreData> {
         )
         .subscribe(transformActionSubject$);
 
-      if ((await key) == null) {
+      if ((await actionKey) == null) {
         subscription.unsubscribe();
       }
     };

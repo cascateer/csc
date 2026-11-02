@@ -54,7 +54,7 @@ const actions = new NextObservable<Observable<InMessages>, OutMessages>(
   (messages) =>
     messages.pipe(
       mergeAll(),
-      groupBy(({ connect }) => connect.data.key),
+      groupBy(({ connect }) => connect.data.sliceKey),
       mergeMap((group) =>
         group.pipe(
           scan<InMessages, OutMessages>(

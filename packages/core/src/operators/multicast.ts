@@ -34,7 +34,7 @@ interface MulticastActions<Data> {
   transformAction: {
     predicate: EndoFunction<Data>;
     data: {
-      key: string;
+      actionKey: string;
       args: string;
     };
   };
@@ -76,7 +76,7 @@ export type MulticastAction<
   }[Type];
 
 export interface MulticastConnectMessageData {
-  key: string;
+  sliceKey: string;
   seed: string;
 }
 
@@ -92,31 +92,36 @@ export type MulticastClientMessage =
 type MulticastMessage = MulticastHostMessage | MulticastClientMessage;
 
 export type MulticastMessageConstructor<Message extends MulticastMessage> =
-  Function1<Record<"key" | "id", string>, Promise<MaybeArray<Message>>>;
+  Function1<Record<"sliceKey" | "id", string>, Promise<MaybeArray<Message>>>;
 
 export type MulticastObservable = NextObservable<
   MulticastMessageConstructor<MulticastClientMessage>,
   MulticastHostMessage
 >;
 
-export const multicast = <Seed>(key: string, seed: Seed): MulticastObservable =>
+export const multicast = <Seed>(
+  sliceKey: string,
+  seed: Seed,
+): MulticastObservable =>
   new NextObservable(new ReplaySubject(), (messages) =>
     messages.pipe(
-      startWith(({ key, id }): MulticastConnectMessage => ({
+      startWith(({ sliceKey, id }): MulticastConnectMessage => ({
         id,
         type: "connect",
         data: {
-          key,
+          sliceKey,
           seed: JSON.stringify(
             (
-              (JSON.parse(localStorage.getItem(`${key}.state`) ?? "null") as {
+              (JSON.parse(
+                localStorage.getItem(`${sliceKey}.state`) ?? "null",
+              ) as {
                 data: Seed;
               } | null) ?? { data: seed }
             ).data,
           ),
         },
       })),
-      concatMap(async (message) => message({ key, id: v4() })),
+      concatMap(async (message) => message({ sliceKey, id: v4() })),
       flatMap(identity),
       exchangeMessages<MulticastHostMessage, MulticastClientMessage>(
         new SharedWorker(new URL("./multicast.js", import.meta.url), {

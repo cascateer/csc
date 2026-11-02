@@ -15,13 +15,10 @@ import {
   isObject,
   isString,
   tap,
-  thru,
 } from "lodash";
 import React from "react";
 import {
   defer,
-  distinctUntilChanged,
-  filter,
   fromEvent,
   isObservable,
   map,
@@ -95,15 +92,6 @@ export class FinalizationObserver {
     this.subscribe = finalized$.subscribe.bind(finalized$);
   }
 }
-
-// TODO
-const fromDocumentEvent = (element: HTMLElement, type: string) =>
-  thru(new WeakRef(element), (elementRef) =>
-    fromEvent(document, type).pipe(
-      filter((event) => event.composedPath()[0] === elementRef.deref()),
-      distinctUntilChanged(),
-    ),
-  );
 
 type DocumentEventListener<EventName extends keyof DocumentEventMap> =
   | Partial<Observer<DocumentEventMap[EventName]>>

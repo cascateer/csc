@@ -6,9 +6,9 @@ import { createFragment } from "./jsx-runtime";
 import { fromComponentLike } from "./operators";
 
 export function createComponent<Context>(
-  key: string,
+  ns: string,
   ctx: Context,
-): (customElement?: string) => {
+): (name?: string) => {
   withStyles: <Styles extends Promise<unknown>[]>(
     ...styles: Styles
   ) => {
@@ -23,7 +23,7 @@ export function createComponent<Context>(
     constructor: (ctx: Context) => JSX.ComponentLike<Props>,
   ) => JSX.Component<Props>;
 } {
-  return (customElement?: string) => {
+  return (name?: string) => {
     const withTemplate =
       <Styles extends Promise<unknown>[]>(...styles: Styles) =>
       <Props extends JSX.Props>(
@@ -40,14 +40,15 @@ export function createComponent<Context>(
                 constructor(ctx, ...cssModules),
               )(props);
 
-              return customElement != null
+              return name != null
                 ? new CSSStyleSheets()
                     .of(...cssModules)
                     .then(
                       (cssStyleSheets) =>
-                        new (defineCustomElement(
-                          kebabCase(key, customElement),
-                        ))(element, cssStyleSheets),
+                        new (defineCustomElement(kebabCase(ns, name)))(
+                          element,
+                          cssStyleSheets,
+                        ),
                     )
                 : element;
             }),
@@ -63,6 +64,6 @@ export function createComponent<Context>(
   };
 }
 
-export function createStandaloneComponent(customElement?: string) {
-  return createComponent("html", {})(customElement);
+export function createStandaloneComponent(name?: string) {
+  return createComponent("html", {})(name);
 }

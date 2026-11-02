@@ -122,7 +122,7 @@ export const createStore = <StoreData>(storeData: StoreData) => ({
           ApiActions
         >,
       ) => ({
-        createSlice: (key: string) => ({
+        createSlice: (sliceKey: string) => ({
           from: <
             TerminalEffects extends Dictionary<TerminalEffect<any, any>>,
             TerminalActions extends Dictionary<Action<any, any>>,
@@ -137,7 +137,7 @@ export const createStore = <StoreData>(storeData: StoreData) => ({
               TerminalActions
             >,
           ) =>
-            new Slice(key, {
+            new Slice(sliceKey, {
               storeData,
               store,
               apiClient,
@@ -165,7 +165,7 @@ export class Slice<
   private terminal: TerminalAdapter<TerminalEffects, TerminalActions>;
 
   constructor(
-    private key: string,
+    private sliceKey: string,
     {
       storeData,
       store,
@@ -184,7 +184,7 @@ export class Slice<
     >,
   ) {
     this.store = store({
-      StoreProvider: new StoreReducer(key, storeData).provider,
+      StoreProvider: new StoreReducer(sliceKey, storeData).provider,
     });
 
     this.api = api({
@@ -219,7 +219,7 @@ export class Slice<
   }
 
   createComponent() {
-    return createComponent(`my-${this.key}`, {
+    return createComponent(`my-${this.sliceKey}`, {
       store: {
         effects: asStoreEffects<StoreData, StoreSignals>(this.store.signals),
         actions: this.store.actions,
