@@ -1,17 +1,21 @@
-import { AppCounterComponent } from "./counter/component";
-import { AppIconsComponent } from "./icons/component";
-import { AppNumbersComponent } from "./numbers/component";
+import { AppCounter } from "./counter/component";
+import { AppIcons } from "./icons/component";
+import { AppNumbers } from "./numbers/component";
 import { appSlice } from "./slice";
 
-export const AppRootComponent = appSlice
+export const AppRoot = appSlice
   .createComponent("root")
-  .withStyles(import("./styles.module.scss"), import("./styles.scss?inline"))
+  .withStyles(
+    import("./styles.module.scss"),
+    import("../../styles.inline.scss"),
+    import("./styles.inline.scss"),
+  )
   .withTemplate((ctx, { button }) => () => (
     <>
-      <AppIconsComponent />
-      <AppCounterComponent />
-      <AppNumbersComponent />
-      <button className={button} onClick={() => void ctx.store.actions.reset()}>
+      <AppIcons />
+      <AppCounter />
+      <AppNumbers />
+      <button className={button} onClick={() => ctx.store.actions.reset()}>
         Reset
       </button>
     </>

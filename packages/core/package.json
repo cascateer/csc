@@ -12,8 +12,7 @@
       "./src/jsx-dev-runtime.ts",
       "./src/multicast.ts",
       "./src/operators/index.ts",
-      "./src/test/index.ts",
-      "./src/vite.ts"
+      "./src/test/index.ts"
     ],
     "format": [
       "esm"
@@ -35,13 +34,9 @@
     },
     "./operators": {
       "types": "./src/operators/index.ts",
-      "default": "./dist/operators.js"
+      "default": "./dist/operators/index.js"
     },
-    "./test": "./src/test/index.ts",
-    "./vite": {
-      "types": "./src/vite.ts",
-      "default": "./dist/vite.js"
-    }
+    "./test": "./src/test/index.ts"
   },
   "devDependencies": {
     "@cascateer/eslint-config": "*",
@@ -55,16 +50,16 @@
   },
   "dependencies": {
     "@cascateer/lib": "*",
+    "classnames": "^2.5.1",
+    "html-tag-names": "^2.1.0",
     "lodash": "^4.18.1",
     "object-hash": "^3.0.0",
     "path-to-regexp": "^8.4.2",
     "rxjs": "^7.8.2",
+    "svg-tag-names": "^3.0.1",
     "ts-toolbelt": "^9.6.0",
     "utility-types": "^3.11.0",
     "uuid": "^14.0.1"
-  },
-  "peerDependencies": {
-    "vite": "^8.2.0"
   },
   "files": [
     "./dist"

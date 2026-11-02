@@ -1,25 +1,25 @@
 import { flatMap } from "@cascateer/lib/observable";
 import { appSlice } from "../slice";
 
-export const AppNumbersComponent = appSlice
+export const AppNumbers = appSlice
   .createComponent("numbers")
   .withStyles(
     import("../styles.module.scss"),
     import("./styles.module.scss"),
-    import("./styles.scss?inline"),
+    import("./styles.inline.scss"),
   )
   .withTemplate((ctx, { button }, { numbersList }) => () => {
     return (
       <>
         <button
           className={button}
-          onClick={() => void ctx.store.actions.addNumber()}
+          onClick={() => ctx.store.actions.addNumber()}
         >
           Add
         </button>
         <div className={numbersList}>
           {ctx.store.effects.numbers().list((number$) => (
-            <code onTeardown={() => console.log("done")}>
+            <code>
               {number$.pipe(
                 flatMap((item) =>
                   item != null

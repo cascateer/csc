@@ -6,12 +6,53 @@ import { asStoreEffects, StoreAdapter, StoreEffectMap } from "./store";
 import {
   Action,
   combineProxyEffects,
-  Effect,
   ProxyEffect,
   ProxyEffectMap,
+  ReargEffect,
+  ReargEffectConstructorPredicate,
 } from "./types";
 
 export type TerminalEffect<Args, Result> = ProxyEffect<Args, Result>;
+
+export interface TerminalEffectContext<
+  StoreData,
+  StoreSignals extends Dictionary<DerivedSignal<StoreData, any>>,
+  ApiEffects extends Dictionary<ApiEffect<any, any>>,
+  Effects extends Dictionary<TerminalEffect<any, any>>,
+> {
+  store: {
+    effects: StoreEffectMap<StoreData, StoreSignals>;
+  };
+  api: {
+    effects: ApiEffectMap<ApiEffects>;
+  };
+  terminal: {
+    effects: ProxyEffectMap<Effects>;
+  };
+}
+
+export interface TerminalActionContext<
+  StoreData,
+  StoreSignals extends Dictionary<DerivedSignal<StoreData, any>>,
+  StoreActions extends Dictionary<Action<any, any>>,
+  ApiEffects extends Dictionary<ApiEffect<any, any>>,
+  ApiActions extends Dictionary<Action<any, any>>,
+  Effects extends Dictionary<TerminalEffect<any, any>>,
+  Actions extends Dictionary<Action<any, any>>,
+> {
+  store: {
+    effects: StoreEffectMap<StoreData, StoreSignals>;
+    actions: StoreActions;
+  };
+  api: {
+    effects: ApiEffects;
+    actions: ApiActions;
+  };
+  terminal: {
+    effects: Effects;
+    actions: Actions;
+  };
+}
 
 export class TerminalAdapter<
   Effects extends Dictionary<TerminalEffect<any, any>>,
@@ -24,8 +65,8 @@ export class TerminalAdapter<
 }
 
 export class LazyTerminalAdapter<
-  Data,
-  StoreSignals extends Dictionary<DerivedSignal<Data, any>>,
+  StoreData,
+  StoreSignals extends Dictionary<DerivedSignal<StoreData, any>>,
   StoreActions extends Dictionary<Action<any, any>>,
   ApiEffects extends Dictionary<ApiEffect<any, any>>,
   ApiActions extends Dictionary<Action<any, any>>,
@@ -41,7 +82,7 @@ export class LazyTerminalAdapter<
 
   constructor(
     private context: {
-      store: StoreAdapter<Data, StoreSignals, StoreActions>;
+      store: StoreAdapter<StoreData, StoreSignals, StoreActions>;
       api: ApiAdapter<ApiEffects, ApiActions>;
     },
     private lazyEffects: LazyDictionary<TerminalEffect<any, any>, Effects>,
@@ -49,50 +90,46 @@ export class LazyTerminalAdapter<
   ) {}
 
   provideEffects<MoreEffects extends Dictionary<TerminalEffect<any, any>>>(
-    effects: Function1<
-      {
-        effect: <Args, Result>(
-          constructor: Function1<
-            {
-              store: {
-                effects: StoreEffectMap<Data, StoreSignals>;
-              };
-              api: {
-                effects: ApiEffectMap<ApiEffects>;
-              };
-              terminal: {
-                effects: ProxyEffectMap<Effects>;
-              };
-            },
-            Effect<Args, Result>
-          >,
-        ) => TerminalEffect<Args, Result>;
-      },
-      MoreEffects
-    >,
+    effects: (factory: {
+      effect: <Args, Result>() => <DepKeys extends (keyof Args)[]>(
+        predicate: ReargEffectConstructorPredicate<
+          TerminalEffectContext<StoreData, StoreSignals, ApiEffects, Effects>,
+          Args,
+          Result,
+          DepKeys
+        >,
+        ...depKeys: DepKeys
+      ) => TerminalEffect<Args, Result>;
+    }) => MoreEffects,
   ) {
     return new LazyTerminalAdapter(
       this.context,
       this.lazyEffects.extend(
         (currentEffects) => () =>
           effects({
-            effect: (project) =>
-              combineProxyEffects({
-                intercept: (proxy) => ({
-                  store: {
-                    effects: asStoreEffects<Data, StoreSignals>(
-                      this.context.store.signals,
+            effect:
+              () =>
+              (predicate, ...depKeys) =>
+                combineProxyEffects({
+                  intercept: (proxy) => ({
+                    store: {
+                      effects: asStoreEffects<StoreData, StoreSignals>(
+                        this.context.store.signals,
+                      ),
+                    },
+                    api: {
+                      effects: mapValues(this.context.api.effects, proxy),
+                    },
+                    terminal: {
+                      effects: mapValues(currentEffects, proxy),
+                    },
+                  }),
+                  project: (ctx) =>
+                    new ReargEffect(
+                      (...deps) => predicate(ctx, ...deps),
+                      depKeys,
                     ),
-                  },
-                  api: {
-                    effects: mapValues(this.context.api.effects, proxy),
-                  },
-                  terminal: {
-                    effects: mapValues(currentEffects, proxy),
-                  },
                 }),
-                project,
-              }),
           }),
       ),
       this.lazyActions,
@@ -103,22 +140,18 @@ export class LazyTerminalAdapter<
     actions: Function1<
       {
         action: <Args, Result>(
-          constructor: Function1<
-            {
-              store: {
-                effects: StoreEffectMap<Data, StoreSignals>;
-                actions: StoreActions;
-              };
-              api: {
-                actions: ApiActions;
-              };
-              terminal: {
-                effects: Effects;
-                actions: Actions;
-              };
-            },
-            Action<Args, Result>
-          >,
+          factory: (
+            ctx: TerminalActionContext<
+              StoreData,
+              StoreSignals,
+              StoreActions,
+              ApiEffects,
+              ApiActions,
+              Effects,
+              Actions
+            >,
+            args: Args,
+          ) => Promise<Result>,
         ) => Action<Args, Result>;
       },
       MoreActions
@@ -130,20 +163,24 @@ export class LazyTerminalAdapter<
       this.lazyActions.extend(
         (currentActions) => () =>
           actions({
-            action: (constructor) =>
-              constructor({
-                store: {
-                  effects: asStoreEffects(this.context.store.signals),
-                  actions: this.context.store.actions,
+            action: (factory) => (args) =>
+              factory(
+                {
+                  store: {
+                    effects: asStoreEffects(this.context.store.signals),
+                    actions: this.context.store.actions,
+                  },
+                  api: {
+                    effects: this.context.api.effects,
+                    actions: this.context.api.actions,
+                  },
+                  terminal: {
+                    effects: this.lazyEffects.currentValue,
+                    actions: currentActions,
+                  },
                 },
-                api: {
-                  actions: this.context.api.actions,
-                },
-                terminal: {
-                  effects: this.lazyEffects.currentValue,
-                  actions: currentActions,
-                },
-              }),
+                args,
+              ),
           }),
       ),
     );
@@ -151,13 +188,13 @@ export class LazyTerminalAdapter<
 }
 
 export class TerminalProvider<
-  Data,
-  StoreSignals extends Dictionary<DerivedSignal<Data, any>>,
+  StoreData,
+  StoreSignals extends Dictionary<DerivedSignal<StoreData, any>>,
   StoreActions extends Dictionary<Action<any, any>>,
   ApiEffects extends Dictionary<ApiEffect<any, any>>,
   ApiActions extends Dictionary<Action<any, any>>,
 > extends LazyTerminalAdapter<
-  Data,
+  StoreData,
   StoreSignals,
   StoreActions,
   ApiEffects,
@@ -168,8 +205,8 @@ export class TerminalProvider<
   {}
 > {
   constructor(context: {
+    store: StoreAdapter<StoreData, StoreSignals, StoreActions>;
     api: ApiAdapter<ApiEffects, ApiActions>;
-    store: StoreAdapter<Data, StoreSignals, StoreActions>;
   }) {
     super(context, new LazyDictionary({}), new LazyDictionary({}));
   }

@@ -1,7 +1,7 @@
-export { ApiProvider } from "./api";
+export { ApiEffectResult, ApiProvider } from "./api";
 export { createStandaloneComponent } from "./component";
-export { registerCustomProperties } from "./dom";
+export { registerCustomProperty } from "./dom";
 export { createRoot } from "./jsx-runtime";
-export { Router } from "./router";
-export { createApi, createSlice, createStore } from "./slice";
+export { createStore } from "./slice";
 export { loadSample, SampleRegistry } from "./test";
+export { Action, Effect } from "./types";

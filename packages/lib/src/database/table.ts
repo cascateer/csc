@@ -466,7 +466,7 @@ export class Table<R, K extends keyof R> {
 }
 
 interface TableInstance<R, K extends keyof R> {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/prefer-function-type
   new (): Table<R, K>;
 }
 
@@ -494,7 +494,7 @@ export const createTable = memoize(
 );
 
 interface FileTableInstance<R, K extends keyof R> {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/prefer-function-type
   new (): Table<R, K> & {
     getFile: (url: string, spinner?: Ora) => Promise<File>;
   };

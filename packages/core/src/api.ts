@@ -4,7 +4,7 @@ import {
   MaybeObservable,
   ProxyObservable,
 } from "@cascateer/lib/observable";
-import { Dictionary, Function1, intersection } from "lodash";
+import { Dictionary, Function1, intersection, memoize } from "lodash";
 import {
   BehaviorSubject,
   combineLatest,
@@ -17,8 +17,12 @@ import {
   Subject,
   tap,
 } from "rxjs";
-import { memoize } from "./lib/memoize";
-import { Action, ProxyEffect } from "./types";
+import {
+  Action,
+  ProxyEffect,
+  ReargEffect,
+  ReargEffectConstructorPredicate,
+} from "./types";
 
 type ApiTags = MaybeArray<string>;
 
@@ -28,23 +32,14 @@ export interface ApiEffectResult<Result> {
   invalidatesTags?: ApiTags;
 }
 
-interface ApiActionResult<Result> {
-  data: Result;
-  invalidatesTags?: ApiTags;
-}
-
-interface ApiEffectConfig<Args, Result> {
-  predicate: Function1<Args, MaybeObservable<ApiEffectResult<Result>>>;
+interface ApiEffectConfig {
   resetOnRefCountZero?: boolean;
 }
 
-interface ApiActionConfig<Args, Result> {
-  predicate: Function1<Args, MaybeObservable<ApiActionResult<Result>>>;
-}
-
 const subscribe = <Args, Result>(
-  { predicate, resetOnRefCountZero = false }: ApiEffectConfig<Args, Result>,
+  predicate: ReargEffect<Args, ApiEffectResult<Result>>,
   invalidatesTagsSubject$: Subject<string[]>,
+  { resetOnRefCountZero = false }: ApiEffectConfig = {},
 ): ApiEffect<Args, Result> => {
   const memoizedEffect: ApiEffect<Args, Result> = memoize(
     (args) =>
@@ -53,7 +48,7 @@ const subscribe = <Args, Result>(
           const finalizedSubject$ = new BehaviorSubject(true);
 
           super(
-            asObservable(predicate(args)).pipe(
+            predicate.predicate(args).pipe(
               tap({
                 next: ({ invalidatesTags }) => {
                   if (invalidatesTags != null) {
@@ -78,18 +73,30 @@ const subscribe = <Args, Result>(
               }),
               shareReplay({ bufferSize: 1, refCount: resetOnRefCountZero }),
             ),
+            predicate.hash(args),
             finalizedSubject$,
           );
         }
       })(),
+    predicate.hash,
   );
 
   return memoizedEffect;
 };
 
+interface ApiActionResult<Result> {
+  data: Result;
+  invalidatesTags?: ApiTags;
+}
+
+type ApiActionPredicate<Args, Result> = Function1<
+  Args,
+  MaybeObservable<ApiActionResult<Result>>
+>;
+
 const share =
   <Args, Result>(
-    { predicate }: ApiActionConfig<Args, Result>,
+    predicate: ApiActionPredicate<Args, Result>,
     invalidatesTagsObserver: NextObserver<string[]>,
   ): Action<Args, Result> =>
   (args) =>
@@ -121,14 +128,6 @@ export type ApiEffectMap<Effects extends Dictionary<ApiEffect<any, any>>> = {
   >;
 };
 
-type ApiAdapterEffectConstructor<Source> = <Args, Result>(
-  config: Function1<Source, ApiEffectConfig<Args, Result>>,
-) => ApiEffect<Args, Result>;
-
-type ApiAdapterActionConstructor<Source> = <Args, Result>(
-  config: Function1<Source, ApiActionConfig<Args, Result>>,
-) => Action<Args, Result>;
-
 export class ApiAdapter<
   Effects extends Dictionary<ApiEffect<any, any>>,
   Actions extends Dictionary<Action<any, any>>,
@@ -140,7 +139,7 @@ export class ApiAdapter<
 }
 
 export class LazyApiAdapter<
-  Source,
+  Client,
   Effects extends Dictionary<ApiEffect<any, any>>,
   Actions extends Dictionary<Action<any, any>>,
 > {
@@ -153,7 +152,7 @@ export class LazyApiAdapter<
 
   constructor(
     public context: {
-      source: Source;
+      client: Client;
       invalidatedTagsSubject$: Subject<string[]>;
     },
     private lazyEffects: LazyDictionary<ApiEffect<any, any>, Effects>,
@@ -162,7 +161,19 @@ export class LazyApiAdapter<
 
   provideEffects<MoreEffects extends Dictionary<ApiEffect<any, any>>>(
     effects: Function1<
-      { effect: ApiAdapterEffectConstructor<Source> },
+      {
+        effect: <Args, Result>(
+          config?: ApiEffectConfig,
+        ) => <DepKeys extends (keyof Args)[]>(
+          predicate: ReargEffectConstructorPredicate<
+            Client,
+            Args,
+            ApiEffectResult<Result>,
+            DepKeys
+          >,
+          ...depKeys: DepKeys
+        ) => ApiEffect<Args, Result>;
+      },
       MoreEffects
     >,
   ) {
@@ -171,11 +182,17 @@ export class LazyApiAdapter<
       this.lazyEffects.extend(
         () => () =>
           effects({
-            effect: (config) =>
-              subscribe(
-                config(this.context.source),
-                this.context.invalidatedTagsSubject$,
-              ),
+            effect:
+              (config) =>
+              (predicate, ...depKeys) =>
+                subscribe(
+                  new ReargEffect(
+                    (...deps) => predicate(this.context.client, ...deps),
+                    depKeys,
+                  ),
+                  this.context.invalidatedTagsSubject$,
+                  config,
+                ),
           }),
       ),
       this.lazyActions,
@@ -184,7 +201,14 @@ export class LazyApiAdapter<
 
   provideActions<MoreActions extends Dictionary<Action<any, any>>>(
     actions: Function1<
-      { action: ApiAdapterActionConstructor<Source> },
+      {
+        action: <Args, Result>(
+          predicate: (
+            client: Client,
+            args: Args,
+          ) => MaybeObservable<ApiActionResult<Result>>,
+        ) => Action<Args, Result>;
+      },
       MoreActions
     >,
   ) {
@@ -194,9 +218,9 @@ export class LazyApiAdapter<
       this.lazyActions.extend(
         () => () =>
           actions({
-            action: (config) =>
+            action: (predicate) =>
               share(
-                config(this.context.source),
+                (args) => predicate(this.context.client, args),
                 this.context.invalidatedTagsSubject$,
               ),
           }),
@@ -205,12 +229,14 @@ export class LazyApiAdapter<
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export class ApiProvider<Source> extends LazyApiAdapter<Source, {}, {}> {
-  constructor(source: Source) {
+export class ApiProvider<
+  ApiClient,
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+> extends LazyApiAdapter<ApiClient, {}, {}> {
+  constructor(client: ApiClient) {
     super(
       {
-        source,
+        client,
         invalidatedTagsSubject$: new Subject(),
       },
       new LazyDictionary({}),

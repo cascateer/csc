@@ -4,7 +4,7 @@ import {
   flatMap,
   mutationRecords,
 } from "@cascateer/lib/observable";
-import { difference, tap } from "lodash";
+import { difference, isPlainObject, tap } from "lodash";
 import {
   combineLatest,
   distinctUntilChanged,
@@ -66,7 +66,7 @@ export class ObservableFragment extends SlotFragment {
           elements.map((element) =>
             asObservable(element).pipe(
               map((element) =>
-                element == null || element === false
+                element == null || element === false || isPlainObject(element)
                   ? []
                   : isPrimitive(element)
                     ? new Text(element.toString())
@@ -88,7 +88,7 @@ export class ObservableFragment extends SlotFragment {
             if (node instanceof ObservableFragment) {
               node.unlink();
             } else {
-              node.parentElement?.removeChild(node);
+              node.parentNode?.removeChild(node);
             }
           }
 

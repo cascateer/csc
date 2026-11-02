@@ -31,7 +31,7 @@ export class Signal<D, T> extends ProxyObservable<T> {
     enumerator?: Enumerator<T>;
     retract?: EndoFunctionOperator<T, D>;
   }) {
-    super(value);
+    super(value, "");
 
     this.enumerator = enumerator;
     this.retract = retract;

@@ -1,6 +1,6 @@
-import { keys } from "@cascateer/lib";
-import { createRoot } from ".";
-import { splitUrl } from "./lib/splitUrl";
+import { entries } from "@cascateer/lib";
+import { createRoot } from "./jsx-runtime";
+import { QueryParams } from "./router";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -9,7 +9,12 @@ declare global {
     type Component = JSX.Component<{}>;
 
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-    export interface Components extends Record<keyof {}, Component> {}
+    export interface Components extends Record<
+      keyof {
+        __no_empty_object_sample__: Component;
+      },
+      Component
+    > {}
   }
 }
 
@@ -24,31 +29,22 @@ export class SampleRegistry {
   }
 }
 
-export const loadSample = async (
-  sampleQuery: string | undefined | null = splitUrl(
-    window.location.hash,
-  )?.search.get("sample"),
-) => {
+export const loadSample = async ({
+  query,
+}: {
+  query: QueryParams<"/test?sample">;
+}) => {
   const samples = import.meta.glob("/**/*.samples.tsx");
 
   for (const url in samples) {
     await samples[url]?.call(null);
   }
 
-  const sample = keys(SampleRegistry.components).find(
-    (key) => key === sampleQuery,
-  );
-
-  const root = Object.assign(document.createElement("div"), { id: "root" });
-
-  document.body.replaceChildren(root);
-
-  if (sample != null) {
-    createRoot(root).render(
-      // eslint-disable-next-line
-      SampleRegistry.components[sample]
-        // @ts-expect-error Property 'call' does not exist on type 'never'
-        ?.call(null, {}),
-    );
+  for (const [key, SampleComponent] of entries(SampleRegistry.components)) {
+    if (key === query.parseString("sample")) {
+      return createRoot(
+        Object.assign(document.createElement("div"), { id: "root" }),
+      ).render(SampleComponent?.call(null, {}));
+    }
   }
 };

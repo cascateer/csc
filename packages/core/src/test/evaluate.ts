@@ -7,17 +7,23 @@ export const evaluate = <T>(
   sample: keyof Sample.Components,
   callback: (handle: ElementHandle<Element>) => MaybePromise<T>,
 ): Promise<T> =>
-  puppeteer.launch().then((browser) =>
-    browser.newPage().then(async (page) => {
-      await page.goto(
-        // eslint-disable-next-line  @typescript-eslint/restrict-template-expressions
-        `http://${VITE_HOST}:${VITE_PORT}/#/test?sample=${sample}`,
-      );
+  puppeteer
+    .launch({
+      headless: false,
+      acceptInsecureCerts: true,
+      devtools: true,
+      browser: "firefox",
+    })
+    .then((browser) =>
+      browser.newPage().then(async (page) => {
+        await page.goto(
+          `https://${VITE_HOST}:${VITE_PORT}/#/test?sample=${sample}`,
+        );
 
-      const value = await page.locator("#root").waitHandle().then(callback);
+        const value = await page.locator("#root").waitHandle().then(callback);
 
-      await browser.close();
+        await browser.close();
 
-      return value;
-    }),
-  );
+        return value;
+      }),
+    );

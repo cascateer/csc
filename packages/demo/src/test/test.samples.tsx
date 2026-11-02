@@ -24,7 +24,9 @@ SampleRegistry.register({
 
     return (
       <>
-        <button type="button" onClick={() => toggleSubject$.next()}></button>
+        <button type="button" onClick={() => toggleSubject$.next()}>
+          Toggle
+        </button>
         <input
           type="checkbox"
           checked={toggleSubject$.pipe(scan((acc) => !acc, false))}

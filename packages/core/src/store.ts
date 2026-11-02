@@ -107,21 +107,18 @@ export class LazyStoreAdapter<
     actions: Function1<
       {
         action: <Args>(
-          constructor: Function1<
-            {
-              [K in keyof Signals]: {
-                update: <
-                  T extends (Signals[K] extends DerivedSignal<Data, infer T>
-                    ? T
-                    : never),
-                >(
-                  predicate: Function1<Args, EndoFunction<T>>,
-                  config?: { sameOrigin?: boolean },
-                ) => Action<Args, Data>;
-              };
-            },
-            Action<Args, Data>
-          >,
+          constructor: (signals: {
+            [K in keyof Signals]: {
+              update: <
+                T extends (Signals[K] extends DerivedSignal<Data, infer T>
+                  ? T
+                  : never),
+              >(
+                predicate: Function1<Args, EndoFunction<T>>,
+                config?: { sameOrigin?: boolean },
+              ) => Action<Args, Data>;
+            };
+          }) => Action<Args, Data>,
         ) => Action<Args, Data>;
       },
       MoreActions
@@ -188,8 +185,8 @@ export class LazyStoreAdapter<
   }
 }
 
-export class StoreReducer<Data> {
-  value: Observable<Data>;
+export class StoreReducer<StoreData> {
+  value: Observable<StoreData>;
 
   next: Function1<MulticastMessageConstructor<MulticastClientMessage>, void>;
 
@@ -197,14 +194,14 @@ export class StoreReducer<Data> {
     key: Promise<string | undefined>,
     parse: (
       action: MulticastBaseActionMessage<any, "transformAction">,
-    ) => MulticastAction<Data, "transformAction">,
+    ) => MulticastAction<StoreData, "transformAction">,
   ) => Promise<void>;
 
-  constructor(key: string, data: Data) {
-    const actions$ = multicast(key, data);
+  constructor(sliceKey: string, storeData: StoreData) {
+    const actions$ = multicast(sliceKey, storeData);
 
     const transformActionSubject$ = new ReplaySubject<
-      MulticastAction<Data, "transformAction">
+      MulticastAction<StoreData, "transformAction">
     >();
 
     const seedActions$ = actions$.pipe(
@@ -242,7 +239,7 @@ export class StoreReducer<Data> {
 
     this.value = merge(seedActions$, transformActionSubject$).pipe(
       tapOperator((action) => console.debug(action)),
-      reduce<MulticastAction<Data>, Data>(
+      reduce<MulticastAction<StoreData>, StoreData>(
         (previousState, action, previousAction) => {
           if (isMulticastSeedActionMessage(action)) {
             return action.predicate();
@@ -270,9 +267,12 @@ export class StoreReducer<Data> {
       ),
       this.value,
     ]).subscribe({
-      next: ([hasFocus, data]) => {
+      next: ([hasFocus, storeData]) => {
         if (hasFocus) {
-          localStorage.setItem(`${key}.state`, JSON.stringify({ data }));
+          localStorage.setItem(
+            `${sliceKey}.state`,
+            JSON.stringify({ data: storeData }),
+          );
         }
 
         document.title = document.title.replace(
@@ -283,10 +283,10 @@ export class StoreReducer<Data> {
     });
   }
 
-  get provider(): new () => StoreProvider<Data> {
+  get provider(): new () => StoreProvider<StoreData> {
     const self = this;
 
-    return class extends StoreProvider<Data> {
+    return class extends StoreProvider<StoreData> {
       constructor() {
         super(self);
       }

@@ -1,4 +1,5 @@
 export { accumulate } from "./accumulate";
+export { fromComponentLike } from "./fromComponentLike";
 export {
   multicast,
   type MulticastAction,

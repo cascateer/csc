@@ -4,6 +4,7 @@ import { MaybePromise } from "./promise";
 export { asArray, type MaybeArray } from "./array";
 export { chunkWith } from "./chunkWith";
 export { createElement } from "./createElement";
+export { entries } from "./entries";
 export {
   asEnumerable,
   Enumerable,
@@ -13,7 +14,7 @@ export {
 export { envConfig } from "./envConfig";
 export { findDupeBy } from "./findDupeBy";
 export { asFunction, type MaybeFunction } from "./function";
-export { keyMapBy } from "./keyMapBy";
+export { kebabCase } from "./kebabCase";
 export { keys } from "./keys";
 export { LazyDictionary, type Extend } from "./LazyDictionary";
 export { nonNullable } from "./nonNullable";

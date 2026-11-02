@@ -1,12 +1,11 @@
-import { OperatorFunction, from, mergeMap } from "rxjs";
-import { MaybePromise } from "../promise";
+import { OperatorFunction, from, map, mergeMap } from "rxjs";
 
 export const flatMap =
   <T, U>(
-    project: (value: T, index: number) => MaybePromise<U | U[]>,
+    project: (value: T, index: number) => U | U[],
   ): OperatorFunction<T, U> =>
   (source) =>
     source.pipe(
-      mergeMap(async (value, index) => project(value, index)),
+      map(project),
       mergeMap((value) => from(Array.isArray(value) ? value : [value])),
     );

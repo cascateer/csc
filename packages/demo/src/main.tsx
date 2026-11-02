@@ -8,7 +8,8 @@ new Router()
   })
   .addRoute({
     path: "/test",
-    component: () =>
-      void import("@cascateer/core").then(({ loadSample }) => loadSample()),
+    component: fromComponentLike(() =>
+      import("@cascateer/core").then(({ loadSample }) => loadSample()),
+    ),
   })
   .init();

@@ -5,7 +5,7 @@ import {
 import { map } from "rxjs";
 import { appSlice } from "../slice";
 
-export const AppIconsComponent = appSlice
+export const AppIcons = appSlice
   .createComponent("icons")
   .withStyles(import("../styles.module.scss"))
   .withTemplate((ctx, { button }) => () => (
@@ -13,7 +13,7 @@ export const AppIconsComponent = appSlice
       <button
         className={button}
         onClick={() =>
-          void ctx.api.actions.addIcon({
+          ctx.api.actions.addIcon({
             group: AppControllerPostIconGroupEnum.Insects,
             requestBody: ["🪰"],
           })

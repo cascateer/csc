@@ -1,23 +1,10 @@
-import { kebabCase } from "lodash";
-import { defer, share } from "rxjs";
-import { cssStyleSheets } from "./css";
+import { kebabCase } from "@cascateer/lib";
+import { defer } from "rxjs";
+import { CSSStyleSheets } from "./css";
 import { defineCustomElement } from "./dom";
 import { createFragment } from "./jsx-runtime";
+import { fromComponentLike } from "./operators";
 
-export function createComponent(key: string): (customElement?: string) => {
-  withStyles: <Styles extends Promise<unknown>[]>(
-    ...styles: Styles
-  ) => {
-    withTemplate: <Props extends JSX.Props>(
-      constructor: (
-        ...classNames: { -readonly [K in keyof Styles]: Awaited<Styles[K]> }
-      ) => JSX.Component<Props>,
-    ) => (props: Props) => JSX.Element;
-  };
-  withTemplate: <Props extends JSX.Props>(
-    constructor: () => JSX.Component<Props>,
-  ) => (props: Props) => JSX.Element;
-};
 export function createComponent<Context>(
   key: string,
   ctx: Context,
@@ -29,58 +16,42 @@ export function createComponent<Context>(
       constructor: (
         ctx: Context,
         ...classNames: { -readonly [K in keyof Styles]: Awaited<Styles[K]> }
-      ) => JSX.Component<Props>,
-    ) => (props: Props) => JSX.Element;
+      ) => JSX.ComponentLike<Props>,
+    ) => JSX.Component<Props>;
   };
   withTemplate: <Props extends JSX.Props>(
-    constructor: (ctx: Context) => JSX.Component<Props>,
-  ) => (props: Props) => JSX.Element;
-};
-export function createComponent<Context>(
-  key: string,
-  ctx?: Context,
-): (customElement?: string) => {
-  withStyles: <Styles extends Promise<unknown>[]>(
-    ...styles: Styles
-  ) => {
-    withTemplate: <Props extends JSX.Props>(
-      constructor: (
-        ctx?: Context,
-        ...classNames: { -readonly [K in keyof Styles]: Awaited<Styles[K]> }
-      ) => JSX.Component<Props>,
-    ) => (props: Props) => JSX.Element;
-  };
-  withTemplate: <Props extends JSX.Props>(
-    constructor: (ctx?: Context) => JSX.Component<Props>,
-  ) => (props: Props) => JSX.Element;
+    constructor: (ctx: Context) => JSX.ComponentLike<Props>,
+  ) => JSX.Component<Props>;
 } {
   return (customElement?: string) => {
     const withTemplate =
       <Styles extends Promise<unknown>[]>(...styles: Styles) =>
       <Props extends JSX.Props>(
         constructor: (
-          ctx?: Context,
+          ctx: Context,
           ...classNames: { -readonly [K in keyof Styles]: Awaited<Styles[K]> }
-        ) => JSX.Component<Props>,
+        ) => JSX.ComponentLike<Props>,
       ) =>
       (props: Props) =>
         createFragment({
           children: defer(() =>
-            Promise.all(styles).then((cssModules) =>
-              cssStyleSheets(cssModules).then((cssStyleSheets) => {
-                const element = constructor(
-                  ...(ctx != null ? [ctx] : []),
-                  ...cssModules,
-                )(props);
+            Promise.all(styles).then((cssModules) => {
+              const element = fromComponentLike(
+                constructor(ctx, ...cssModules),
+              )(props);
 
-                return customElement != null
-                  ? new (defineCustomElement(
-                      `${key}-${kebabCase(customElement)}`,
-                    ))(element, cssStyleSheets)
-                  : element; /* TODO omit cssModules (whole workflow) */
-              }),
-            ),
-          ).pipe(share()),
+              return customElement != null
+                ? new CSSStyleSheets()
+                    .of(...cssModules)
+                    .then(
+                      (cssStyleSheets) =>
+                        new (defineCustomElement(
+                          kebabCase(key, customElement),
+                        ))(element, cssStyleSheets),
+                    )
+                : element;
+            }),
+          ),
         });
 
     return {
@@ -93,5 +64,5 @@ export function createComponent<Context>(
 }
 
 export function createStandaloneComponent(customElement?: string) {
-  return createComponent("csc")(customElement);
+  return createComponent("html", {})(customElement);
 }
