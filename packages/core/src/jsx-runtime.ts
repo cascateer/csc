@@ -18,15 +18,18 @@ import {
 } from "lodash";
 import React from "react";
 import {
+  combineLatest,
   defer,
   fromEvent,
   isObservable,
   map,
   Observable,
+  ObservableInputTuple,
   Observer,
   shareReplay,
   Subscriber,
   Subscription,
+  switchMap,
   tap as tapOperator,
 } from "rxjs";
 import { svgTagNames } from "svg-tag-names";
@@ -348,3 +351,15 @@ export const createRoot = (root: Node, ...styles: Promise<unknown>[]) => ({
 export const Fragment = createFragment;
 export const jsx = createElement;
 export const jsxs = createElement;
+
+export const CombineLatest = <A extends unknown[]>({
+  from: from,
+  to,
+}: JSX.ComponentProps<{
+  from: [...ObservableInputTuple<A>];
+  to: (...values: A) => JSX.Element;
+}>): JSX.Element =>
+  combineLatest(from).pipe(
+    map((values) => to(...values)),
+    switchMap(asObservable),
+  );

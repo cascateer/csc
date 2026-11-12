@@ -1,5 +1,5 @@
-export const splitUrl = (hash: string) => {
-  const [pathname, query] = hash.replace(/^#/, "").split("?");
+export const splitUrl = (url: string) => {
+  const [pathname, query] = url.replace(/^#/, "").split("?");
 
   if (pathname != null) {
     return {

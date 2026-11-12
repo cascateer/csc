@@ -105,7 +105,7 @@ export class LazyTerminalAdapter<
     return new LazyTerminalAdapter(
       this.context,
       this.lazyEffects.extend(
-        (currentEffects) => () =>
+        (baseEffects) => () =>
           effects({
             effect:
               () =>
@@ -121,7 +121,7 @@ export class LazyTerminalAdapter<
                       effects: mapValues(this.context.api.effects, proxy),
                     },
                     terminal: {
-                      effects: mapValues(currentEffects, proxy),
+                      effects: mapValues(baseEffects, proxy),
                     },
                   }),
                   project: (ctx) =>
@@ -161,7 +161,7 @@ export class LazyTerminalAdapter<
       this.context,
       this.lazyEffects,
       this.lazyActions.extend(
-        (currentActions) => () =>
+        (baseActions) => () =>
           actions({
             action: (factory) => (args) =>
               factory(
@@ -175,8 +175,8 @@ export class LazyTerminalAdapter<
                     actions: this.context.api.actions,
                   },
                   terminal: {
-                    effects: this.lazyEffects.currentValue,
-                    actions: currentActions,
+                    effects: this.lazyEffects.baseValue,
+                    actions: baseActions,
                   },
                 },
                 args,

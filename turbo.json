@@ -16,7 +16,9 @@
     "test": {
       "dependsOn": ["^build"]
     },
-    "test-ui": {},
+    "test-ui": {
+      "cache": false
+    },
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["./dist/**"],

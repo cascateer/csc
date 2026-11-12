@@ -9,3 +9,4 @@ export {
   type MulticastHostMessage,
   type MulticastObservable,
 } from "./multicast";
+export { when } from "./when";

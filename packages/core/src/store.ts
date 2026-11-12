@@ -94,9 +94,9 @@ export class LazyStoreAdapter<
     return new LazyStoreAdapter(
       this.reducer,
       this.lazySignals.extend(
-        (currentSignals) => () =>
+        (baseSignals) => () =>
           effects({
-            effect: (constructor) => constructor(currentSignals),
+            effect: (constructor) => constructor(baseSignals),
           }),
       ),
       this.lazyActions,
@@ -134,7 +134,7 @@ export class LazyStoreAdapter<
               action: (constructor) =>
                 property((actionKey) =>
                   constructor(
-                    mapValues(this.lazySignals.currentValue, (target) => ({
+                    mapValues(this.lazySignals.baseValue, (target) => ({
                       update: (predicate, config = {}) => {
                         const callbacks = new Map<
                           string,

@@ -7,16 +7,15 @@ export type Extend<T, U> = Omit<T, keyof U> & U;
 
 export class LazyDictionary<T, U extends Dictionary<T>> {
   constructor(
-    public currentValue: U,
+    public baseValue: U,
     private value = new LazyPromise<Dictionary<T>>(identity),
   ) {}
 
-  complete = () =>
-    tap(this.currentValue, (value) => void this.value.start(value));
+  complete = () => tap(this.baseValue, (value) => void this.value.start(value));
 
   extend<V extends Dictionary<T>>(
     value: (
-      currentValue: U,
+      baseValue: U,
     ) => ({
       property,
     }: {
@@ -27,8 +26,8 @@ export class LazyDictionary<T, U extends Dictionary<T>> {
   ) {
     return new LazyDictionary<T, Extend<U, V>>(
       {
-        ...this.currentValue,
-        ...value(this.currentValue)({
+        ...this.baseValue,
+        ...value(this.baseValue)({
           property: (constructor) => {
             const property = constructor(
               this.value.then((value) => {
